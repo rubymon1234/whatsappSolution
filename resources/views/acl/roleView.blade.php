@@ -4,13 +4,13 @@
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
-    <h5 class="hk-sec-title">@yield('title') :: List Role 
+    <h6 class="hk-sec-title">@yield('title') :: List Role
         @permission('acl.role.create')
-            <a class="btn btn-tool btn-success pull-right" href="{{ route('acl.role.manage') }}"> Add New Role </a>
+            <a class="btn btn-outline-info pull-right" href="{{ route('acl.role.manage') }}"> Add Role </a>
         @endpermission
-    </h5>
+    </h6>
     <p class="mb-20"></p>
-    <div class="row">   
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
                 <div class="table-responsive" style="padding: 1%;">
@@ -31,14 +31,14 @@
                                     <td class="serial">{{ $key + $roles->firstItem()}}</td>
                                     <td>  <span class="name">{{ $role->name }}</span> </td>
                                     <td> <span class="product">{{ $role->display_name }}</span> </td>
-                                    <td> {{ $role->description }} </td>                                   
+                                    <td> {{ $role->description }} </td>
                                     <td>
                                         <span class="btn btn-primary">
-                                            <a href="{{ route('acl.assign.role.permission', Crypt::encrypt($role->id)) }}" style="color: white; "> Manage Permissions</a></span>
+                                            <a href="{{ route('acl.assign.role.permission', Crypt::encrypt($role->id)) }}" style="color: white; ">Permissions</a></span>
                                     </td>
                                     <td>
                                         {{-- Edit --}}
-                                    
+
                                     <a href="{{ route('acl.role.action', Crypt::encrypt($role->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Permission" ></i></a>&nbsp;&nbsp;
                                     {{-- Delete --}}
                                     <a href="javascript:void(0)" {{-- id="dou_conf_{{ $perm->id }}" --}} >
@@ -48,13 +48,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Role in the list... for now! </td>
+                                    <td colspan="6"> No Role in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->

@@ -12,11 +12,11 @@
     <div class="hk-pg-header mb-0">
     <div class="d-flex">
             @permission('reseller.user.create')
-                <a class="btn btn-outline-info" href="{{ route('reseller.user.create') }}"> Add New User </a>
+                <a class="btn btn-outline-info" href="{{ route('reseller.user.create') }}"> Add User </a>
             @endpermission
             &nbsp;&nbsp;
             @permission('reseller.user.reseller.create')
-                <a class="btn btn-outline-info" href="{{ route('reseller.user.reseller.create') }}"> Add New Reseller </a>
+                <a class="btn btn-outline-info" href="{{ route('reseller.user.reseller.create') }}"> Add Reseller </a>
             @endpermission
             &nbsp;&nbsp;&nbsp;&nbsp;
             <form name="searchForm" action="" method="get">
@@ -35,7 +35,7 @@
             margin-bottom: 0px ! important;
         }
     </style>
-    <div class="row">   
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
                 <div class="table-responsive" style="padding: 1%;">
@@ -59,7 +59,7 @@
                                     $roleUser = \App\Helpers\Helper::getUserRole(Crypt::encrypt($user->id));
                                     @endphp
                                     <td style="font-weight: bold;">{{$roleUser->display_name }}</td>
-                                    <td> 
+                                    <td>
                                         @if($user->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
                                         @elseif($user->is_status==1)
@@ -71,7 +71,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Users in the list... for now! </td>
+                                    <td colspan="6"> No Users in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -94,15 +94,15 @@
                         </div>
                     @endif
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->
 </div>
 <script type="text/javascript">
     function doubleConfirm(permission_id,url){
-        if (confirm('Are you sure you want to permanently delete this permission ?')){
-           
+        if (confirm('Are you sure you want to block the user ?')){
+
         }
     }
 </script>

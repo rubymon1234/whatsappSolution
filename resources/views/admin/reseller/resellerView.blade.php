@@ -10,7 +10,7 @@
         @endpermission
     </h5>
     <p class="mb-20"></p>
-    <div class="row">   
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
                 <div class="table-responsive" style="padding: 1%;">
@@ -31,7 +31,7 @@
                                     <td> <span class="name">{{ $perm->name }}</span> </td>
                                     <td> <span class="product">{{ $perm->display_name }}</span> </td>
                                     <td> {{ $perm->description }} </td>
-                                    <td style="text-align: left;"> 
+                                    <td style="text-align: left;">
                                         <a href="{{ route('acl.perms.edit' ,Crypt::encrypt($perm->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Permission" ></i></a>&nbsp;&nbsp;
                                         <a href="" id="dou_conf_{{ $perm->id }}">
                                         <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete Permission" onclick="doubleConfirm({{ $perm->id }},'{{ route('acl.perms.delete',$perm->id) }}')">
@@ -40,13 +40,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Permission in the list... for now! </td>
+                                    <td colspan="6"> No Permission in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->

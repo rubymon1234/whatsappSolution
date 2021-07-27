@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title> @yield('title'):: {{ config('app.name', 'Whatsapp Messaging System') }} </title>
+    <title> @yield('title') </title>
     <meta name="description" content="Whatsapp Messaging System" />
 
     <!-- Favicon -->
@@ -19,7 +19,7 @@
         <div class="loader-pendulums"></div>
     </div>
     <!-- /Preloader -->
-   
+
 	<!-- HK Wrapper -->
 	<div class="hk-wrapper">
         <!-- Main Content -->

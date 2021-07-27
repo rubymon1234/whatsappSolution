@@ -10,10 +10,7 @@
             @endphp
             <h3 style="color: white;">{{ $domainDetail->company_name }}</h3>{{-- </img> --}}
         </a>
-        <div class="btn-group btn-group-sm">
-            <a href="#" class="btn btn-outline-secondary">Help</a>
-            <a href="#" class="btn btn-outline-secondary">About Us</a>
-        </div>
+        
     </header>
     <div class="container-fluid">
         <div class="row">
@@ -70,7 +67,7 @@
                                 </div>
                             </div>
                              <div class="custom-control custom-checkbox mb-25">
-                                 <a class="d-flex auth-brand font-14">{{ __('Forgot Your Password?') }} </a> 
+                                 <a class="d-flex auth-brand font-14">{{ __('Forgot Your Password?') }} </a>
                             </div>
                             <button class="btn btn-primary btn-block" type="submit">Login</button>
                         </form>

@@ -4,9 +4,9 @@
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row -->
    @include('errors.status')
-   <h5 class="hk-sec-title">@yield('title') :: Add Reseller</h5>
+   <h6 class="hk-sec-title">@yield('title') :: Add Reseller</h6>
    <p class="mb-20"></p>
-    <div class="row">   
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
                 <div class="col-lg-12 col-sm-6">
@@ -18,7 +18,7 @@
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="name" class="form-control" placeholder="Enter User Name." value="{{ old('name') }}" autocomplete="nope">
+                                            <input type="text" name="name" class="form-control" placeholder="Enter Name." value="{{ old('name') }}" autocomplete="nope">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -40,15 +40,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Domain url</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Domain</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="domain_name" class="form-control" placeholder="Enter domain url(ex: whatapp.sms.com)." value="{{ old('domain_name') }}" autocomplete="off">
+                                            <input type="text" name="domain_name" class="form-control" placeholder="Enter domain (ex: whatsapp.bulk.com)." value="{{ old('domain_name') }}" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Company name</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Company</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="company_name" class="form-control" placeholder="Enter comapny name(ex: xxx )." value="{{ old('company_name') }}" autocomplete="off">
+                                            <input type="text" name="company_name" class="form-control" placeholder="Enter company (ex: Google )." value="{{ old('company_name') }}" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
@@ -57,7 +57,7 @@
                                                 <label class="control-label" for="inputError" style="color: #dd4b39"><i class="fa fa-times-circle-o" ></i> {{ implode(' | ', $errors->all(':message')) }} .</label>
                                                 <br>
                                             @endif
-                                            
+
                                             <button type="submit" class="btn btn-info " style="margin-right: 10px;" name="Update" value="Save">Create</button>&nbsp;
                                             <button type="submit" class="btn btn-danger " name="Cancel" value="cancel">Cancel</button>
                                         </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->

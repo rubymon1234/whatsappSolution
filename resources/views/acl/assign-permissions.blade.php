@@ -3,11 +3,11 @@
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row -->
-   <h5 class="hk-sec-title">@yield('title') :: List Role</h5>
+   <h6 class="hk-sec-title">@yield('title') :: List Role</h6>
     <p class="mb-20"></p>
     <?php $assignRole  = array(); ?>
         @foreach($role_permissions as $assignrole)
-            <?php  $assignRole[] = $assignrole->id; ?> 
+            <?php  $assignRole[] = $assignrole->id; ?>
         @endforeach
     <div class="row">
         <div class="col-xl-12">
@@ -20,14 +20,14 @@
                                 <tr>
                                     <th >Check</th>
                                     <th >Name</th>
-                                    <th>Display Name</th>
+                                    <th>Display name</th>
                                     <th style="text-align: left;">Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                                  @forelse($permissions as $key=>$role_perms)
                                     <tr>
-                                        <td class="serial"><input type="checkbox" name="permissn[]" class="" id="check1" value="{{ $role_perms->id }}" <?php 
+                                        <td class="serial"><input type="checkbox" name="permissn[]" class="" id="check1" value="{{ $role_perms->id }}" <?php
                                     if (in_array($role_perms->id, $assignRole)) { ?>
                                         checked=checked
                                     <?php } ?>> </td>
@@ -37,7 +37,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6"> No Permission in the list... for now! </td>
+                                        <td colspan="6"> No Permission in the list</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -48,7 +48,7 @@
                         </div>
                     </form>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->

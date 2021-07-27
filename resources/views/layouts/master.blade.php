@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>@yield('title'):: {{ config('app.name', 'Whatsapp Messaging System') }}</title>
+    <title>@yield('title')</title>
     <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.gif') }}">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-	
+
 	<!-- Morris Charts CSS -->
     <link href="{{ asset('dist/css/morris.css') }}" rel="stylesheet" type="text/css" />
-	
+
     <!-- Toggles CSS -->
     <link href="{{ asset('dist/css/toggles.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('dist/css/toggles-light.css') }}" rel="stylesheet" type="text/css">
-	
+
 	<!-- Toastr CSS -->
     {{-- <link href="{{ asset('dist/css/jquery.toast.min.css') }}" rel="stylesheet" type="text/css"> --}}
 
@@ -30,7 +30,7 @@
         <div class="loader-pendulums"></div>
     </div>
     <!-- /Preloader -->
-	
+
 	<!-- HK Wrapper -->
 	<div class="hk-wrapper hk-vertical-nav">
 
@@ -45,7 +45,7 @@
                 <h3 style="color: #273b86; font-weight: bold;">{{ $domainDetail->company_name }}</h3>
             </a>
             <ul class="navbar-nav hk-navbar-content">
-                
+
                 <li class="nav-item dropdown dropdown-notifications">
                     <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="feather-icon"><i data-feather="bell"></i></span><span class="badge-wrap"><span class="badge badge-primary badge-indicator badge-indicator-sm badge-pill pulse"></span></span></a>
                     <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -146,22 +146,22 @@
                             <div class="media-img-wrap">
                                 <div class="avatar">
                                     <span class="avatar-text avatar-text-inv-primary rounded-circle"><span class="initial-wrap" style="margin-top: -31% ! important;">
-                                        <span> 
-                                            {{ substr($user->name, 0, 2) }} 
+                                        <span>
+                                            {{ substr($user->name, 0, 2) }}
                                         </span>
                                     </span>
                                 </div>
                                 <span class="badge badge-success badge-indicator"></span>
                             </div>
                             <div class="media-body">
-                                <span>{{ Auth::user()->name }} | {{ $user->roles->first()->display_name }}<i class="zmdi zmdi-chevron-down"></i></span> 
+                                <span>{{ Auth::user()->name }} | {{ $user->roles->first()->display_name }}<i class="zmdi zmdi-chevron-down"></i></span>
                             </div>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                         <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
                         <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-card"></i><span>My balance</span></a>
-                        
+
                         <div class="dropdown-divider"></div>
                         <div class="sub-dropdown-menu show-on-hover">
                             <a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>
@@ -188,7 +188,7 @@
             </div>
         </form>
         <!-- Top Navbar -->
-	
+
         <!-- Vertical Nav -->
             @include('layouts.sidemenu.navmenu')
         <!-- Vertical Nav -->
@@ -198,7 +198,7 @@
 			<!-- Container -->
                 @yield('content')
             <!-- Container -->
-			
+
             <!-- Footer -->
             <div class="hk-footer-wrap container-fluid">
                 <footer class="footer">
@@ -235,21 +235,21 @@
     <!-- Toggles JavaScript -->
     <script src="{{ asset('dist/js/toggles.min.js') }}"></script>
     <script src="{{ asset('dist/js/toggle-data.js') }}"></script>
-	
+
 	<!-- Toastr JS -->
     {{-- <script src="{{ asset('dist/js/jquery.toast.min.js') }}"></script> --}}
-    
+
 	<!-- Counter Animation JavaScript -->
 	<script src="{{ asset('dist/js/jquery.waypoints.min.js') }}"></script>
 	<script src="{{ asset('dist/js/jquery.counterup.min.js') }}"></script>
-	
+
 	<!-- Morris Charts JavaScript -->
     <script src="{{ asset('dist/js/raphael.min.js') }}"></script>
     <script src="{{ asset('dist/js/morris.min.js') }}"></script>
-	
+
 	<!-- Easy pie chart JS -->
     <script src="{{ asset('dist/js/jquery.easypiechart.min.js') }}"></script>
-	
+
 	<!-- Flot Charts JavaScript -->
     <script src="{{ asset('dist/js/excanvas.min.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.js') }}"></script>
@@ -259,14 +259,14 @@
     <script src="{{ asset('dist/js/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.crosshair.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.tooltip.min.js') }}"></script>
-	
+
 	<!-- EChartJS JavaScript -->
     <script src="{{ asset('dist/js/echarts-en.min.js') }}"></script>
-    
+
     <!-- Init JavaScript -->
     <script src="{{ asset('dist/js/init.js') }}"></script>
 	<script src="{{ asset('dist/js/dashboard2-data.js') }}"></script>
-	
+
 </body>
 
 

@@ -4,10 +4,10 @@
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row -->
-   <h5 class="hk-sec-title">@yield('title') :: @php 
-if($id){ echo 'Update'; }else { echo'Add'; } @endphp Role</h5>
+   <h6 class="hk-sec-title">@yield('title') :: @php
+if($id){ echo 'Update'; }else { echo'Add'; } @endphp Role</h6>
    <p class="mb-20"></p>
-    <div class="row">   
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
                 <div class="col-lg-12 col-sm-6">
@@ -19,18 +19,18 @@ if($id){ echo 'Update'; }else { echo'Add'; } @endphp Role</h5>
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Role name</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="name" class="form-control" placeholder="Enter Role Name." value="<?php if(isset($roleDetail->name)){ echo $roleDetail->name; }else{ echo old('name'); } ?>">
-                                            
+                                            <input type="text" name="name" class="form-control" placeholder="Enter Role name." value="<?php if(isset($roleDetail->name)){ echo $roleDetail->name; }else{ echo old('name'); } ?>">
+
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Display Name</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Display name</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="display_name" class="form-control" placeholder="Enter display name." value="<?php if(isset($roleDetail->display_name)){ echo $roleDetail->display_name; }else{ echo old('display_name'); } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Default Permission </label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Default permission </label>
                                         <div class="col-sm-10">
                                             <select class="form-control select2" name="slug">
                                                 <option>Select Permission </option>
@@ -45,7 +45,7 @@ if($id){ echo 'Update'; }else { echo'Add'; } @endphp Role</h5>
                                     <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Description</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="description" class="form-control" placeholder="Enter Description." value="<?php if(isset($roleDetail->description)){ echo $roleDetail->description; }else{ echo old('description'); } ?>">
+                                            <input type="text" name="description" class="form-control" placeholder="Enter description." value="<?php if(isset($roleDetail->description)){ echo $roleDetail->description; }else{ echo old('description'); } ?>">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
@@ -68,7 +68,7 @@ if($id){ echo 'Update'; }else { echo'Add'; } @endphp Role</h5>
                         </div>
                     </div>
                 </div>
-            </div>      
+            </div>
         </div>
     </div>
     <!-- /Row -->
