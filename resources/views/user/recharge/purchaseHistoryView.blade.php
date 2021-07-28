@@ -25,12 +25,11 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th >User name</th>
                                 <th>Plan name</th>
                                 <th>Plan count</th>
                                 <th>Plan validity(days)</th>
                                 <th>Credit</th>
-                                <th>Request time</th>
+                                <th>Date</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -38,8 +37,6 @@
                             @forelse($purchaseHistory as $key=>$transaction)
                                 <tr>
                                     <td class="serial">{{ $key + $purchaseHistory->firstItem()}} </td>
-                                    <td> <span class="name">{{ $transaction->name }}</span> </td>
-                                    </span></td>
                                     <td> <span class="name">{{ $transaction->plan_name }}</span> </td>
                                      <td> <span class="product">{{ $transaction->daily_count }}</span> </td>
                                     <td >{{$transaction->plan_validity }}</td>
