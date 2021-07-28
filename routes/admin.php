@@ -54,6 +54,4 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::post('/plan/create', 'Web\PlanController@postPlanCreate')->name('global.plan.create')->middleware(['permission:global.plan.create']);
 	Route::get('/plan/edit/{id}', 'Web\PlanController@getPlanUpdate')->name('global.plan.update')->middleware(['permission:global.plan.update']);
 	Route::post('/plan/edit/{id}', 'Web\PlanController@postPlanUpdate')->name('global.plan.update')->middleware(['permission:global.plan.update']);
-
-
 });
