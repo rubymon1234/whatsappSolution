@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title', 'User Management')
+@section('title', 'Credit Management')
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: Recharge Request Users</h6>
+            <h6 class="hk-pg-title">@yield('title') :: List Requests</h6>
         </div>
     </div>
     <style type="text/css">
@@ -25,12 +25,12 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th >User name</th>
-                                <th >Reseller name</th>
-                                <th>Plan name</th>
-                                <th>Plan count</th>
-                                <th>Plan validity(days)</th>
-                                <th>Request time</th>
+                                <th >Username</th>
+                                <th >Reseller Name</th>
+                                <th>Plan Name</th>
+                                <th>Plan Count</th>
+                                <th>Plan Validity(days)</th>
+                                <th>Request Time</th>
                                 <th>Manage</th>
                             </tr>
                         </thead>
@@ -49,16 +49,16 @@
                                     <td >{{$plan->plan_validity }}</td>
                                     <td>
                                         {{ $plan->created_at}}
-                                    </td> 
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModalPopovers_{{ $plan->id}}">
                                            view
                                         </button>
-                                        
+
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8"> No Users in the list</td>
+                                    <td colspan="8"> No Request in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
