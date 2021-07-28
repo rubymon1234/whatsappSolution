@@ -41,9 +41,16 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::get('/user/create', 'Admin\UserController@getUserCreate')->name('admin.user.create')->middleware(['permission:admin.user.create']);
 	Route::post('/user/create', 'Admin\UserController@postUserCreate')->name('admin.user.create')->middleware(['permission:admin.user.create']);
 
+	//USER REQUEST
+	Route::get('/user/recharge-request/{id}', 'Admin\UserController@getUserRechargeRequestView')->name('admin.user.recharge.request')->middleware(['permission:admin.user.recharge.request']);
+	Route::post('/user/recharge-request/{id}', 'Admin\UserController@postUserRechargeRequestView')->name('admin.user.recharge.request')->middleware(['permission:admin.user.recharge.request']);
+
 	//RECHARGE MANAGEMENT
 	Route::get('/recharge/request-list', 'Admin\RechargeController@getRequestView')->name('admin.recharge.request.view')->middleware(['permission:admin.recharge.request.view']);
-	
+
+	//PURCHASE HISTORY
+	Route::get('/credit/transaction-list', 'Admin\PurchaseHistoryController@getPurchaseHistory')->name('admin.recharge.transaction.view')->middleware(['permission:admin.recharge.transaction.view']);
+
 	//RESELLER Management
 	Route::get('/user/reseller-create', 'Admin\UserController@getResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
 	Route::post('/user/reseller-create', 'Admin\UserController@postResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);

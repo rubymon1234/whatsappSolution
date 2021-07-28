@@ -19,6 +19,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('dashboard', 'Auth\AuthController@userlanding')->name('user.dashboard')->middleware(['permission:user.dashboard']);
 	Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 	Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+	//PURCHASE HISTORY
+	Route::get('/credit/transaction-list', 'User\PurchaseHistoryController@getPurchaseHistory')->name('user.recharge.transaction.view')->middleware(['permission:user.recharge.transaction.view']);
 });
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);

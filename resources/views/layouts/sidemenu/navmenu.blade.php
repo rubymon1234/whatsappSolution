@@ -103,7 +103,7 @@
             @permission(('global.plan.view'))
                 <li class="nav-item {{ (Route::is('global.plan.view') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="feather-icon"><i data-feather="file-text"></i></span>
                         <span class="nav-link-text">Plan Management</span>
                     </a>
                     <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.plan.view') ? 'show' : '') }} collapse ">
@@ -122,7 +122,7 @@
             @permission(('global.reseller.plan.view'))
                 <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="feather-icon"><i data-feather="file-text"></i></span>
                         <span class="nav-link-text">Plan Management</span>
                     </a>
                     <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.reseller.plan.view') ? 'show' : '') }} collapse ">
@@ -150,6 +150,49 @@
                                 @permission('admin.recharge.request.view')
                                 <li class="nav-item {{ (Route::is('admin.recharge.request.view') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('admin.recharge.request.view') }}">List Request</a>
+                                </li>
+                                @endpermission
+                                @permission('admin.recharge.transaction.view')
+                                <li class="nav-item {{ (Route::is('admin.recharge.transaction.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('admin.recharge.transaction.view') }}">List Transactions</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+            @permission(('reseller.recharge.*'))
+                <li class="nav-item {{ (Route::is('reseller.recharge.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="credit-card"></i></span>
+                        <span class="nav-link-text">Credit Management</span>
+                    </a>
+                    <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('reseller.recharge.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('reseller.recharge.transaction.view')
+                                <li class="nav-item {{ (Route::is('reseller.recharge.transaction.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('reseller.recharge.transaction.view') }}">List Transactions</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+            @permission(('user.recharge.*'))
+                <li class="nav-item {{ (Route::is('user.recharge.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="credit-card"></i></span>
+                        <span class="nav-link-text">Credit Management</span>
+                    </a>
+                    <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('user.recharge.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.recharge.transaction.view')
+                                <li class="nav-item {{ (Route::is('user.recharge.transaction.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.recharge.transaction.view') }}">List Transactions</a>
                                 </li>
                                 @endpermission
                             </ul>

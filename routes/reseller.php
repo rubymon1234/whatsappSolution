@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth','prefix' =>'reseller'], function () {
 	//USER REQUEST
 	Route::get('/user/recharge-request/{id}', 'Reseller\UserController@getUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);
 	Route::post('/user/recharge-request/{id}', 'Reseller\UserController@postUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);
+
+	//PURCHASE HISTORY
+	Route::get('/credit/transaction-list', 'Reseller\PurchaseHistoryController@getPurchaseHistory')->name('reseller.recharge.transaction.view')->middleware(['permission:reseller.recharge.transaction.view']);
 	
 	//RESELLER MANAGEMENT
 	Route::get('/user/reseller-create', 'Reseller\UserController@getResellerCreate')->name('reseller.user.reseller.create')->middleware(['permission:reseller.user.reseller.create']);

@@ -7,8 +7,11 @@ use App\Models\Role;
 use App\Models\Permission;
 use App\Models\User;
 use App\Models\RoleUser;
+use App\Models\Plan;
 use App\Models\PermissionRole;
 use App\Models\Domain;
+use App\Models\PlanRequest;
+use App\Models\PurchaseHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -207,5 +210,69 @@ class UserController extends Controller
     	} catch (\Exception $e) {
         	return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
     	}
+    }
+    /**
+     * Recharge Request (GET)
+     * @author Ruban
+    */
+    public function getUserRechargeRequestView(Request $request,$id){
+        $user = User::find(Crypt::decrypt($id));
+        $plans = Plan::all();
+        return view('admin.user.rechargeRequest', compact('user','plans'));
+    }
+    /**
+     * Recharge Request (POST)
+     * @author Ruban
+    */
+    public function postUserRechargeRequestView(Request $request,$id){
+        
+        try {
+
+            $user_id = Crypt::decrypt($id);
+            $reseller_id = Auth::user()->id;
+            if($request->Update =='Save'){
+
+                $rule = [
+                    'plan_id' => 'required|numeric',
+                    'credit' => 'required|numeric',
+                ];
+                $messages = [
+                    'plan_id.required' => 'Plan is required',
+                    'credit.required' => 'credit is required',
+                ];
+                
+                $validator = Validator::make(Input::all(), $rule, $messages);
+
+                if ($validator->fails()) {
+                    return Redirect::back()
+                                ->withErrors($validator)
+                                ->withInput(Input::all());
+                }else{
+                    //request plan Insertion
+                    $requestPlan = new PlanRequest();
+                    $requestPlan->plan_id           = $request->get('plan_id');
+                    $requestPlan->credit            = $request->get('credit');
+                    $requestPlan->user_id           = $user_id;
+                    $requestPlan->reseller_id       = $reseller_id;
+                    $requestPlan->is_status         = 2;
+                    $requestPlan->save();
+
+                    //purchase Insertion
+                    $purchaseHistInsert = new PurchaseHistory();
+                    $purchaseHistInsert->plan_id = $request->get('plan_id');
+                    $purchaseHistInsert->plan_request_id = $requestPlan->id;
+                    $purchaseHistInsert->user_id = $user_id;
+                    $purchaseHistInsert->reseller_id = $reseller_id;
+                    $purchaseHistInsert->is_status = 2;
+                    if($purchaseHistInsert->save())
+                        return redirect()->route('admin.user.view')->with('success_message', 'Plan Request successfully Added ');
+                }
+            }
+            if ($request->Cancel =='cancel') {
+                return redirect()->route('admin.user.view')->with('warning_message', 'Request is Rollback');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
+        }
     }
 }

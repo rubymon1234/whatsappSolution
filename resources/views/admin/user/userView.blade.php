@@ -47,6 +47,7 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
+                                <th>Request</th>
                                 <th style="text-align: left;">Manage</th>
                             </tr>
                         </thead>
@@ -68,6 +69,14 @@
                                         @elseif($user->is_status==2)
                                             <span class="badge badge-warning"> Pending</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                    @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
+                                        <span class="btn btn-primary">
+                                            <a href="{{ route('admin.user.recharge.request',Crypt::encrypt($user->id)) }}" style="color: white; ">Request</a></span>
+                                    @else
+                                        {{ '' }}
+                                    @endif
                                     </td>
                                     <td style="text-align: left;">
                                         <a href="">

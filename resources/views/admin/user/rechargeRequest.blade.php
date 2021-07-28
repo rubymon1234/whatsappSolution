@@ -86,7 +86,6 @@
         </div>
     </div>
 </div>
-
 @endforeach
 <script type="text/javascript">
     function openSelectedPlan(id){
