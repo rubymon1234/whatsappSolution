@@ -6,7 +6,7 @@
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: Transaction Log</h6>
+            <h6 class="hk-pg-title">@yield('title') :: List Transactions</h6>
         </div>
     </div>
     <style type="text/css">
@@ -25,12 +25,12 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th >User name</th>
-                                <th>Plan name</th>
-                                <th>Plan count</th>
-                                <th>Plan validity(days)</th>
+                                <th >Username</th>
+                                <th>Plan Name</th>
+                                <th>Plan Count</th>
+                                <th>Plan Validity(days)</th>
                                 <th>Credit</th>
-                                <th>Request time</th>
+                                <th>Request Time</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -47,7 +47,7 @@
                                     <td>
                                         {{ $transaction->created_at}}
                                     </td>
-                                    <td> 
+                                    <td>
                                         @if($transaction->is_status==1)
                                             <span class="badge badge-success">approved</span>
                                         @elseif($transaction->is_status==2)
