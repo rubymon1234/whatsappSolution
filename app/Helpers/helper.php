@@ -6,6 +6,8 @@ use Validator;
 use App\Models\Domain;
 use App\Models\RoleUser;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -38,5 +40,18 @@ class Helper {
     	$role = RoleUser::where('user_id',$id)->first();
     	$roleUser = Role::find($role->role_id);
     	return $roleUser;
+    }
+    public static function getUserDetail($user_id){
+    	$user = array();
+    	$id = Crypt::decrypt($user_id);
+    	$user = User::find($id);
+    	if($user){
+    		return $user;
+    	}
+    	return $user;
+    }
+    public static function getPlanDetail($plan_id){
+    	$plan_id = Crypt::decrypt($plan_id);
+    	return $planDetail = Plan::find($plan_id);
     }
 }

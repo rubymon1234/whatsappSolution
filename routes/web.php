@@ -22,5 +22,10 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 });
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);
-// Errors
+
+//globalAjaxcall
+Route::post('/ajax/request-approve', 'Web\AjaxController@postRequestApprove')->name('ajax.request.approve')->middleware(['permission:ajax.request.approve']);
+Route::post('/ajax/request-reject', 'Auth\AjaxController@postRequestReject')->name('ajax.request.reject')->middleware(['permission:ajax.request.reject']);
+
+//Errors
 Route::get('/permission/denid/403', 'Web\HomeController@accessDenied')->name('accessDenied');

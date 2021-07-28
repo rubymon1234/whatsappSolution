@@ -1,27 +1,24 @@
 @extends('layouts.master')
-@section('title', 'User Management')
+@section('title', 'Plan Management')
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: List Users</h6>
+            <h6 class="hk-pg-title">@yield('title') :: List Plans</h6>
+            
         </div>
     </div>
     <div class="hk-pg-header mb-0">
     <div class="d-flex">
-            @permission('reseller.user.create')
-                <a class="btn btn-outline-info" href="{{ route('reseller.user.create') }}"> Add User </a>
+            @permission('global.plan.create')
+                <a class="btn btn-outline-info" href="{{ route('global.plan.create') }}"> Add Plan </a>
             @endpermission
             &nbsp;&nbsp;
-            @permission('reseller.user.reseller.create')
-                <a class="btn btn-outline-info" href="{{ route('reseller.user.reseller.create') }}"> Add Reseller </a>
-            @endpermission
-            &nbsp;&nbsp;&nbsp;&nbsp;
             <form name="searchForm" action="" method="get">
                 <label>
-                    <input type="text" class="form-control form-control-sm new" placeholder="name or email search" aria-controls="datable_1" name="qa" value="{{ $key }}">
+                    <input type="text" class="form-control form-control-sm new" placeholder="plan name search" aria-controls="datable_1" name="qa" value="{{ $key }}">
                 </label>
                 <button class="btn btn-tool btn-danger" name="search" value="search">Search </button>
             </form>
@@ -43,54 +40,54 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Plan name</th>
+                                <th>Daily count</th>
+                                <th>Plan validity</th>
                                 <th>Status</th>
-                                <th>Recharge</th>
+                                @permission('global.plan.update')
+                                <th style="text-align: left;">Manage</th>
+                                @endpermission
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($users as $key=>$user)
+                            @forelse($plans as $key=>$plan)
                                 <tr>
-                                    <td class="serial">{{ $key + $users->firstItem()}} </td>
-                                    <td> <span class="name">{{ $user->name }}</span> </td>
-                                    <td> <span class="product">{{ $user->email }}</span> </td>
-                                    @php
-                                    $roleUser = \App\Helpers\Helper::getUserRole(Crypt::encrypt($user->id));
-                                    @endphp
-                                    <td style="font-weight: bold;">{{$roleUser->display_name }}</td>
+                                    <td class="serial">{{ $key + $plans->firstItem()}} </td>
+                                    <td> <span class="name">{{ $plan->plan_name }}</span> </td>
+                                    <td> <span class="product">{{ $plan->daily_count }}</span> </td>
+                                    <td> <span class="product">{{ $plan->plan_validity }}</span> </td>
                                     <td>
-                                        @if($user->is_status==0)
+                                        @if($plan->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
-                                        @elseif($user->is_status==1)
+                                        @elseif($plan->is_status==1)
                                            <span class="badge badge-success">Active</span>
-                                        @elseif($user->is_status==2)
-                                            <span class="badge badge-warning"> Pending</span>
                                         @endif
                                     </td>
-                                    <td><span class="btn btn-primary">
-                                            <a href="{{ route('reseller.user.recharge.request',Crypt::encrypt($user->id)) }}" style="color: white; ">Request</a></span></td>
+                                    @permission('global.plan.update')
+                                    <td>
+                                        <a href="{{ route('global.plan.update' ,Crypt::encrypt($plan->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Plan" ></i></a>&nbsp;&nbsp;
+                                    </td>
+                                    @endpermission
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Users in the list</td>
+                                    <td colspan="6"> No Plan in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                     <br>
-                    @if($users->total()!=0)
+                    @if($plans->total()!=0)
                         <div class="hk-row">
                             <div class="col-sm-12 col-md-5">
                                 <div class="dataTables_info" id="datable_1_info" role="status" aria-live="polite">
-                                    Showing {{$users->firstItem()}} to {{$users->lastItem()}} of {{$users->total()}} entries
+                                    Showing {{$plans->firstItem()}} to {{$plans->lastItem()}} of {{$plans->total()}} entries
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-7">
                                 <div class="dataTables_paginate paging_simple_numbers pull-right" id="datable_1_paginate">
                                     <ul class="pagination">
-                                        {{ $users->appends(Request::get('qa'))->links() }}
+                                        {{ $plans->appends(Request::get('qa'))->links() }}
                                     </ul>
                                 </div>
                             </div>

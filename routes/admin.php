@@ -40,8 +40,20 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::get('/user/view', 'Admin\UserController@getUserView')->name('admin.user.view')->middleware(['permission:admin.user.view']);
 	Route::get('/user/create', 'Admin\UserController@getUserCreate')->name('admin.user.create')->middleware(['permission:admin.user.create']);
 	Route::post('/user/create', 'Admin\UserController@postUserCreate')->name('admin.user.create')->middleware(['permission:admin.user.create']);
+
+	//RECHARGE MANAGEMENT
+	Route::get('/user/request-list', 'Admin\RechargeController@getRequestView')->name('admin.user.recharge.request.view')->middleware(['permission:admin.user.recharge.request.view']);
 	
 	//RESELLER Management
 	Route::get('/user/reseller-create', 'Admin\UserController@getResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
 	Route::post('/user/reseller-create', 'Admin\UserController@postResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
+
+	//PLAN MANAGEMENT
+	Route::get('/plan/view', 'Web\PlanController@getPlanView')->name('global.plan.view')->middleware(['permission:global.plan.view']);
+	Route::get('/plan/create', 'Web\PlanController@getPlanCreate')->name('global.plan.create')->middleware(['permission:global.plan.create']);
+	Route::post('/plan/create', 'Web\PlanController@postPlanCreate')->name('global.plan.create')->middleware(['permission:global.plan.create']);
+	Route::get('/plan/edit/{id}', 'Web\PlanController@getPlanUpdate')->name('global.plan.update')->middleware(['permission:global.plan.update']);
+	Route::post('/plan/edit/{id}', 'Web\PlanController@postPlanUpdate')->name('global.plan.update')->middleware(['permission:global.plan.update']);
+
+
 });

@@ -83,6 +83,40 @@ class PermissionSeeder extends Seeder
                 'name' => 'reseller.user.reseller.create',
                 'display_name' => 'reseller.user.reseller.create',
                 'description' => 'reseller.user.reseller.create',
+            ],[
+                'name' => 'global.plan.view',
+                'display_name' => 'global.plan.view',
+                'description' => 'Admin plan view',
+            ],
+            [
+                'name' => 'global.plan.create',
+                'display_name' => 'global.plan.create',
+                'description' => 'Admin plan create',
+            ],
+            [
+                'name' => 'global.plan.update',
+                'display_name' => 'global.plan.update',
+                'description' => 'Admin plan update',
+            ],[
+                'name' => 'global.reseller.plan.view',
+                'display_name' => 'global.reseller.plan.view',
+                'description' => 'Reseller plan view',
+            ],[
+                'name' => 'reseller.user.recharge.request',
+                'display_name' => 'reseller.user.recharge.request',
+                'description' => 'Reseller recharge request',
+            ],[
+                'name' => 'admin.user.recharge.request.view',
+                'display_name' => 'admin.user.recharge.request.view',
+                'description' => 'Admin recharge request',
+            ],[
+                'name' => 'ajax.request.approve',
+                'display_name' => 'ajax.request.approve',
+                'description' => 'Admin recharge request approve',
+            ],[
+                'name' => 'ajax.request.reject',
+                'display_name' => 'ajax.request.reject',
+                'description' => 'Admin recharge request reject',
             ],
         ];
         //Insertion

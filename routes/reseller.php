@@ -19,8 +19,15 @@ Route::group(['middleware' => 'auth','prefix' =>'reseller'], function () {
 	Route::get('/user/view', 'Reseller\UserController@getUserView')->name('reseller.user.view')->middleware(['permission:reseller.user.view']);
 	Route::get('/user/create', 'Reseller\UserController@getUserCreate')->name('reseller.user.create')->middleware(['permission:reseller.user.create']);
 	Route::post('/user/create', 'Reseller\UserController@postUserCreate')->name('reseller.user.create')->middleware(['permission:reseller.user.create']);
+
+	//USER REQUEST
+	Route::get('/user/recharge-request/{id}', 'Reseller\UserController@getUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);
+	Route::post('/user/recharge-request/{id}', 'Reseller\UserController@postUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);
 	
-	//RESELLER Management
+	//RESELLER MANAGEMENT
 	Route::get('/user/reseller-create', 'Reseller\UserController@getResellerCreate')->name('reseller.user.reseller.create')->middleware(['permission:reseller.user.reseller.create']);
 	Route::post('/user/reseller-create', 'Reseller\UserController@postResellerCreate')->name('reseller.user.reseller.create')->middleware(['permission:reseller.user.reseller.create']);
+
+	//PLAN MANAGEMENT
+	Route::get('/plan/view', 'Web\PlanController@getPlanView')->name('global.reseller.plan.view')->middleware(['permission:global.reseller.plan.view']);
 });
