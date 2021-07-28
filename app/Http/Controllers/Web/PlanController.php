@@ -77,7 +77,8 @@ class PlanController extends Controller
     */
    	public function getPlanUpdate($id =null)
     {
-    	$plan = Plan::find($id);
+
+    	$plan = Plan::find(Crypt::decrypt($id));
     	return view('web.global.planUpdate', compact('plan','id'));
     }
     /**

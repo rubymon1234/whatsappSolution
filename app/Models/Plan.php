@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
-    //protected $table = 'plan';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'plan_name','daily_count','plan_validity','instance_count','is_status',
+    ];
 }

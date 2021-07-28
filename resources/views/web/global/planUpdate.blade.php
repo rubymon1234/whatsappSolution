@@ -17,7 +17,7 @@
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Plan name</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="plan_name" class="form-control" placeholder="Enter plan name." value="{{ old('plan_name') }}">
+                                            <input type="text" name="plan_name" class="form-control" placeholder="Enter plan name." value="{{ $plan->plan_name }}">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
@@ -27,7 +27,7 @@
                                                 <br>
                                             @endif
 
-                                            <button type="submit" class="btn btn-info " style="margin-right: 10px;" name="Update" value="Save">Create</button>&nbsp;
+                                            <button type="submit" class="btn btn-info " style="margin-right: 10px;" name="Update" value="Save">Update</button>&nbsp;
                                             <button type="submit" class="btn btn-danger " name="Cancel" value="cancel">Cancel</button>
                                         </div>
                                     </div>
