@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>@yield('title')</title>
-    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+    <meta name="description" content="" />
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.gif') }}">
@@ -204,7 +204,7 @@
                 <footer class="footer">
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <p> Powered by <a href="javaScript::void(0)" class="text-dark" target="_blank">Tech</a> © {{ date('Y')}}</p>
+                            <p> Powered by <a href="http://{{ $_SERVER['SERVER_NAME'] }}" class="text-dark" target="_blank">{{ $domainDetail->company_name }}</a> © {{ date('Y')}}</p>
                         </div>
                     </div>
                 </footer>
@@ -268,7 +268,4 @@
 	<script src="{{ asset('dist/js/dashboard2-data.js') }}"></script>
 
 </body>
-
-
-<!-- Mirrored from hencework.com/theme/griffin/dashboard2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Jul 2021 07:21:37 GMT -->
 </html>

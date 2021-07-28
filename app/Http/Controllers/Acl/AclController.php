@@ -133,7 +133,7 @@ class AclController extends Controller
     */
     public function getViewPerms()
     {
-        $perms = Permission::paginate(15);
+        $perms = Permission::paginate(50);
         return view('acl.permsView',compact('perms'));
     }
 

@@ -101,6 +101,44 @@
                     </ul>
                 </li>
             @endpermission
+            @permission(('global.plan.*'))
+                <li class="nav-item {{ (Route::is('global.plan.view') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="nav-link-text">Plan Management</span>
+                    </a>
+                    <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.plan.view') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('global.plan.view')
+                                <li class="nav-item {{ (Route::is('global.plan.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('global.plan.view') }}">List Plan</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+            @permission(('global.reseller.plan.view'))
+                <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="nav-link-text">Plan Management</span>
+                    </a>
+                    <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.reseller.plan.view') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('global.reseller.plan.view')
+                                <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('global.reseller.plan.view') }}">List Plan</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             </ul>
         </div>
     </div>
