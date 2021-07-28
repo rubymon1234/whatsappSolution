@@ -95,13 +95,12 @@
                                     <a class="nav-link" href="{{ route('reseller.user.view') }}">List Users</a>
                                 </li>
                                 @endpermission
-                                
                             </ul>
                         </li>
                     </ul>
                 </li>
             @endpermission
-            @permission(('global.plan.*'))
+            @permission(('global.plan.view'))
                 <li class="nav-item {{ (Route::is('global.plan.view') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="users"></i></span>
@@ -132,6 +131,25 @@
                                 @permission('global.reseller.plan.view')
                                 <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('global.reseller.plan.view') }}">List Plan</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+            @permission(('admin.recharge.*'))
+                <li class="nav-item {{ (Route::is('admin.recharge.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="credit-card"></i></span>
+                        <span class="nav-link-text">Credit Management</span>
+                    </a>
+                    <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('admin.recharge.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('admin.recharge.request.view')
+                                <li class="nav-item {{ (Route::is('admin.recharge.request.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('admin.recharge.request.view') }}">List Request</a>
                                 </li>
                                 @endpermission
                             </ul>

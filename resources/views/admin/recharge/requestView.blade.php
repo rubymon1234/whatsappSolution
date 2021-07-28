@@ -99,10 +99,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5>Plan daily count</h5>
+                    <h5>Plan daily count </h5>
                     <p class="mt-10 mb-20"> {{ $planDetail->daily_count }}</p>
-                    <h5>plan validity</h5>
-                    <p class="mt-10"> {{ $planDetail->plan_validity }}</p>
+                    <h5>plan validity (days) </h5>
+                    <p class="mt-10"> {{ $planDetail->plan_validity }} </p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="__appActions('{{ Crypt::encryptString($plan->id) }}',1)">Approve</button>
@@ -113,51 +113,44 @@
         </div>
     </div>
     @empty
-    No data found
     @endforelse
 </div>
 <script type="text/javascript">
     function __appActions(plan_req_id,status){
         if(status ==1){
-            message = 'Are you sure you want to Approve the recharge request ?';
             res = 'Approve';
         }else{
-            message = 'Are you sure you want to Reject the recharge request ?';
             res = 'Reject';
         }
-        if (confirm(message)){
+        if(typeof  plan_req_id !=='undefined' && plan_req_id !=''){
 
-            if(typeof  plan_req_id !=='undefined' && plan_req_id !=''){
-
-                $.ajax(
-                    {
-                        url: '{{ route('ajax.request.approve') }}',
-                        dataType: 'json', // what to expect back from the PHP script
-                        cache: false,
-                        data: { _token: "{{ csrf_token() }}", plan_req_id : plan_req_id , status : status ,res : res } ,
-                        type: 'POST' ,
-                        beforeSend: function () {
-                            $('.preloader-it').show();
-                        },
-                        complete: function () {
+            $.ajax(
+                {
+                    url: '{{ route('ajax.request.approve') }}',
+                    dataType: 'json', // what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", plan_req_id : plan_req_id , status : status ,res : res } ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
                             $('.preloader-it').hide();
-                        },
-                        success: function (result) {
-                            $('#loading').hide();
-                            if(result.success){
-                                $('.preloader-it').hide();
-                                alert(result.response);
-                                location.reload();
-                            }
-                        },
-                        error: function (response) {
-                            console.log('Server error');
+                            alert(result.response);
+                            location.reload();
                         }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
                     }
-                );
-            }
+                }
+            );
         }
     }
-
 </script>
 @endsection

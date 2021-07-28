@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::post('/user/create', 'Admin\UserController@postUserCreate')->name('admin.user.create')->middleware(['permission:admin.user.create']);
 
 	//RECHARGE MANAGEMENT
-	Route::get('/user/request-list', 'Admin\RechargeController@getRequestView')->name('admin.user.recharge.request.view')->middleware(['permission:admin.user.recharge.request.view']);
+	Route::get('/recharge/request-list', 'Admin\RechargeController@getRequestView')->name('admin.recharge.request.view')->middleware(['permission:admin.recharge.request.view']);
 	
 	//RESELLER Management
 	Route::get('/user/reseller-create', 'Admin\UserController@getResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
