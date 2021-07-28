@@ -108,7 +108,7 @@ class PermissionSeeder extends Seeder
             ],[
                 'name' => 'admin.user.recharge.request.view',
                 'display_name' => 'admin.user.recharge.request.view',
-                'description' => 'Admin recharge request',
+                'description' => 'Admin recharge request view',
             ],[
                 'name' => 'ajax.request.approve',
                 'display_name' => 'ajax.request.approve',
@@ -117,6 +117,22 @@ class PermissionSeeder extends Seeder
                 'name' => 'ajax.request.reject',
                 'display_name' => 'ajax.request.reject',
                 'description' => 'Admin recharge request reject',
+            ],[
+                'name' => 'admin.recharge.transaction.view',
+                'display_name' => 'admin.recharge.transaction.view',
+                'description' => 'Admin transaction log view',
+            ],[
+                'name' => 'admin.user.recharge.request',
+                'display_name' => 'admin.user.recharge.request',
+                'description' => 'Admin recharge request',
+            ],[
+                'name' => 'reseller.recharge.transaction.view',
+                'display_name' => 'reseller.recharge.transaction.view',
+                'description' => 'Reseller transaction log view',
+            ],[
+                'name' => 'user.recharge.transaction.view',
+                'display_name' => 'user.recharge.transaction.view',
+                'description' => 'User transaction log view',
             ],
         ];
         //Insertion
