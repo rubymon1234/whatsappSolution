@@ -48,11 +48,11 @@
                                         {{ $transaction->created_at}}
                                     </td>
                                     <td> 
-                                        @if($transaction->is_status==1)
+                                        @if($transaction->is_status===1)
                                             <span class="badge badge-success">approved</span>
-                                        @elseif($transaction->is_status==2)
+                                        @elseif($transaction->is_status===2)
                                         <span class="badge badge-warning">waiting for approval</span>
-                                        @elseif($transaction->is_status==3)
+                                        @elseif($transaction->is_status===3)
                                             <span class="badge badge-danger">reject</span>
                                         @endif
                                     </td>
