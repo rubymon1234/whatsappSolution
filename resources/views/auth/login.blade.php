@@ -29,7 +29,7 @@
                         <div class="auth-cover-info py-xl-0 pt-100 pb-50">
                             <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
                                 <h1 class="display-3 text-white mb-20">PROMOTE YOUR BUSINESS THROUGH MOBILE MARKETING</h1>
-                                <p class="text-white">Remove the negative, promote the positive!</p>
+                                <p class="text-white">Create seamless WhatsApp customer journeys in minutes</p>
                             </div>
                         </div>
                         <div class="bg-overlay bg-trans-dark-50"></div>
