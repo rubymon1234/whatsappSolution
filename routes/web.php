@@ -22,6 +22,11 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	//PURCHASE HISTORY
 	Route::get('/credit/transaction-list', 'User\PurchaseHistoryController@getPurchaseHistory')->name('user.recharge.transaction.view')->middleware(['permission:user.recharge.transaction.view']);
+
+	//INSTANCE MANAGEMENT
+	Route::get('/instance/list', 'User\InstanceController@getInstanceView')->name('user.instance.view')->middleware(['permission:user.instance.view']);
+	Route::post('/instance/create', 'User\InstanceController@postInstanceCreate')->name('user.instance.create');
+	Route::post('/ajax/scan-qr', 'Web\AjaxController@postQRScan')->name('user.instance.postqrscan')->middleware(['permission:user.instance.view']);
 });
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);

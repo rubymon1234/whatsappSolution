@@ -54,4 +54,11 @@ class Helper {
     	$plan_id = Crypt::decrypt($plan_id);
     	return $planDetail = Plan::find($plan_id);
     }
+    public static function generateToken()
+    {
+        mt_srand((double)microtime()*10000);
+        $charid = strtolower(md5(uniqid(rand(), true)));
+        $salt =  substr($charid, 0, 2).substr($charid, 4, 2).substr($charid,9, 2).substr($charid,12, 2);
+        return $salt;
+    }
 }

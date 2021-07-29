@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use Crypt;
+use App\Models\Instance;
 use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
 use Illuminate\Http\Request;
@@ -48,5 +49,22 @@ class AjaxController extends Controller
 	                'message' => 'Oops, Something Went Wrong',
 	            ]);
     	}
+    }
+    public function postQRScan(Request $request){
+
+    	$instance_id = $request->get('instance_id');
+
+    	//get Instance
+    	$Instance = Instance::find(Crypt::decryptString($instance_id));
+
+    	$token 	= $Instance->token;
+    	$scan_url 	= 'http://127.0.0.1:8000/?id='.$token;
+
+    		return response()->json([
+	                'success' => true,
+	                'message' =>'success',
+	                'scan_url' => $scan_url,
+	                'response' => 'QA Successfully Generated'
+	            ]);
     }
 }
