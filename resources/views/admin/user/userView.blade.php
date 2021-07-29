@@ -47,7 +47,7 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Request</th>
+                                <th>Recharge</th>
                                 <th style="text-align: left;">Manage</th>
                             </tr>
                         </thead>
