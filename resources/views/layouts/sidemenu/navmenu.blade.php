@@ -200,6 +200,25 @@
                     </ul>
                 </li>
             @endpermission
+            @permission(('user.instance.*'))
+                <li class="nav-item {{ (Route::is('user.instance.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp6" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="rss"></i></span>
+                        <span class="nav-link-text">Instance Management</span>
+                    </a>
+                    <ul id="auth_drp6" class="nav flex-column collapse-level-1 {{ (Route::is('user.instance.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.recharge.transaction.view')
+                                <li class="nav-item {{ (Route::is('user.instance.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.instance.view') }}">List Instance</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             </ul>
         </div>
     </div>

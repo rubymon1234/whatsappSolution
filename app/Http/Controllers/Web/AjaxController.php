@@ -52,19 +52,27 @@ class AjaxController extends Controller
     }
     public function postQRScan(Request $request){
 
-    	$instance_id = $request->get('instance_id');
+    	try{
+	    	$instance_id = $request->get('instance_id');
 
-    	//get Instance
-    	$Instance = Instance::find(Crypt::decryptString($instance_id));
+	    	//get Instance
+	    	$Instance = Instance::find(Crypt::decryptString($instance_id));
 
-    	$token 	= $Instance->token;
-    	$scan_url 	= 'http://127.0.0.1:8000/?id='.$token;
+	    	$token 	= $Instance->token;
+	    	$scan_url 	= 'http://127.0.0.1:8000/?id='.$token;
 
-    		return response()->json([
-	                'success' => true,
-	                'message' =>'success',
-	                'scan_url' => $scan_url,
-	                'response' => 'QA Successfully Generated'
+	    		return response()->json([
+		                'success' => true,
+		                'message' =>'success',
+		                'scan_url' => $scan_url,
+		                'response' => 'QA Successfully Generated'
+		            ]);
+		}catch(\Exception $e){
+
+				return response()->json([
+	                'success' => false,
+	                'message' => 'Oops, Something Went Wrong',
 	            ]);
+    	}
     }
 }

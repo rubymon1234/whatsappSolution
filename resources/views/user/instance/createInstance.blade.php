@@ -39,7 +39,6 @@
                             <tr>
                                 <th >#</th>
                                 <th>Instanse Name </th>
-                                <th>token </th>
                                 <th>Status </th>
                                 <th style="text-align: left;"> Scan </th>
                             </tr>
@@ -48,8 +47,7 @@
                             @forelse($instanceDetail as $key=> $instance)
                                 <tr>
                                     <td class="serial">{{ $key + $instanceDetail->firstItem()}}</td>
-                                    <td> <span class="name">{{ $instance->instance_name }}</span> </td>
-                                    <td> <span class="product">{{ $instance->token }}</span> </td>
+                                    <td><span class="name">{{ $instance->instance_name }}</span></td>
                                     <td style="font-weight: bold;">
                                         @if($instance->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
@@ -58,7 +56,7 @@
                                         @endif
                                     </td>
                                     <td style="text-align: left;">
-                                        <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Approve</button>
+                                        <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Scan</button>
                                     </td>
                                 </tr>
                             @empty
@@ -94,13 +92,11 @@
     <div class="modal fade" id="scanQRCodeModel">
         <div class="modal-dialog">
             <div class="modal-content bmd-modalContent">
-
-                <div class="modal-body">
-          
-          <div class="close-button">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-              <div class="embed-responsive embed-responsive-16by9">
+                <div class="modal-body" style="height: 500px;">
+                  <div class="close-button">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+              <div class="embed-responsive embed-responsive-16by9" style="height: 450px;">
                 <iframe src="" class="qrCode" title="WhatsappScan"></iframe>
               </div>
                 </div>
@@ -129,6 +125,8 @@
                         if(result.success){
                             $('#scanQRCodeModel').modal('show');
                             $('.qrCode').attr('src', result.scan_url);
+                        }else{
+                            console.log("Something went wrong in server!!");
                         }
                     },
                     error: function (response) {
