@@ -6,7 +6,7 @@
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: Instance Create & View</h6>
+            <h6 class="hk-pg-title">@yield('title') :: List Instance</h6>
         </div>
     </div>
     <div class="hk-pg-header mb-0">
@@ -38,7 +38,7 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th>Instanse Name </th>
+                                <th>Instance Name </th>
                                 <th>Status </th>
                                 <th style="text-align: left;"> Scan </th>
                             </tr>
