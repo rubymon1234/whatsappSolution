@@ -22,6 +22,10 @@ class InstanceController extends Controller
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)->orderBy('updated_at','DESC')->paginate(10);
     	return view('user.instance.createInstance', compact('instanceDetail'));
     }
+    /**
+     * Create Instance and view (POST)
+     * @author Ruban
+    */
     public function postInstanceCreate(Request $request){
 
    		if($request->save =='save'){
@@ -54,6 +58,5 @@ class InstanceController extends Controller
             }
         }
         return redirect()->route('user.instance.view')->with('warning_message', 'Something went wrong.');
-        
     }
 }
