@@ -41,7 +41,7 @@
                 <li class="nav-item {{ (Route::is('acl.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp1" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="sliders"></i></span>
-                        <span class="nav-link-text">Role Management</span>
+                        <span class="nav-link-text">Roles</span>
                     </a>
                     <ul id="auth_drp1" class="nav flex-column collapse-level-1 {{ (Route::is('acl.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
@@ -65,7 +65,7 @@
                 <li class="nav-item {{ (Route::is('admin.user.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="users"></i></span>
-                        <span class="nav-link-text">User Management</span>
+                        <span class="nav-link-text">Users</span>
                     </a>
                     <ul id="auth_drp" class="nav flex-column collapse-level-1 {{ (Route::is('admin.user.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
@@ -75,7 +75,7 @@
                                     <a class="nav-link" href="{{ route('admin.user.view') }}">List Users</a>
                                 </li>
                                 @endpermission
-                                
+
                             </ul>
                         </li>
                     </ul>
@@ -85,7 +85,7 @@
                 <li class="nav-item {{ (Route::is('reseller.user.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="users"></i></span>
-                        <span class="nav-link-text">User Management</span>
+                        <span class="nav-link-text">Users</span>
                     </a>
                     <ul id="auth_drp" class="nav flex-column collapse-level-1 {{ (Route::is('reseller.user.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
@@ -104,14 +104,14 @@
                 <li class="nav-item {{ (Route::is('global.plan.view') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="file-text"></i></span>
-                        <span class="nav-link-text">Plan Management</span>
+                        <span class="nav-link-text">Plans</span>
                     </a>
                     <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.plan.view') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('global.plan.view')
                                 <li class="nav-item {{ (Route::is('global.plan.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('global.plan.view') }}">List Plan</a>
+                                    <a class="nav-link" href="{{ route('global.plan.view') }}">List Plans</a>
                                 </li>
                                 @endpermission
                             </ul>
@@ -123,14 +123,14 @@
                 <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp4" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="file-text"></i></span>
-                        <span class="nav-link-text">Plan Management</span>
+                        <span class="nav-link-text">Plans</span>
                     </a>
                     <ul id="auth_drp4" class="nav flex-column collapse-level-1 {{ (Route::is('global.reseller.plan.view') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('global.reseller.plan.view')
                                 <li class="nav-item {{ (Route::is('global.reseller.plan.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('global.reseller.plan.view') }}">List Plan</a>
+                                    <a class="nav-link" href="{{ route('global.reseller.plan.view') }}">List Plans</a>
                                 </li>
                                 @endpermission
                             </ul>
@@ -142,14 +142,14 @@
                 <li class="nav-item {{ (Route::is('admin.recharge.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="credit-card"></i></span>
-                        <span class="nav-link-text">Credit Management</span>
+                        <span class="nav-link-text">Credits</span>
                     </a>
                     <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('admin.recharge.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('admin.recharge.request.view')
                                 <li class="nav-item {{ (Route::is('admin.recharge.request.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('admin.recharge.request.view') }}">List Request</a>
+                                    <a class="nav-link" href="{{ route('admin.recharge.request.view') }}">List Requests</a>
                                 </li>
                                 @endpermission
                                 @permission('admin.recharge.transaction.view')
@@ -166,7 +166,7 @@
                 <li class="nav-item {{ (Route::is('reseller.recharge.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="credit-card"></i></span>
-                        <span class="nav-link-text">Credit Management</span>
+                        <span class="nav-link-text">Credits</span>
                     </a>
                     <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('reseller.recharge.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
@@ -185,7 +185,7 @@
                 <li class="nav-item {{ (Route::is('user.recharge.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp5" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="credit-card"></i></span>
-                        <span class="nav-link-text">Credit Management</span>
+                        <span class="nav-link-text">Credits</span>
                     </a>
                     <ul id="auth_drp5" class="nav flex-column collapse-level-1 {{ (Route::is('user.recharge.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
@@ -204,14 +204,14 @@
                 <li class="nav-item {{ (Route::is('user.instance.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp6" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="rss"></i></span>
-                        <span class="nav-link-text">Instance Management</span>
+                        <span class="nav-link-text">Instances</span>
                     </a>
                     <ul id="auth_drp6" class="nav flex-column collapse-level-1 {{ (Route::is('user.instance.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('user.recharge.transaction.view')
                                 <li class="nav-item {{ (Route::is('user.instance.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.instance.view') }}">List Instance</a>
+                                    <a class="nav-link" href="{{ route('user.instance.view') }}">List Instances</a>
                                 </li>
                                 @endpermission
                             </ul>
