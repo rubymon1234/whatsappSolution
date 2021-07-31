@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}{{ $errors->has('error') ? ' is-invalid' : '' }}" placeholder="prassword" name="password" required>
+                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}{{ $errors->has('error') ? ' is-invalid' : '' }}" placeholder="password" name="password" required>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
