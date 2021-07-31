@@ -72,8 +72,8 @@
                                     </td>
                                     <td>
                                     @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
-                                        <span class="btn btn-primary">
-                                            <a href="{{ route('admin.user.recharge.request',Crypt::encrypt($user->id)) }}" style="color: white; ">Request</a></span>
+                                        <span>
+                                            <a class="btn btn-outline-primary" href="{{ route('admin.user.recharge.request',Crypt::encrypt($user->id)) }}" >Request</a></span>
                                     @else
                                         {{ '' }}
                                     @endif

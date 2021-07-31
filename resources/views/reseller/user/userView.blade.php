@@ -71,8 +71,8 @@
                                     </td>
                                     <td>
                                         @if($user->hasRole('user'))
-                                        <span class="btn btn-primary">
-                                            <a href="{{ route('reseller.user.recharge.request',Crypt::encrypt($user->id)) }}" style="color: white; ">Request</a></span></td>
+                                        <span >
+                                            <a class="btn btn-outline-primary" href="{{ route('reseller.user.recharge.request',Crypt::encrypt($user->id)) }}" >Request</a></span></td>
                                             @endif
                                 </tr>
                             @empty
