@@ -40,7 +40,7 @@
             @php
             $domainDetail = \App\Helpers\Helper::getDomainDetail($_SERVER['SERVER_NAME']);
             @endphp
-            <a class="navbar-brand" href="dashboard1.html">
+            <a class="navbar-brand" href="#">
                 {{-- <img class="brand-img d-inline-block" src="{{ asset('dist/img/logo-light.png') }}" alt="brand" /> --}}
                 <h3 style="color: #273b86; font-weight: bold;">{{ $domainDetail->company_name }}</h3>
             </a>

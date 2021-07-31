@@ -33,8 +33,8 @@
                                     <td> <span class="product">{{ $role->display_name }}</span> </td>
                                     <td> {{ $role->description }} </td>
                                     <td>
-                                        <span class="btn btn-primary">
-                                            <a href="{{ route('acl.assign.role.permission', Crypt::encrypt($role->id)) }}" style="color: white; ">Permissions</a></span>
+                                        <span>
+                                            <a  class="btn btn-outline-primary" href="{{ route('acl.assign.role.permission', Crypt::encrypt($role->id)) }}">Permissions</a></span>
                                     </td>
                                     <td>
                                         {{-- Edit --}}

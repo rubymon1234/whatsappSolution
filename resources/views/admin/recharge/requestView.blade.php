@@ -51,7 +51,7 @@
                                         {{ $plan->created_at}}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModalPopovers_{{ $plan->id}}">
+                                        <button type="button" class="btn btn-outline-primary " data-toggle="modal" data-target="#exampleModalPopovers_{{ $plan->id}}">
                                            view
                                         </button>
 
@@ -93,17 +93,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Plan name : {{ $planDetail->plan_name }}</h5>
+                    <h5 class="modal-title">Plan Detail</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5>Plan daily count </h5>
-                    <p class="mt-10 mb-20"> {{ $planDetail->daily_count }}</p>
-                    <h5>plan validity (days) </h5>
+                    <h6>Plan name </h6>
+                    <p class="mt-10 mb-20"> {{ $planDetail->plan_name }}</p>
+                    <h6>Daily Count</h6>
+                    <p class="mt-10"> {{ $planDetail->daily_count }} </p>
+                    <h6>Plan Validity</h6>
                     <p class="mt-10"> {{ $planDetail->plan_validity }} </p>
                 </div>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" onclick="__appActions('{{ Crypt::encryptString($plan->id) }}',1)">Approve</button>
                     <button type="submit" class="btn btn-danger" onclick="__appActions('{{ Crypt::encryptString($plan->id) }}',3)">Reject</button>
