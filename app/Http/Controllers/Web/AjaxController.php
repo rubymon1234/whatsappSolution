@@ -38,6 +38,7 @@ class AjaxController extends Controller
 
 	    		$planApproveDetail = PurchaseHistory::find($planApproveHistory->id);
 	    		$planDetail = Plan::find($planApproveDetail->plan_id);
+	    		
 	    		//CurrentPlan
                 $currentPlanInsert = new CurrentPlan();
                 $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
