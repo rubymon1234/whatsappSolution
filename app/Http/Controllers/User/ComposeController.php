@@ -80,10 +80,11 @@ class ComposeController extends Controller
 	    		//extension and file size checking
 	    		if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
 	    			//current plan
-	    			$currentPlan 	= CurrentPlan::where('is_status',1)->first();
-	    			$daily_count 	= $currentPlan->daily_count;
-	    			$plan_validity 	= $currentPlan->plan_validity;
-
+	    			$currentPlan 	= CurrentPlan::where('is_status',1)->where('user_id',$user_id)->first();
+	    			
+	    			if($currentPlan){
+	    				$daily_count 	= $currentPlan->daily_count;
+	    				$plan_validity 	= $currentPlan->plan_validity;
 	    			$campaignFetch = Campaign::where('user_id',$user_id)
 	    										->where('current_plan_id',$currentPlan->id)
 	    										->select( DB::raw('sum(count) as total'))
@@ -167,6 +168,14 @@ class ComposeController extends Controller
 							                'response' => 'daily limit exceeded',
 							            ]);
 	    				}
+	    			}else{
+	    				return response()->json([
+							                'success' => false,
+							                'message' =>'success',
+							                'validator' => false,
+							                'response' => 'plan is not active , please check with adminstrator',
+							            ]);
+	    			}
 	    						
 	    		}else{
 
