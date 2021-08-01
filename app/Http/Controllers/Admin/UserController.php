@@ -264,6 +264,8 @@ class UserController extends Controller
                     $purchaseHistInsert->user_id = $user_id;
                     $purchaseHistInsert->reseller_id = $reseller_id;
                     $purchaseHistInsert->is_status = 2;
+                    $purchaseHistInsert->save();
+                    
                     if($purchaseHistInsert->save())
                         return redirect()->route('admin.user.view')->with('success_message', 'Plan Request successfully Added ');
                 }

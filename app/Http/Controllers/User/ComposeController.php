@@ -99,19 +99,18 @@ class ComposeController extends Controller
 		            }
  
     				//upload file
-    				if($request->message_type=='image' || $request->message_type=='video' || $request->message_type=='audio' || $request->message_type =='document'){
-    					if($request->message_type =='image'){
-    						$uploadfilename = $this->uploadFile($request,'photo');
-    					}elseif($request->message_type =='video'){
-    						$uploadfilename = $this->uploadFile($request,'video_file');
-    					}elseif ($request->message_type =='audio') {
-    						$uploadfilename = $this->uploadFile($request,'audio_file');
-    					}elseif($request->message_type =='document'){
-    						$uploadfilename = $this->uploadFile($request,'doc_file');
-    					}else{
-    						$uploadfilename = NULL;
-    					}
-    				}
+					if($request->message_type =='image'){
+						$uploadfilename = $this->uploadFile($request,'photo');
+					}elseif($request->message_type =='video'){
+						$uploadfilename = $this->uploadFile($request,'video_file');
+					}elseif ($request->message_type =='audio') {
+						$uploadfilename = $this->uploadFile($request,'audio_file');
+					}elseif($request->message_type =='document'){
+						$uploadfilename = $this->uploadFile($request,'doc_file');
+					}else{
+						$uploadfilename = NULL;
+					}
+    				
 	    			if(isset($campaignFetch[0]['total'])){ $total = $campaignFetch[0]['total']; }else{ $total = 0; }
 	    				$total = $total + $num_count; 
 	    				if($daily_count >=$total){

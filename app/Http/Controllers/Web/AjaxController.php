@@ -6,6 +6,8 @@ use Crypt;
 use App\Models\Instance;
 use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
+use App\Models\Plan;
+use App\Models\CurrentPlan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,7 +34,18 @@ class AjaxController extends Controller
 	    		$getPurchaseDetail = PurchaseHistory::where('plan_request_id',$plan_req_id)->first();
 	    		$planApproveHistory = PurchaseHistory::find($getPurchaseDetail->id);
 	    		$planApproveHistory->is_status = $status;
-	    		if($planApproveHistory->save()){
+	    		$planApproveHistory->save();
+
+	    		$planApproveDetail = PurchaseHistory::find($planApproveHistory->id);
+	    		$planDetail = Plan::find($planApproveDetail->plan_id);
+	    		//CurrentPlan
+                $currentPlanInsert = new CurrentPlan();
+                $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
+                $currentPlanInsert->daily_count = $planDetail->daily_count;
+                $currentPlanInsert->user_id = $planApproveDetail->user_id;
+                $currentPlanInsert->reseller_id = $planApproveDetail->reseller_id;
+                $currentPlanInsert->is_status = 0;
+	    		if($currentPlanInsert->save()){
 
 	    			return response()->json([
 		                'success' => true,
