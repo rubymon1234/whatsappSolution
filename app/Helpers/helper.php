@@ -61,4 +61,11 @@ class Helper {
         $salt =  substr($charid, 0, 2).substr($charid, 4, 2).substr($charid,9, 2).substr($charid,12, 2);
         return $salt;
     }
+    public static function generateUniqueId()
+    {
+        mt_srand((double)microtime()*10000);
+        $charid = strtolower(md5(uniqid(rand(), true)));
+        $salt =  substr($charid, 0, 4).substr($charid, 4, 4).substr($charid,9, 4).substr($charid,12, 4);
+        return $salt;
+    }
 }

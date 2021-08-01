@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class CurrentPlan extends Model
 {
-    protected $table = 'current_plan';
+    //protected $table = 'current_plan';
 }
