@@ -81,7 +81,7 @@ class ComposeController extends Controller
 	    		if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
 	    			//current plan
 	    			$currentPlan 	= CurrentPlan::where('is_status',1)->where('user_id',$user_id)->first();
-	    			
+	    			//current plan not active
 	    			if($currentPlan){
 	    				$daily_count 	= $currentPlan->daily_count;
 	    				$plan_validity 	= $currentPlan->plan_validity;
