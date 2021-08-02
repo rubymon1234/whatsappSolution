@@ -59,7 +59,7 @@
                                             $endPoint = strrpos($stringCut, ' ');
                                             //if the string doesn't contain any space then it will cut without word basis.
                                             $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                                            $string .= '... <i data-toggle="tooltip" data-original-title="'.rawurldecode($campaign->message).'" ><a href="javascript::void(0)">read more</a></i>';
+                                            $string .= '... <i class="fa fa-eye" data-toggle="tooltip" data-original-title="'.rawurldecode($campaign->message).'" ></i>';
                                         }
                                         ?>
                                         <?php  echo $string ?>

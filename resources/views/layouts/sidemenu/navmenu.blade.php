@@ -247,7 +247,25 @@
                     </ul>
                 </li>
             @endpermission
-
+            @permission(('user.report.*'))
+                <li class="nav-item {{ (Route::is('user.report.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp10" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="list"></i></span>
+                        <span class="nav-link-text">Reports</span>
+                    </a>
+                    <ul id="auth_drp10" class="nav flex-column collapse-level-1 {{ (Route::is('user.report.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.report.consolidated')
+                                <li class="nav-item {{ (Route::is('user.report.consolidated') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.report.consolidated') }}">Campaign </a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             </ul>
         </div>
     </div>

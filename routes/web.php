@@ -38,6 +38,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	//CAMPAIGN MANAGEMENT
 	 Route::get('/message/campaign-list', 'User\CampaignController@getCampaignList')->name('user.campaign.view')->middleware(['permission:user.campaign.view']);
+
+	 //REPORT MANAGEMENT
+	Route::get('/report/consolidated', 'User\ReportController@getConsolidatedReport')->name('user.report.consolidated')->middleware(['permission:user.report.consolidated']);
 });
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);
