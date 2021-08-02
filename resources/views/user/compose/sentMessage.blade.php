@@ -118,8 +118,7 @@
             $("#error_message").text('');
             $("#error_message").hide();
             valid = validationError();
-            valid = true;
-        if(valid===true){
+            if(valid===true){
             //$('#sendBtn').prop('disabled', true);
             var form    = $(this);
             let formData = new FormData(this);
@@ -182,7 +181,7 @@
         instance        = $("#instance").val();
         message_type    = $("#message_type").val();
         mobile          = $("#mobile").val();
-        message         = $("#message").val();
+        //message         = $("#message").val();
 
         if(campaign =='' || campaign =='undefined'){
             $("#campaign").addClass('is-invalid');
@@ -208,12 +207,12 @@
         }else{
             $("#mobile").removeClass("is-invalid");
         }
-        if(message =='' || message =='undefined'){
+        /*if(message =='' || message =='undefined'){
             $("#message").addClass('is-invalid');
             i++;
         }else{
             $("#message").removeClass("is-invalid");
-        }
+        }*/
         if(i ==0){
             return true;
         }else{
