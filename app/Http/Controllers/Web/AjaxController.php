@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Web;
 
 use Crypt;
+use Carbon\Carbon;
 use App\Models\Instance;
 use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
 use App\Models\Plan;
 use App\Models\CurrentPlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class AjaxController extends Controller
@@ -71,6 +73,7 @@ class AjaxController extends Controller
     public function postQRScan(Request $request){
 
     	try{
+
 	    	$instance_id = $request->get('instance_id');
 
 	    	//get Instance
@@ -91,6 +94,50 @@ class AjaxController extends Controller
 	                'success' => false,
 	                'message' => 'Oops, Something Went Wrong',
 	            ]);
+    	}
+    }
+
+    public function postCurrentStatus(Request $request){
+
+    	try{
+    		$curr_plan_id = $request->get('curr_plan_id');
+    		$status = $request->get('status');
+    		$user_id = Auth::user()->id;
+
+    		//Active - InActive
+    		$currentPlan = CurrentPlan::where('user_id',$user_id)->where('is_status',1)->first();
+    		if($currentPlan){
+    			$currentPlan->is_status = 0;
+    			$currentPlan->save();
+    		}
+    		
+
+    		//Active current plan
+    		$currentPlanUpdate = CurrentPlan::find($curr_plan_id);
+    		if($currentPlanUpdate->plan_validity ==NULL){
+    			$planDetail = Plan::find($currentPlanUpdate->plan_id);
+    			$planDetail->plan_validity; //plan validity in days
+    			//update plan 
+    			$start = Carbon::today();
+    			$start_date = $start->addDay($planDetail->plan_validity);
+    			$currentPlanUpdate->plan_validity = $start_date;
+    		}
+    		$currentPlanUpdate->is_status = $status;
+
+    		if($currentPlanUpdate->save()){
+
+    			return response()->json([
+		                'success' => true,
+		                'message' =>'success',
+		                'response' => 'Plan Successfully Updated'
+		            ]);
+    		}
+		}catch(\Exception $e){
+
+			return response()->json([
+                'success' => false,
+                'message' => 'Oops, Something Went Wrong',
+            ]);
     	}
     }
 }

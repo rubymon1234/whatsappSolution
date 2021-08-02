@@ -37,9 +37,9 @@
                              	@if($crtplan->is_status ==1)
                              		<button class="btn btn-xs btn-success ml-15 w-sm-100p">Active</button>
                              	@elseif($crtplan->is_status ==2)
-                            	<button class="btn btn-xs btn-info ml-15 w-sm-100p">Start</button>
+                            	<button class="btn btn-xs btn-info ml-15 w-sm-100p" onclick="__planChange({{ $crtplan->id }},1)">Start</button>
                             	@elseif($crtplan->is_status ==0)
-                            	<button class="btn btn-xs btn-danger ml-15 w-sm-100p">Activate</button>
+                            	<button class="btn btn-xs btn-danger ml-15 w-sm-100p" onclick="__planChange({{ $crtplan->id }},1)">Activate </button>
                             	@endif
                             @else
                             <button class="btn btn-xs btn-danger ml-15 w-sm-100p">Expired</button>
@@ -57,4 +57,37 @@
     </div>
     <!-- /Row -->
 </div>
+<script type="text/javascript">
+    function __planChange(curr_plan_id,status){
+        if(typeof  curr_plan_id !=='undefined' && curr_plan_id !=''){
+
+            $.ajax(
+                {
+                    url: '{{ route('ajax.current.status.change') }}',
+                    dataType: 'json', //what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", curr_plan_id : curr_plan_id , status : status } ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
+                            $('.preloader-it').hide();
+                            alert(result.response);
+                            location.reload();
+                        }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
+                    }
+                }
+            );
+        }
+    }
+</script>
 @endsection

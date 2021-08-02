@@ -29,9 +29,6 @@ class PlanController extends Controller
             ->latest('current_plans.updated_at')
             ->paginate(9);
 
-            /*echo "<pre>";
-            print_r($currentPlan);
-            exit();*/
         return view('user.plans.activePlans',compact('currentPlan'));
     }
 }
