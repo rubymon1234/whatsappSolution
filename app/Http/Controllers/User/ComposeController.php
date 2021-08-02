@@ -110,7 +110,6 @@ class ComposeController extends Controller
 					}else{
 						$uploadfilename = NULL;
 					}
-    				
 	    			if(isset($campaignFetch[0]['total'])){ $total = $campaignFetch[0]['total']; }else{ $total = 0; }
 	    				$total = $total + $num_count; 
 	    				if($daily_count >=$total){
