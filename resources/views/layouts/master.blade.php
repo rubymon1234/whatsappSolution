@@ -38,7 +38,8 @@
         <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
             <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
             @php
-            $domainDetail = \App\Helpers\Helper::getDomainDetail($_SERVER['SERVER_NAME']);
+            $domain = \App\Helpers\Helper::getFqdn($_SERVER['SERVER_NAME']);
+            $domainDetail = \App\Helpers\Helper::getDomainDetail($domain);
             @endphp
             <a class="navbar-brand" href="#">
                 {{-- <img class="brand-img d-inline-block" src="{{ asset('dist/img/logo-light.png') }}" alt="brand" /> --}}

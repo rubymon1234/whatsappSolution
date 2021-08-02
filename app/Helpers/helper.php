@@ -31,24 +31,8 @@ class Helper {
 			return $fqdn;
 		}
     }
-    public function getFqdnNew($fqdn =null)
-    {
-        $fqdn = trim($fqdn);
-        if (!$fqdn){
-            @$fqdn = $_SERVER['HTTP_HOST'];
-        }
-        $domain = explode(chr(46),$fqdn);
-        if($domain['0'] == 'www'){
-            if(count($domain) > 3){
-                return  $domain['1'].chr(46).$domain['2'].chr(46).$domain['3'];
-            }
-            return  $domain['1'].chr(46).$domain['2'];
-        }else{
-            return $fqdn;
-        }
-    }
     public static function getDomainDetail($domain){
-        $domain = self::getFqdn($domain);
+        //$domain = self::getFqdn($domain);
     	$domainDetail = Domain::where('domain_name',$domain)->where('is_active',1)->first();
     	return $domainDetail;
     }
