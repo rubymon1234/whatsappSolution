@@ -62,17 +62,45 @@
                 </li>
             @endpermission
             @permission(('user.instance.*'))
+                <li class="nav-item {{ (Route::is('user.instance.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp6" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="rss"></i></span>
+                        <span class="nav-link-text">Instances</span>
+                    </a>
+                    <ul id="auth_drp6" class="nav flex-column collapse-level-1 {{ (Route::is('user.instance.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.instance.view')
+                                <li class="nav-item {{ (Route::is('user.instance.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.instance.view') }}">List Instances</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+            @permission(('user.instance.*'))
                 <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="message-square"></i></span>
                         <span class="nav-link-text">Messages</span>
                     </a>
-                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') ? 'show' : '') }} collapse ">
+                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') || Route::is('user.campaign.*')? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('user.recharge.transaction.view')
                                 <li class="nav-item {{ (Route::is('user.compose.sent.message') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.compose.sent.message') }}">Compose</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.campaign.view')
+                                <li class="nav-item {{ (Route::is('user.campaign.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.campaign.view') }}">Sent</a>
                                 </li>
                                 @endpermission
                             </ul>
@@ -212,44 +240,6 @@
                                 @permission('user.recharge.transaction.view')
                                 <li class="nav-item {{ (Route::is('user.recharge.transaction.view') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.recharge.transaction.view') }}">List Transactions</a>
-                                </li>
-                                @endpermission
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            @endpermission
-            @permission(('user.instance.*'))
-                <li class="nav-item {{ (Route::is('user.instance.*') ? 'menu-open' : '') }}">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp6" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="rss"></i></span>
-                        <span class="nav-link-text">Instances</span>
-                    </a>
-                    <ul id="auth_drp6" class="nav flex-column collapse-level-1 {{ (Route::is('user.instance.*') ? 'show' : '') }} collapse ">
-                        <li class="nav-item">
-                            <ul class="nav flex-column">
-                                @permission('user.instance.view')
-                                <li class="nav-item {{ (Route::is('user.instance.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.instance.view') }}">List Instances</a>
-                                </li>
-                                @endpermission
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            @endpermission
-            @permission(('user.campaign.*'))
-                <li class="nav-item {{ (Route::is('user.campaign.*') ? 'menu-open' : '') }}">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp8" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="mail"></i></span>
-                        <span class="nav-link-text">Campaign</span>
-                    </a>
-                    <ul id="auth_drp8" class="nav flex-column collapse-level-1 {{ (Route::is('user.campaign.*') ? 'show' : '') }} collapse ">
-                        <li class="nav-item">
-                            <ul class="nav flex-column">
-                                @permission('user.campaign.view')
-                                <li class="nav-item {{ (Route::is('user.campaign.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.campaign.view') }}">List campaign</a>
                                 </li>
                                 @endpermission
                             </ul>
