@@ -16,7 +16,7 @@ use App\Http\Controllers\Controller;
 class AjaxController extends Controller
 {
     /**
-     * Request Approve 
+     * Request Approve
      * @author Ruban
     */
    	public function postRequestApprove(Request $request)
@@ -40,7 +40,7 @@ class AjaxController extends Controller
 
 	    		$planApproveDetail = PurchaseHistory::find($planApproveHistory->id);
 	    		$planDetail = Plan::find($planApproveDetail->plan_id);
-	    		
+
 	    		//CurrentPlan
 	    		if($status==1){
 	    			$currentPlanInsert = new CurrentPlan();
@@ -51,7 +51,7 @@ class AjaxController extends Controller
 	                $currentPlanInsert->is_status = 2;
 	                $currentPlanInsert->save();
 	    		}
-                
+
 	    		if($planApproveHistory){
 
 	    			return response()->json([
@@ -80,7 +80,7 @@ class AjaxController extends Controller
 	    	$Instance = Instance::find(Crypt::decryptString($instance_id));
 
 	    	$token 	= $Instance->token;
-	    	$scan_url 	= 'http://127.0.0.1:8000/?id='.$token;
+	    	$scan_url 	= 'http://95.216.214.103:8000/?id='.$token;
 
 	    		return response()->json([
 		                'success' => true,
@@ -111,13 +111,13 @@ class AjaxController extends Controller
     			$currentPlan->is_status = 0;
     			$currentPlan->save();
     		}
-    		
+
     		//Active current plan
     		$currentPlanUpdate = CurrentPlan::find($curr_plan_id);
     		if($currentPlanUpdate->plan_validity ==NULL){
     			$planDetail = Plan::find($currentPlanUpdate->plan_id);
     			$planDetail->plan_validity; //plan validity in days
-    			//update plan 
+    			//update plan
     			$start = Carbon::today();
     			$start_date = $start->addDay($planDetail->plan_validity);
     			$currentPlanUpdate->plan_validity = $start_date;
@@ -132,7 +132,7 @@ class AjaxController extends Controller
 		                'response' => 'Plan Successfully Updated'
 		            ]);
     		}
-    		
+
 		}catch(\Exception $e){
 
 			return response()->json([
