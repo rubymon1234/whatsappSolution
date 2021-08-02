@@ -129,7 +129,7 @@ class ComposeController extends Controller
     						$campaignInsert->instance_token = $getInstance->token; 
     						$campaignInsert->instance_name = $getInstance->instance_name;
     						$campaignInsert->type = $validResponse['slug'];
-    						$campaignInsert->message = urlencode($message);
+    						$campaignInsert->message = rawurlencode($message);
     						$campaignInsert->media_file_name = $uploadfilename;
     						$campaignInsert->count = $num_count;
     						if($num_count <=10){
@@ -138,7 +138,12 @@ class ComposeController extends Controller
     							$campaignInsert->is_status = 0;
     						}
     						$campaignInsert->start_at = Carbon::now()->toDateTimeString();
-    						if($campaignInsert->save()){
+    						$campaignInsert->save();
+    						$last_inserted_id = $campaignInsert->id;
+    						if($num_count <=10){
+    							shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
+    						}
+    						if($campaignInsert){
 
     							return response()->json([
 						                'success' => true,

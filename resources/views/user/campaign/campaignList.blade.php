@@ -49,14 +49,27 @@
                                         {{ $campaign->count }}
                                     </td>
                                     <td>
-                                        {{ urldecode($campaign->message) }}
+                                        
+                                        <?php
+                                        $string = strip_tags(rawurldecode($campaign->message));
+                                        if (strlen($string) > 10) {
+
+                                            // truncate string
+                                            $stringCut = substr($string, 0, 10);
+                                            $endPoint = strrpos($stringCut, ' ');
+                                            //if the string doesn't contain any space then it will cut without word basis.
+                                            $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                            $string .= '... <i data-toggle="tooltip" data-original-title="'.rawurldecode($campaign->message).'" ><a href="javascript::void(0)">read more</a></i>';
+                                        }
+                                        ?>
+                                        <?php  echo $string ?>
                                     </td>
                                     <td>
                                         @if($campaign->is_status==0)
                                             <span class="badge badge-warning">Queued</span>
                                         @elseif($campaign->is_status==2)
                                         <span class="badge badge-info">Sending</span>
-                                        @elseif($campaign->is_status==3)
+                                        @elseif($campaign->is_status==1)
                                             <span class="badge badge-success">Sent </span>
                                         @endif
                                     </td>

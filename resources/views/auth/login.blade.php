@@ -6,7 +6,8 @@
         <a class="d-flex auth-brand" href="#">
             {{-- <img class="brand-img" src="javascript:void(0)" alt="brand" /> --}}
             @php
-            $domainDetail = \App\Helpers\Helper::getDomainDetail($_SERVER['SERVER_NAME']);
+            $domain = \App\Helpers\Helper::getFqdn($_SERVER['SERVER_NAME']);
+            $domainDetail = \App\Helpers\Helper::getDomainDetail($domain);
             @endphp
             <h3 style="color: white;">{{ $domainDetail->company_name }}</h3>{{-- </img> --}}
         </a>
