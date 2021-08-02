@@ -238,6 +238,25 @@
                     </ul>
                 </li>
             @endpermission
+            @permission(('user.campaign.*'))
+                <li class="nav-item {{ (Route::is('user.campaign.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp8" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="rss"></i></span>
+                        <span class="nav-link-text">Campaign</span>
+                    </a>
+                    <ul id="auth_drp8" class="nav flex-column collapse-level-1 {{ (Route::is('user.campaign.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.campaign.view')
+                                <li class="nav-item {{ (Route::is('user.campaign.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.campaign.view') }}">List campaign</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
 
             </ul>
         </div>

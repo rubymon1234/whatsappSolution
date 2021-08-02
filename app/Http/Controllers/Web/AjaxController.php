@@ -100,6 +100,7 @@ class AjaxController extends Controller
     public function postCurrentStatus(Request $request){
 
     	try{
+
     		$curr_plan_id = $request->get('curr_plan_id');
     		$status = $request->get('status');
     		$user_id = Auth::user()->id;
@@ -111,7 +112,6 @@ class AjaxController extends Controller
     			$currentPlan->save();
     		}
     		
-
     		//Active current plan
     		$currentPlanUpdate = CurrentPlan::find($curr_plan_id);
     		if($currentPlanUpdate->plan_validity ==NULL){
@@ -132,6 +132,7 @@ class AjaxController extends Controller
 		                'response' => 'Plan Successfully Updated'
 		            ]);
     		}
+    		
 		}catch(\Exception $e){
 
 			return response()->json([

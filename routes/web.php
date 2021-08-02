@@ -35,6 +35,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	//MY PLAN
 	Route::get('/my/plan', 'User\PlanController@getActivePlans')->name('user.plan.my.plans')->middleware(['permission:user.plan.my.plans']);
 	Route::post('/my/plan', 'User\PlanController@postActivePlans')->name('user.plan.my.plans')->middleware(['permission:user.plan.my.plans']);
+
+	//CAMPAIGN MANAGEMENT
+	 Route::get('/message/campaign-list', 'User\CampaignController@getCampaignList')->name('user.campaign.view')->middleware(['permission:user.campaign.view']);
 });
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);
