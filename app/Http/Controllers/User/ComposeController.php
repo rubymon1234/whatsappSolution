@@ -138,7 +138,11 @@ class ComposeController extends Controller
     							$campaignInsert->is_status = 0;
     						}
     						$campaignInsert->start_at = Carbon::now()->toDateTimeString();
-    						if($campaignInsert->save()){
+    						$campaignInsert->save();
+    						$last_inserted_id = $campaignInsert->id;
+    						shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$$last_inserted_id.' 2> /dev/null > /dev/null  &');
+    						
+    						if($campaignInsert){
 
     							return response()->json([
 						                'success' => true,
