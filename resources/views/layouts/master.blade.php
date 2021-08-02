@@ -66,8 +66,9 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                         <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
-                        <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-card"></i><span>My balance</span></a>
-
+                        @permission(('user.plan.my.plans'))
+                        <a class="dropdown-item" href="{{ route('user.plan.my.plans') }}"><i class="dropdown-icon zmdi zmdi-card"></i><span>My Plans</span></a>
+                        @endpermission
                         <div class="dropdown-divider"></div>
                         <div class="sub-dropdown-menu show-on-hover">
                             <a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>

@@ -40,13 +40,17 @@ class AjaxController extends Controller
 	    		$planDetail = Plan::find($planApproveDetail->plan_id);
 	    		
 	    		//CurrentPlan
-                $currentPlanInsert = new CurrentPlan();
-                $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
-                $currentPlanInsert->daily_count = $planDetail->daily_count;
-                $currentPlanInsert->user_id = $planApproveDetail->user_id;
-                $currentPlanInsert->reseller_id = $planApproveDetail->reseller_id;
-                $currentPlanInsert->is_status = 0;
-	    		if($currentPlanInsert->save()){
+	    		if($status==1){
+	    			$currentPlanInsert = new CurrentPlan();
+	                $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
+	                $currentPlanInsert->daily_count = $planDetail->daily_count;
+	                $currentPlanInsert->user_id = $planApproveDetail->user_id;
+	                $currentPlanInsert->reseller_id = $planApproveDetail->reseller_id;
+	                $currentPlanInsert->is_status = 2;
+	                $currentPlanInsert->save();
+	    		}
+                
+	    		if($planApproveHistory){
 
 	    			return response()->json([
 		                'success' => true,
