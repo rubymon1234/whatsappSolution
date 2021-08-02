@@ -61,6 +61,25 @@
                     </ul>
                 </li>
             @endpermission
+            @permission(('user.instance.*'))
+                <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="message-square"></i></span>
+                        <span class="nav-link-text">Messages</span>
+                    </a>
+                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.recharge.transaction.view')
+                                <li class="nav-item {{ (Route::is('user.compose.sent.message') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.compose.sent.message') }}">Compose</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             @permission(('admin.user.*'))
                 <li class="nav-item {{ (Route::is('admin.user.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp" aria-expanded="true">
@@ -219,25 +238,7 @@
                     </ul>
                 </li>
             @endpermission
-            @permission(('user.instance.*'))
-                <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="message-square"></i></span>
-                        <span class="nav-link-text">Sent Message</span>
-                    </a>
-                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') ? 'show' : '') }} collapse ">
-                        <li class="nav-item">
-                            <ul class="nav flex-column">
-                                @permission('user.recharge.transaction.view')
-                                <li class="nav-item {{ (Route::is('user.compose.sent.message') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.compose.sent.message') }}">WhatsApp</a>
-                                </li>
-                                @endpermission
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            @endpermission
+
             </ul>
         </div>
     </div>
