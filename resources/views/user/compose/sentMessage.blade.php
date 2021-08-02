@@ -91,7 +91,7 @@
                                  <div class="col-md-6 form-group">
                                     <label for="lastName">Message</label>
                                      <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" id="message" name="message"></textarea>
-                                    <span class="btn btn-danger btn-xs pull-right btn-rounded">1500</span>
+                                    <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="1000">1000</span>
                                  </div>
                             </div>
                             <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="submit">Send</button>
@@ -149,11 +149,11 @@
                                $("#error_message").text(response.response);
                             }
                         }else{
-                             $("#success_message").text(response.response);
-                             window.setTimeout( function(){
-                                 //window.location = "order.php?order_id=";
-                                 location.reload();
-                             }, 3000 );
+                            $("#success_message").show();
+                            $("#success_message").text(response.response);
+                            window.setTimeout( function(){
+                                location.reload();
+                            }, 4000);
                         }
                     },
                     error: function (response) {

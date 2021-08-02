@@ -49,7 +49,7 @@
                                         {{ $campaign->count }}
                                     </td>
                                     <td>
-                                        {{ $campaign->message }}
+                                        {{ urldecode($campaign->message) }}
                                     </td>
                                     <td>
                                         @if($campaign->is_status==0)

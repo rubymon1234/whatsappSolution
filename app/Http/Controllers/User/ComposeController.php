@@ -129,10 +129,15 @@ class ComposeController extends Controller
     						$campaignInsert->instance_token = $getInstance->token; 
     						$campaignInsert->instance_name = $getInstance->instance_name;
     						$campaignInsert->type = $validResponse['slug'];
-    						$campaignInsert->message = $message;
+    						$campaignInsert->message = urlencode($message);
     						$campaignInsert->media_file_name = $uploadfilename;
     						$campaignInsert->count = $num_count;
-    						$campaignInsert->is_status = 0;
+    						if($num_count <=10){
+    							$campaignInsert->is_status = 2;
+    						}else{
+    							$campaignInsert->is_status = 0;
+    						}
+    						$campaignInsert->start_at = Carbon::now()->toDateTimeString();
     						if($campaignInsert->save()){
 
     							return response()->json([
