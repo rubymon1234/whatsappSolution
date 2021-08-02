@@ -32,6 +32,7 @@ class Helper {
 		}
     }
     public static function getDomainDetail($domain){
+        $domain = $this->getFqdn($domain);
     	$domainDetail = Domain::where('domain_name',$domain)->where('is_active',1)->first();
     	return $domainDetail;
     }
