@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Compose')
+@section('title', 'Messages')
 @section('content')
  <!-- select2 CSS -->
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -11,14 +11,14 @@
 </div>
 <div class="alert alert-success alert-dismissable" id="success_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    
+
 </div>
 <div class="alert alert-warning alert-dismissable" id="warning_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 
 </div>
 
-   <h6 class="hk-sec-title"> Send Message</h6>
+   <h6 class="hk-pg-title">@yield('title') :: Compose </h6>
    <p class="mb-20"></p>
     <div class="row">
         <div class="col-xl-12">
@@ -66,7 +66,7 @@
                                  <div class="col-sm-6 form-group">
                                 <label for="message_type" class="col-form-label sel_image" style="display: none;">Select Image:</label>
                                 <input type="file" class="form-control sel_image" id="photo" name="photo" accept=".png, .jpg, .jpeg" style="display: none;"><span class="sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
-                                
+
                                 <label for="message_type" class="col-form-label sel_document" style="display: none;">Select Document:</label>
                                 <input type="file" class="form-control sel_document" id="doc_file" name="doc_file" accept=".doc, .xls , .ppt, .docx, .xlsx, .pptx, .pdf, .txt" style="display: none;">
                                 <span class="sel_document text-sm" style="display: none;font-size:  9px;"><b>* Please upload - doc, xls , ppt, docx, xlsx, pptx, pdf or txt documents with less than 4 MB size.</b></span>
@@ -147,7 +147,7 @@
                             if(response.validator){
                                 serverValidation(response.response.customMessages);
                             }else{
-                               $("#error_message").text(response.response); 
+                               $("#error_message").text(response.response);
                             }
                         }else{
                              $("#success_message").text(response.response);
