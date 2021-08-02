@@ -49,7 +49,20 @@
                                         {{ $campaign->count }}
                                     </td>
                                     <td>
-                                        {{ rawurldecode($campaign->message) }}
+                                        
+                                        <?php
+                                        $string = strip_tags(rawurldecode($campaign->message));
+                                        if (strlen($string) > 10) {
+
+                                            // truncate string
+                                            $stringCut = substr($string, 0, 10);
+                                            $endPoint = strrpos($stringCut, ' ');
+                                            //if the string doesn't contain any space then it will cut without word basis.
+                                            $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                            $string .= '... <i data-toggle="tooltip" data-original-title="'.rawurldecode($campaign->message).'" ><a href="javascript::void(0)">read more</a></i>';
+                                        }
+                                        ?>
+                                        <?php  echo $string ?>
                                     </td>
                                     <td>
                                         @if($campaign->is_status==0)
