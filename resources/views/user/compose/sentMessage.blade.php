@@ -151,9 +151,9 @@
                         }else{
                             $("#success_message").show();
                             $("#success_message").text(response.response);
-                            window.setTimeout( function(){
+                            /*window.setTimeout( function(){
                                 location.reload();
-                            }, 4000);
+                            }, 4000);*/
                         }
                     },
                     error: function (response) {
