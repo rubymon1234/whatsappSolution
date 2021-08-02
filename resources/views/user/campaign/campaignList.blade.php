@@ -56,7 +56,7 @@
                                             <span class="badge badge-warning">Queued</span>
                                         @elseif($campaign->is_status==2)
                                         <span class="badge badge-info">Sending</span>
-                                        @elseif($campaign->is_status==3)
+                                        @elseif($campaign->is_status==1)
                                             <span class="badge badge-success">Sent </span>
                                         @endif
                                     </td>
