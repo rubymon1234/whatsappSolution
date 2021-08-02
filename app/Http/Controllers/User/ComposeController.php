@@ -129,7 +129,7 @@ class ComposeController extends Controller
     						$campaignInsert->instance_token = $getInstance->token; 
     						$campaignInsert->instance_name = $getInstance->instance_name;
     						$campaignInsert->type = $validResponse['slug'];
-    						$campaignInsert->message = urlencode($message);
+    						$campaignInsert->message = rawurlencode($message);
     						$campaignInsert->media_file_name = $uploadfilename;
     						$campaignInsert->count = $num_count;
     						if($num_count <=10){
