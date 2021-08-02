@@ -40,6 +40,7 @@
                                 <th >#</th>
                                 <th>Instance Name </th>
                                 <th>Status </th>
+                                <th>State </th>
                                 <th style="text-align: left;"> Scan </th>
                             </tr>
                         </thead>
@@ -55,8 +56,13 @@
                                            <span class="badge badge-success">Active</span>
                                         @endif
                                     </td>
+                                    <td>{{ $instance->state }}</td>
                                     <td style="text-align: left;">
+                                        @if($instance->is_status==1)
+                                            <span class="badge badge-success">whatsapp_authenticated</span>
+                                        @else
                                         <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Scan</button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

@@ -143,7 +143,6 @@ class ComposeController extends Controller
     						if($num_count <=10){
     							shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$$last_inserted_id.' 2> /dev/null > /dev/null  &');
     						}
-
     						if($campaignInsert){
 
     							return response()->json([
