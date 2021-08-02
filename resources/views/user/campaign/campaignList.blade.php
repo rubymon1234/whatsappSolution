@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title', 'Campaign Management')
+@section('title', 'Messages')
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: List Campaign</h6>
+            <h6 class="hk-pg-title">@yield('title') :: Sent</h6>
         </div>
     </div>
     <style type="text/css">
