@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Messages')
+@section('title', 'Message Management')
 @section('content')
  <!-- select2 CSS -->
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
