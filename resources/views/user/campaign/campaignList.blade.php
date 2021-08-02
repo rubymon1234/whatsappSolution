@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Messages')
+@section('title', 'Message Management')
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
@@ -26,10 +26,10 @@
                             <tr>
                                 <th >#</th>
                                 <th>Campaign name</th>
-                                <th>Current plan </th>
-                                <th>Instance name</th>
+                                <th>Plan </th>
+                                <th>Instance</th>
                                 <th>Type</th>
-                                <th>number count</th>
+                                <th>Count</th>
                                 <th>Message</th>
                                 <th>Status</th>
                             </tr>
@@ -63,7 +63,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8"> No campaign logs in the list</td>
+                                    <td colspan="8"> No campaign in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
