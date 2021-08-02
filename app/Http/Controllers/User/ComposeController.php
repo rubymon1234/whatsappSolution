@@ -141,7 +141,7 @@ class ComposeController extends Controller
     						$campaignInsert->save();
     						$last_inserted_id = $campaignInsert->id;
     						if($num_count <=10){
-    							shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$$last_inserted_id.' 2> /dev/null > /dev/null  &');
+    							shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
     						}
     						if($campaignInsert){
 
