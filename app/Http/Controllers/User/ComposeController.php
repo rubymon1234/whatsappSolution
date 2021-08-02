@@ -97,7 +97,7 @@ class ComposeController extends Controller
     					$num_count = $csvDetail['num_count'];
     					$csv_name = $csvDetail['csv_name'];
 		            }
- 
+
     				//upload file
 					if($request->message_type =='image'){
 						$uploadfilename = $this->uploadFile($request,'photo');
@@ -111,7 +111,7 @@ class ComposeController extends Controller
 						$uploadfilename = NULL;
 					}
 	    			if(isset($campaignFetch[0]['total'])){ $total = $campaignFetch[0]['total']; }else{ $total = 0; }
-	    				$total = $total + $num_count; 
+	    				$total = $total + $num_count;
 	    				if($daily_count >=$total){
 	    					$today_date = date('Y-m-d');
     					if($plan_validity >= $today_date){
@@ -126,7 +126,7 @@ class ComposeController extends Controller
     						$campaignInsert->reseller_id = $user->reseller_id;
     						$campaignInsert->current_plan_id = $currentPlan->id;
     						$campaignInsert->leads_file = $csv_name;//csv
-    						$campaignInsert->instance_token = $getInstance->token; 
+    						$campaignInsert->instance_token = $getInstance->token;
     						$campaignInsert->instance_name = $getInstance->instance_name;
     						$campaignInsert->type = $validResponse['slug'];
     						$campaignInsert->message = rawurlencode($message);
@@ -141,7 +141,7 @@ class ComposeController extends Controller
     						$campaignInsert->save();
     						$last_inserted_id = $campaignInsert->id;
     						if($num_count <=10){
-    							shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
+    							shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
     						}
     						if($campaignInsert){
 
@@ -184,7 +184,7 @@ class ComposeController extends Controller
 							                'response' => 'plan is not active , please check with adminstrator',
 							            ]);
 	    			}
-	    						
+
 	    		}else{
 
 	    			return response()->json([
@@ -314,7 +314,7 @@ class ComposeController extends Controller
 				$fileSize = $request->file('video_file')->getSize();
 				if($fileSize <=4000000){
 
-					if(in_array($ext, $extension)){ 
+					if(in_array($ext, $extension)){
 						$arrayMessage['status'] = true;
 					}else{
 						$arrayMessage['status'] = false;
@@ -332,7 +332,7 @@ class ComposeController extends Controller
 				$fileSize = $request->file('audio_file')->getSize();
 				if($fileSize <=4000000){
 
-					if(in_array($ext, $extension)){ 
+					if(in_array($ext, $extension)){
 						$arrayMessage['status'] = true;
 					}else{
 						$arrayMessage['status'] = false;

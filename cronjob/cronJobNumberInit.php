@@ -35,7 +35,7 @@ while (true) {
   			  $smsDb->update ('wc_campaigns', $data);
 
   			  if ($totalLeads > 0) {
-            shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+            shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
   			  }
   			}
     	}else {
@@ -59,7 +59,7 @@ while (true) {
   					  	  $smsDb->where('id', $id);
   					  	  $smsDb->update ('wc_campaigns', $data);
 
-  						    shell_exec('/usr/bin/php /root/whatsapp-bulk/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+  						    shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
     					  }
   		       }
   		   	}
