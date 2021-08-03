@@ -53,7 +53,7 @@
                                 <th>#</th>
                                 <th>campaign name</th>
                                 <th>Number</th>
-                                <th>Instance_name</th>
+                                <th>Instance name</th>
                                 <th>Type</th>
                                 <th>message</th>
                                 <th>Sent time</th>
@@ -92,7 +92,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Data in the list</td>
+                                    <td colspan="8"> No Data in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
