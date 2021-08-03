@@ -76,12 +76,12 @@ if (isset($argv[1]))
 										"number" => $data['0'],
 			      				"message" => $message,
 			      				"media_file_name" =>"$file",
-										"time" => $ctimestamp,
+										"sent_time" => $ctimestamp,
 			      				"is_status" => $status,
 			      				"error_code" => "$errorCode",
 			      				"status_message" => "$statusMessage",
 			      		);
-		      $smsDb->insert('wc_campaigns_outbound', $reportData);
+		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
   		}
       fclose($handle);
 
