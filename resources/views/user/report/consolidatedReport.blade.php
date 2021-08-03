@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                 <button class="btn btn-tool btn-danger" name="search" value="search" style="margin-top: 19px;">Search </button>
-                <button class="btn btn-tool btn-info" name="search" value="search" style="margin-top: 19px;">Download </button>
+                <button class="btn btn-tool btn-info" name="download" value="download" style="margin-top: 19px;">Download </button>
                 </div>
             </div>
         </form>
@@ -53,7 +53,7 @@
                                 <th>#</th>
                                 <th>campaign name</th>
                                 <th>Number</th>
-                                <th>Instance_token</th>
+                                <th>Instance_name</th>
                                 <th>Type</th>
                                 <th>message</th>
                                 <th>Sent time</th>
@@ -66,7 +66,7 @@
                                     <td class="serial">{{ $key + $sentList->firstItem()}} </td>
                                     <td> <span class="name">{{ $sent->campaign_name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ $sent->number }}</span></td>
-                                    <td >{{ $sent->instance_token }}</td>
+                                    <td >{{ $sent->instance_name }}</td>
                                     <td >{{ $sent->type }}</td>
                                     <td ><?php
                                         $string = strip_tags(rawurldecode($sent->message));
@@ -81,12 +81,12 @@
                                         }
                                         ?>
                                         <?php  echo $string ?></td>
-                                    <td >{{ strtotime($sent->sent_time) }}</td>
+                                    <td >{{ date('Y-m-d h:m:s', $sent->sent_time) }}</td>
                                     <td>
                                         @if($sent->is_status==0)
-                                            <span class="badge badge-danger">Not sent</span>
+                                            <span class="badge badge-danger">{{ $sent->status_message }}</span>
                                         @elseif($sent->is_status==1)
-                                           <span class="badge badge-success">sent</span>
+                                           <span class="badge badge-success">{{ $sent->status_message }}</span>
                                         @endif
                                     </td>
                                 </tr>
