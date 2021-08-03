@@ -38,7 +38,7 @@ class ReportController extends Controller
     				->join('campaigns', 'campaigns.id', '=', 'campaigns_outbounds.campaign_id')
           			->whereRaw("wc_campaigns_outbounds.`user_id` = '".$user_id. "' $condtion")
           			->select('campaigns_outbounds.*','campaigns.campaign_name','campaigns.instance_name')
-          			->orderBy('campaigns_outbounds.updated_at', 'DESC')->paginate(10);
+          			->orderBy('campaigns_outbounds.id', 'DESC')->paginate(10);
 		$sentList->appends(['number' => $number]);
 		$sentList->appends(['campaign_id' => $campaign_id]);
 
@@ -49,7 +49,7 @@ class ReportController extends Controller
                     ->join('campaigns', 'campaigns.id', '=', 'campaigns_outbounds.campaign_id')
                     ->whereRaw("wc_campaigns_outbounds.`user_id` = '".$user_id. "' $condtion")
                     ->select('campaigns_outbounds.*','campaigns.campaign_name','campaigns.instance_name')
-                    ->orderBy('campaigns_outbounds.updated_at', 'DESC')->get();
+                    ->orderBy('campaigns_outbounds.id', 'DESC')->get();
 
             $uniqueId  = hexdec(uniqid());
 

@@ -83,7 +83,7 @@
                                         <?php  echo $string ?></td>
                                     <td >{{ date('Y-m-d h:m:s', $sent->sent_time) }}</td>
                                     <td>
-                                        @if($sent->is_status==0)
+                                        @if($sent->is_status==0)    
                                             <span class="badge badge-danger">{{ $sent->status_message }}</span>
                                         @elseif($sent->is_status==1)
                                            <span class="badge badge-success">{{ $sent->status_message }}</span>
