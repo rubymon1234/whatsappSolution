@@ -254,7 +254,7 @@ class ComposeController extends Controller
 		}elseif($message_type =='video'){ //text + video_file
 
 			if(isset($request->video_file) && isset($request->message)){
-				$arrayMessage['slug'] = 'media';
+				$arrayMessage['slug'] = 'media-text';
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
