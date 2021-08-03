@@ -15,7 +15,7 @@
         <form name="searchForm" action="" method="get">
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <label for="firstName">Campaign </label>
+                    <label for="firstName"> </label>
                     <select class="form-control select2" name="campaign_id">
                         <option value="">Select Campaign</option>
                         @foreach($campaignList as $campaign)
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="col-md-3 form-group">
-                    <label for="lastName"> number </label>
+                    <label for="lastName">  </label>
                     <input type="text" class="form-control form-control-sm new" placeholder="number" aria-controls="datable_1" name="number" value="{{ $number }}">
                 </div>
                 <div class="col-md-3 form-group">
