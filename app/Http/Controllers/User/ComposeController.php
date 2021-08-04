@@ -124,7 +124,7 @@ class ComposeController extends Controller
     						$campaignInsert->campaign_name = $campaign;
     						$campaignInsert->user_id = $user_id;
     						$campaignInsert->reseller_id = $user->reseller_id;
-    						$campaignInsert->current_plan_id = $currentPlan->id;
+    						$campaignInsert->current_plan_id = $currentPlan->plan_id;
     						$campaignInsert->leads_file = $csv_name;//csv
     						$campaignInsert->instance_token = $getInstance->token;
     						$campaignInsert->instance_name = $getInstance->instance_name;
