@@ -140,7 +140,13 @@ class AuthController extends Controller
         return view('user.dashboard', compact('dashboardCount'));
     }
     public function resellerlanding(Request $request){
-        return view('reseller.dashboard');
+        $dashboardCount = array();
+        $totalUser = User::where('reseller_id',Auth::user()->id)->where('domain_id',Auth::user()->domain_id)->count();
+        $totalreseller = User::where('reseller_id',Auth::user()->id)->count();
+        $resellerCount = $totalreseller -$totalUser;
+        $dashboardCount['total_users'] = $totalUser;
+        $dashboardCount['total_reseller'] = $resellerCount;
+        return view('reseller.dashboard',compact('dashboardCount'));
     }
     public function defaultlanding(Request $request){
         return view('default.dashboard');
