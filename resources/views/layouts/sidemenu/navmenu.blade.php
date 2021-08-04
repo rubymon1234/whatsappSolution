@@ -94,10 +94,6 @@
                                     <a class="nav-link" href="{{ route('user.compose.sent.message') }}">Compose</a>
                                 </li>
                                 @endpermission
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <ul class="nav flex-column">
                                 @permission('user.campaign.view')
                                 <li class="nav-item {{ (Route::is('user.campaign.view') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.campaign.view') }}">Sent</a>
