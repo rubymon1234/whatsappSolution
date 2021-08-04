@@ -144,7 +144,7 @@
                         $('#loading').hide();
                         if(result.success){
                             $('.preloader-it').hide();
-                            alert(result.response);
+                            //alert(result.response);
                             location.reload();
                         }
                     },
