@@ -42,7 +42,62 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+	if( $('#pie_chart_3').length > 0 ){
+		$('#pie_chart_3').easyPieChart({
+			barColor : '#3a55b1',
+			lineWidth: 3,
+			animate: 3000,
+			size:	50,
+			lineCap: 'square',
+			scaleColor: '#f5f5f6',
+			trackColor: '#f5f5f6',
+			onStep: function(from, to, percent) {
+				$(this.el).find('.percent').text(Math.round(percent));
+			}
+		});
+	}
+	if( $('#pie_chart_4').length > 0 ){
+		$('#pie_chart_4').easyPieChart({
+			barColor : '#3a55b1',
+			lineWidth: 3,
+			animate: 3000,
+			size:	50,
+			lineCap: 'square',
+			scaleColor: '#f5f5f6',
+			trackColor: '#f5f5f6',
+			onStep: function(from, to, percent) {
+				$(this.el).find('.percent').text(Math.round(percent));
+			}
+		});
+	}
+	if( $('#pie_chart_5').length > 0 ){
+		$('#pie_chart_5').easyPieChart({
+			barColor : '#3a55b1',
+			lineWidth: 3,
+			animate: 3000,
+			size:	50,
+			lineCap: 'square',
+			scaleColor: '#f5f5f6',
+			trackColor: '#f5f5f6',
+			onStep: function(from, to, percent) {
+				$(this.el).find('.percent').text(Math.round(percent));
+			}
+		});
+	}
+	if( $('#pie_chart_6').length > 0 ){
+		$('#pie_chart_6').easyPieChart({
+			barColor : '#3a55b1',
+			lineWidth: 3,
+			animate: 3000,
+			size:	50,
+			lineCap: 'square',
+			scaleColor: '#f5f5f6',
+			trackColor: '#f5f5f6',
+			onStep: function(from, to, percent) {
+				$(this.el).find('.percent').text(Math.round(percent));
+			}
+		});
+	}
 	var data = [],
 	totalPoints = 300;
 
