@@ -73,7 +73,37 @@ class AuthController extends Controller
     }
     public function homelanding(Request $request)
     {  
-        return view('admin.dashboard');
+        $user_id = Auth::user()->id;
+        $current_date_time = new DateTime("now");
+        $today = $current_date_time->format("Y-m-d");
+        $dashboardCount = array();
+        $yesterday = Carbon::today();
+        $yesterday_date = $yesterday->addDay(1);
+        $yesterday_date = $yesterday_date->format("Y-m-d");
+        //Today
+        $dashboardToday = CampaignsOutbound::whereBetween('created_at', [$today, $today])->count();
+        //yesterday
+        $dashboardYesterday= CampaignsOutbound::whereBetween('created_at', [$yesterday_date.' 00:00:00', $yesterday_date.' 59:59:59'])->count();
+        //this week
+         $dashboardthisWeek= CampaignsOutbound::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+         //last week
+        $lastWeekStart = $yesterday->subDays($yesterday->dayOfWeek)->subWeek();
+        $lastWeekEnd = $yesterday->subDays($yesterday->dayOfWeek + 1); 
+        $lastWeek = CampaignsOutbound::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->count();
+        //this month
+        $dashboardthisMonth= CampaignsOutbound::whereMonth('created_at', date('m'))->count();
+        //last month
+        $dashboardlstMonth= CampaignsOutbound::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+
+        //dates
+        $dashboardCount['today_count'] = $dashboardToday;
+        $dashboardCount['yesterday_count'] = $dashboardYesterday;
+        $dashboardCount['this_week_count'] = $dashboardthisWeek;
+        $dashboardCount['last_week_count'] = $lastWeek;
+        $dashboardCount['this_month'] = $dashboardthisMonth;
+        $dashboardCount['last_month'] = $dashboardlstMonth;
+
+        return view('admin.dashboard', compact('dashboardCount'));
     }
     public function userlanding(Request $request){
 
