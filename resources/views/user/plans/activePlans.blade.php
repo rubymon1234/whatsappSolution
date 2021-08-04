@@ -14,12 +14,28 @@
                         	
 							<div class="d-flex flex-wrap">
 								{{-- <img class="d-86 rounded mb-15 mr-15" src="dist/img/img-thumb1.jpg" alt="thumb"> --}}
-								<div class="w-120">
+								{{-- <div class="w-120">
 									<h6 class="mb-5">Plan name : {{ $crtplan->plan_name }}</h6>
 									<p> plan Validity : <h6> @if($crtplan->current_validity) {{ $crtplan->current_validity }} @else {{ $crtplan->plan_validity }} Days @endif</h6></p>
 									<hr>
 									<p> daily count : <h6>@if($crtplan->daily_count) {{ $crtplan->daily_count }} @else {{ $crtplan->daily_count }} Days @endif</h6></p>
-								</div>
+								</div> --}}
+                                <table class="table table-hover table-bordered mb-0">
+                                    <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: center;">{{ $crtplan->plan_name }}</th>
+                            </tr>
+                        </thead>
+                         <tr>
+                            <td>plan validity </td>
+                            <td>@if($crtplan->current_validity) {{ $crtplan->current_validity }} @else {{ $crtplan->plan_validity }} Days @endif</td>
+                            </tr>
+                            <tr>
+                            <td>daily count</td>
+                            <td>@if($crtplan->daily_count) {{ $crtplan->daily_count }} @else {{ $crtplan->daily_count }} Days @endif</td>
+                        </tr>
+                         </tr>
+                                </table>
 							</div>
 							
 						</div>
@@ -35,11 +51,11 @@
                             ?>
                              @if($current_validity >= $today_date )
                              	@if($crtplan->is_status ==1)
-                             		<button class="btn btn-xs btn-success ml-15 w-sm-100p">Active</button>
+                             		<button class="btn btn-xs btn-success ml-15 w-sm-90p">Active</button>
                              	@elseif($crtplan->is_status ==2)
-                            	<button class="btn btn-xs btn-info ml-15 w-sm-100p" onclick="__planChange({{ $crtplan->id }},1)">Start</button>
+                            	<button class="btn btn-xs btn-info ml-15 w-sm-90p" onclick="__planChange({{ $crtplan->id }},1)">Start</button>
                             	@elseif($crtplan->is_status ==0)
-                            	<button class="btn btn-xs btn-danger ml-15 w-sm-100p" onclick="__planChange({{ $crtplan->id }},1)">Activate </button>
+                            	<button class="btn btn-xs btn-danger ml-15 w-sm-90p" onclick="__planChange({{ $crtplan->id }},1)">Activate </button>
                             	@endif
                             @else
                             <button class="btn btn-xs btn-danger ml-15 w-sm-100p">Expired</button>
@@ -57,6 +73,11 @@
     </div>
     <!-- /Row -->
 </div>
+<style type="text/css">
+    .card-body {
+        padding: 0.0rem ! important;
+    }
+</style>
 <script type="text/javascript">
     function __planChange(curr_plan_id,status){
         if(typeof  curr_plan_id !=='undefined' && curr_plan_id !=''){
