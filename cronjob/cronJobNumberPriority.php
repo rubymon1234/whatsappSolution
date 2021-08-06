@@ -22,6 +22,10 @@ if (isset($argv[1]))
 		$message = $row['message'];
 		$file = $row['media_file_name'];
 		$lead = $row['leads_file'];
+    $optOut = $row['opt_out'];
+    if($optOut){
+      $message = $message.'%0A%0AReply \'STOP\' to unsubscribe';
+    }
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -102,7 +106,7 @@ if (isset($argv[1]))
       $data = Array ('is_status' => '1');
       $smsDb->where('id', $id);
       $return = $smsDb->update ('wc_campaigns', $data);
-      
+
 
     }
   }
