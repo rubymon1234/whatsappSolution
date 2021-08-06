@@ -33,7 +33,7 @@ function smsCounter() {
     }
     var counter_text = char_count +' / ' + msg_count;*/
 
-    var maxLength = 1500;
+    var maxLength = 1000;
     var counter_text = maxLength - char_count;
     //alert(msg);
     $('#msg_count_id').empty().html(counter_text);  

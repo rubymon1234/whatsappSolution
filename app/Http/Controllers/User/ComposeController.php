@@ -116,6 +116,8 @@ class ComposeController extends Controller
 	    					$today_date = date('Y-m-d');
     					if($plan_validity >= $today_date){
 
+
+
     						//current instance
     						$getInstance = Instance::find($instance_id);
 
@@ -136,6 +138,11 @@ class ComposeController extends Controller
     							$campaignInsert->is_status = 2;
     						}else{
     							$campaignInsert->is_status = 0;
+    						}
+    						if($request->optOut =='on'){
+    							$campaignInsert->opt_out = 1;	
+    						}else{
+    							$campaignInsert->opt_out = 0;
     						}
     						$campaignInsert->start_at = Carbon::now()->toDateTimeString();
     						$campaignInsert->save();

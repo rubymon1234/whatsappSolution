@@ -91,7 +91,11 @@
                                  <div class="col-md-6 form-group">
                                     <label for="lastName">Message</label>
                                      <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" id="message" name="message"></textarea>
-                                    <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="1000">1000</span>
+                                     <div class="custom-control custom-checkbox checkbox-primary">
+                                        <input type="checkbox" class="custom-control-input" id="optOut" name="optOut" checked="checked">
+                                        <label class="custom-control-label" for="optOut">Opt-Out</label>
+                                        <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="1000" id="msg_count_id">1000</span>
+                                    </div>
                                  </div>
                             </div>
                             <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="submit">Send</button>

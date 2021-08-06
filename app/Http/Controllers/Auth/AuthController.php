@@ -85,6 +85,7 @@ class AuthController extends Controller
         $dashboardToday = CampaignsOutbound::whereDate('created_at', '=', Carbon::today()->toDateString())->count();
         //yesterday
         $dashboardYesterday= CampaignsOutbound::whereDate('created_at', '=', $yesterday_date)->count();
+        
         //this week
          $dashboardthisWeek= CampaignsOutbound::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
         //last week
