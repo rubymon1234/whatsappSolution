@@ -112,12 +112,13 @@ class AuthController extends Controller
         $today = $current_date_time->format("Y-m-d");
         $dashboardCount = array();
         $yesterday = Carbon::today();
-        $yesterday_date = $yesterday->addDay(1);
+        $yesterday_date = $yesterday->subDay(1);
         $yesterday_date = $yesterday_date->format("Y-m-d");
         //Today
-        $dashboardToday = CampaignsOutbound::where('user_id',$user_id)->whereBetween('created_at', [$today, $today])->count();
+        $dashboardToday = CampaignsOutbound::where('user_id',$user_id)->whereDate('created_at', '=', Carbon::today()->toDateString())->count();
         //yesterday
-        $dashboardYesterday= CampaignsOutbound::where('user_id',$user_id)->whereBetween('created_at', [$yesterday_date.' 00:00:00', $yesterday_date.' 59:59:59'])->count();
+        $dashboardYesterday= CampaignsOutbound::where('user_id',$user_id)->whereDate('created_at', '=', $yesterday_date)->count();
+        
         //this week
          $dashboardthisWeek= CampaignsOutbound::where('user_id',$user_id)->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
          //last week
