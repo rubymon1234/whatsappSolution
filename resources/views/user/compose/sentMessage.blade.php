@@ -90,7 +90,7 @@
                                  </div>
                                  <div class="col-md-6 form-group">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" id="message" name="message"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="1000" id="message" name="message"></textarea>
                                      <div class="custom-control custom-checkbox checkbox-primary">
                                         <input type="checkbox" class="custom-control-input" id="optOut" name="optOut" checked="checked">
                                         <label class="custom-control-label" for="optOut">Opt-Out</label>

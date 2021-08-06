@@ -97,7 +97,14 @@ class ComposeController extends Controller
     					$num_count = $csvDetail['num_count'];
     					$csv_name = $csvDetail['csv_name'];
 		            }
-
+		            if(strlen($request->message) >=1000){
+		            		return response()->json([
+						                'success' => false,
+						                'message' =>'success',
+						                'validator' => false,
+						                'response' => 'message count less than 1000.',
+						            ]);
+		            }
     				//upload file
 					if($request->message_type =='image'){
 						$uploadfilename = $this->uploadFile($request,'photo');
