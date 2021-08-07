@@ -105,8 +105,6 @@ if (isset($argv[1]))
       $smsDb->where('id', $id);
       $return = $smsDb->update ('wc_scrubs', $data);
 
-      print_r($registered);
-      print_r($notRegistered);
     }
   }
 }
