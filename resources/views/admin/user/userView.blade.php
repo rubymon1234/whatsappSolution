@@ -45,6 +45,7 @@
                                 <th >#</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Recharge</th>
@@ -57,6 +58,10 @@
                                     <td class="serial">{{ $key + $users->firstItem()}} </td>
                                     <td> <span class="name">{{ $user->name }}</span> </td>
                                     <td> <span class="product">{{ $user->email }}</span> </td>
+                                    <td> @php
+                                        $domainDetail = \App\Helpers\Helper::getDomainNameId(Crypt::encrypt($user->domain_id));
+                                        @endphp
+                                        <span class="product">{{ $domainDetail->domain_name }} </span> </td>
                                     @php
                                     $roleUser = \App\Helpers\Helper::getUserRole(Crypt::encrypt($user->id));
                                     @endphp

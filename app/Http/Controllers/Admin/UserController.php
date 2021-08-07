@@ -31,9 +31,9 @@ class UserController extends Controller
     {
     	$key = $request->qa;
     	$users = User::where('name', 'LIKE', '%' . $key . '%')
+                        //->leftJoin('domains', 'domains.id', '=', 'users.domain_id')
         				->orWhere('email', 'LIKE', '%' . $key . '%')
         				->orderBy('updated_at', ' DESC')->paginate(10);
-		$users->appends(['qa' => $key]);
 
         return view('admin.user.userView',compact('users','key'));
     }

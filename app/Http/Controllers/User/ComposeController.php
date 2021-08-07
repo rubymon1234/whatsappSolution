@@ -104,7 +104,7 @@ class ComposeController extends Controller
 						                'validator' => false,
 						                'response' => 'message count less than 1000.',
 						            ]);
-		            }
+		            }	
     				//upload file
 					if($request->message_type =='image'){
 						$uploadfilename = $this->uploadFile($request,'photo');

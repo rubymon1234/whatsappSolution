@@ -36,6 +36,11 @@ class Helper {
     	$domainDetail = Domain::where('domain_name',$domain)->where('is_active',1)->first();
     	return $domainDetail;
     }
+    public static function getDomainNameId($domain_id){
+        
+        $domainDetails = Domain::find(Crypt::decrypt($domain_id));
+        return $domainDetails;
+    }
     public static function getUserRole($user_id){
     	$id = Crypt::decrypt($user_id);
     	$role = RoleUser::where('user_id',$id)->first();

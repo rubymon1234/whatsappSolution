@@ -29,6 +29,13 @@
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-6 form-group">
+                                    <label for="schedule"> Schedule : </label>
+                                    <div class="toggle toggle-light toggle-bg-primary toggle2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
                                     <label for="firstName">Campaign </label>
                                     <input class="form-control" id="campaign" name="campaign" placeholder="Enter campaign name" value="" type="text">
                                     <div class="invalid-feedback">
