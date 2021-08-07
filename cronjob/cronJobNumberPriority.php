@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/php -q
 <?php
 //sleep(5);
 require_once '/var/www/html/whatsappSolution/cronjob/Db/initDb.php';
