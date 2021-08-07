@@ -4,6 +4,34 @@
 require_once '/var/www/html/whatsappSolution/cronjob/Db/initDb.php';
 date_default_timezone_set("Asia/Kolkata");
 
+function generateToken()
+	{
+		mt_srand((double)microtime()*10000);
+		$charid = strtolower(md5(uniqid(rand(), true)));
+		$salt =  substr($charid, 0, 2).substr($charid, 4, 2).substr($charid,9, 2).substr($charid,12, 2);
+		return $salt;
+	}
+
+public function createCsv($contacts)
+  {
+    $leadPath = '/var/www/html/whatsappSolution/public/uploads/csv/';
+    $name = generateToken().'.csv';
+    $file = $leadPath.$name;
+    if ($contacts) {
+      $contacts = array_map('trim',$contacts);
+
+      $fp = fopen("$file", 'w');
+      foreach($contacts as $line){
+        $val = explode(",",$line);
+        fputcsv($fp, $val);
+      }
+      fclose($fp);
+
+      return $name;
+    }
+    return false;
+  }
+
 if (isset($argv[1]))
 {
 
@@ -60,9 +88,13 @@ if (isset($argv[1]))
 
   		}
       fclose($handle);
+      $registeredFile = createCsv($registered);
+      $notRegisteredFile = createCsv($notRegistered);
 
       $id = $row['id'];
-      $data = Array ('is_status' => '1');
+      $data = Array ('registered_file' => $registeredFile,
+                      'not_registered_file' => $notRegisteredFile,
+                      'is_status' => '1');
       $smsDb->where('id', $id);
       $return = $smsDb->update ('wc_scrubs', $data);
 
