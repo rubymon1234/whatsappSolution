@@ -12,7 +12,7 @@ function generateToken()
 		return $salt;
 	}
 
-public function createCsv($contacts)
+function createCsv($contacts)
   {
     $leadPath = '/var/www/html/whatsappSolution/public/uploads/csv/';
     $name = generateToken().'.csv';
