@@ -18,12 +18,11 @@ function createCsv($contacts)
     $name = generateToken().'.csv';
     $file = $leadPath.$name;
     if ($contacts) {
-      $contacts = array_map('trim',$contacts);
-
+      //$contacts = array_map('trim',$contacts);
       $fp = fopen("$file", 'w');
       foreach($contacts as $line){
-        $val = explode(",",$line);
-        fputcsv($fp, $val);
+        //$val = explode(",",$line);
+        fputcsv($fp, $line);
       }
       fclose($fp);
 
@@ -77,12 +76,20 @@ if (isset($argv[1]))
   						$errorCode = "";
   						$statusMessage = "Registered";
   						$status = '1';
-              $registered[] = $data['0'];
+              $registered[] = array($data['0'],$statusMessage);
   					}else{
   						$errorCode = $result['code'];
   						$status = '0';
-  						$statusMessage = "Not Registered";
-              $notRegistered[] = $data['0'];
+              if ($errorCode == 'ERR103'){
+                $statusMessage = "Not Registered";
+              }else if($errorCode == 'ERR500'){
+                $statusMessage = "Validation Failed";
+              }else if ($errorCode == 'ERR102'){
+                $statusMessage = "Invalid Instance";
+              }else if ($errorCode == 'ERR105'){
+                $statusMessage = "Instance Offline";
+              }
+              $notRegistered[] = array($data['0'],$statusMessage);
   					}
 
 
@@ -98,6 +105,8 @@ if (isset($argv[1]))
       $smsDb->where('id', $id);
       $return = $smsDb->update ('wc_scrubs', $data);
 
+      print_r($registered);
+      print_r($notRegistered);
     }
   }
 }
