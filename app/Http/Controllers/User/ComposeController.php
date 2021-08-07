@@ -102,7 +102,7 @@ class ComposeController extends Controller
 						                'success' => false,
 						                'message' =>'success',
 						                'validator' => false,
-						                'response' => 'message count less than 1000.',
+						                'response' => 'Message count is more than 1000.',
 						            ]);
 		            }	
     				//upload file
@@ -147,7 +147,7 @@ class ComposeController extends Controller
     							$campaignInsert->is_status = 0;
     						}
     						if($request->optOut =='on'){
-    							$campaignInsert->opt_out = 1;	
+    							$campaignInsert->opt_out = 1;
     						}else{
     							$campaignInsert->opt_out = 0;
     						}
@@ -163,7 +163,7 @@ class ComposeController extends Controller
 						                'success' => true,
 						                'message' =>'success',
 						                'validator' => false,
-						                'response' => 'New campaign created successfully',
+						                'response' => 'Campaign created successfully',
 						            ]);
     						}
     						return response()->json([
@@ -178,7 +178,7 @@ class ComposeController extends Controller
 						                'success' => false,
 						                'message' =>'success',
 						                'validator' => false,
-						                'response' => 'validity date expired',
+						                'response' => 'Validity expired',
 						            ]);
     					}
 
@@ -187,7 +187,7 @@ class ComposeController extends Controller
 							                'success' => false,
 							                'message' =>'success',
 							                'validator' => false,
-							                'response' => 'daily limit exceeded',
+							                'response' => 'Daily limit exceeded',
 							            ]);
 	    				}
 	    			}else{
@@ -195,7 +195,7 @@ class ComposeController extends Controller
 							                'success' => false,
 							                'message' =>'success',
 							                'validator' => false,
-							                'response' => 'plan is not active , please check with adminstrator',
+							                'response' => 'Plan is not active',
 							            ]);
 	    			}
 
@@ -255,7 +255,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'message field are mandatary';
+				$arrayMessage['message'] = 'Message field is mandatary';
 			}
 		}elseif ($message_type =='image') { //text + photo
 			if(isset($request->photo) && isset($request->message)){
@@ -263,7 +263,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'image and message fields are mandatary';
+				$arrayMessage['message'] = 'Image and message fields are mandatary';
 			}
 		}elseif($message_type =='video'){ //text + video_file
 
@@ -272,7 +272,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'video and message fields are mandatary';
+				$arrayMessage['message'] = 'Video and message fields are mandatary';
 			}
 		}elseif($message_type =='audio'){ //audio_file only
 			if(isset($request->audio_file)){
@@ -280,7 +280,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'audio fields are mandatary';
+				$arrayMessage['message'] = 'Audio field is mandatary';
 			}
 		}elseif ($message_type =='document') { // doc_file only
 			if(isset($request->doc_file)){
@@ -288,7 +288,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-			$arrayMessage['message'] = 'document fields are mandatary';
+			$arrayMessage['message'] = 'Document field is mandatary';
 			}
 		}
 		return $arrayMessage;
@@ -302,7 +302,7 @@ class ComposeController extends Controller
 				$arrayMessage['status'] = true;
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'message field are mandatary';
+				$arrayMessage['message'] = 'Message field is mandatary';
 			}
 		}elseif ($message_type =='image') { //text +photo
 			if(isset($request->photo)){
@@ -314,11 +314,11 @@ class ComposeController extends Controller
 						$arrayMessage['status'] = true;
 					}else{
 						$arrayMessage['status'] = false;
-						$arrayMessage['message'] = 'image accepted format jpg, png, jpeg';
+						$arrayMessage['message'] = 'Image accepted format are jpg, png, jpeg';
 					}
 				}else{
 					$arrayMessage['status'] = false;
-					$arrayMessage['message'] = 'image file maximum file size 4MB';
+					$arrayMessage['message'] = 'Image maximum file size is 4MB';
 				}
 			}
 		}elseif($message_type =='video') {
@@ -332,11 +332,11 @@ class ComposeController extends Controller
 						$arrayMessage['status'] = true;
 					}else{
 						$arrayMessage['status'] = false;
-						$arrayMessage['message'] = 'video accepted format mp4, 3gpp';
+						$arrayMessage['message'] = 'Video accepted format are mp4, 3gpp';
 					}
 				}else{
 					$arrayMessage['status'] = false;
-					$arrayMessage['message'] = 'video file maximum file size 4MB';
+					$arrayMessage['message'] = 'Video maximum file size is 4MB';
 				}
 			}
 		}elseif($message_type =='audio') {
@@ -350,11 +350,11 @@ class ComposeController extends Controller
 						$arrayMessage['status'] = true;
 					}else{
 						$arrayMessage['status'] = false;
-						$arrayMessage['message'] = 'accepted format aac, mp3, amr';
+						$arrayMessage['message'] = 'Accepted audio format is aac, mp3, amr';
 					}
 				}else{
 					$arrayMessage['status'] = false;
-					$arrayMessage['message'] = 'audio file maximum file size 4MB';
+					$arrayMessage['message'] = 'Audio maximum file size is 4MB';
 				}
 			}
 		}elseif ($message_type =='document') {
@@ -367,11 +367,11 @@ class ComposeController extends Controller
 					$arrayMessage['status'] = true;
 				}else{
 					$arrayMessage['status'] = false;
-					$arrayMessage['message'] = 'accepted format doc, xls, ppt, docx, xlsx, pptx, pdf, txt';
+					$arrayMessage['message'] = 'Accepted document format are doc, xls, ppt, docx, xlsx, pptx, pdf, txt';
 				}
 			}else{
 				$arrayMessage['status'] = false;
-				$arrayMessage['message'] = 'maximum file size 4MB';
+				$arrayMessage['message'] = 'Document maximum file size is 4MB';
 			}
 		}
 		return $arrayMessage;
