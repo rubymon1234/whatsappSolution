@@ -6,8 +6,6 @@ date_default_timezone_set("Asia/Kolkata");
 
 if (isset($argv[1]))
 {
-
-
   $id = $argv[1];
 
   $smsDb->where ('is_status', 2);
@@ -98,7 +96,7 @@ if (isset($argv[1]))
 			      				"status_message" => "$statusMessage",
 			      		);
 		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
-
+          sleep(mt_rand(0,10));
   		}
       fclose($handle);
 
