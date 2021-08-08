@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'User Management')
+@section('title', 'Reports Management')
 @section('content')
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
@@ -7,7 +7,7 @@
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: List Users</h6>
+            <h6 class="hk-pg-title">@yield('title') :: Campaign</h6>
         </div>
     </div>
     <div class="">
@@ -83,7 +83,7 @@
                                         <?php  echo $string ?></td>
                                     <td >{{ date('Y-m-d h:m:s', $sent->sent_time) }}</td>
                                     <td>
-                                        @if($sent->is_status==0)    
+                                        @if($sent->is_status==0)
                                             <span class="badge badge-danger">{{ $sent->status_message }}</span>
                                         @elseif($sent->is_status==1)
                                            <span class="badge badge-success">{{ $sent->status_message }}</span>
