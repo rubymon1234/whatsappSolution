@@ -70,9 +70,11 @@ if (isset($argv[1]))
   						$errorCode = "";
   						$statusMessage = "Sent";
   						$status = '1';
+              $msgId = $result['response']['id']['id'];
   					}else{
   						$errorCode = $result['code'];
   						$status = '0';
+              $msgId = "";
   						if ($errorCode == 'ERR103'){
   							$statusMessage = "Not Registered";
   						}else if($errorCode == 'ERR500'){
@@ -85,7 +87,8 @@ if (isset($argv[1]))
   					}
           }
 
-					$reportData = Array ("user_id" => $userId,
+					$reportData = Array ("msg_id" => $msgId,
+                    "user_id" => $userId,
 			      				"campaign_id" => $id,
 			      				"instance_token" => "$instance",
 			      				"type" => $type,
@@ -98,7 +101,7 @@ if (isset($argv[1]))
 			      				"status_message" => "$statusMessage",
 			      		);
 		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
-          
+
   		}
       fclose($handle);
 
