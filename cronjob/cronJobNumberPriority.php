@@ -33,7 +33,7 @@ if (isset($argv[1]))
 					$ctimestamp = strtotime($cdateTime);
           $message = $row['message'];
           if($optOut){
-            $message = $message.'%0AReply \'STOP\' to unsubscribe';
+            $message = $message.'%0A%0AReply \'STOP\' to unsubscribe';
           }
           if($promotional){
             $key = mt_rand(0,1594);
