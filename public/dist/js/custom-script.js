@@ -1,3 +1,17 @@
+  $(document).ready(function(){
+        $(".toggle-on").removeClass('active');
+        $(".toggle-off").addClass('active');
+        $(".toggle-inner").css('width','75px');
+        $(".toggle-inner").css('margin-left','-25px');
+        var scheduleOn = $(".toggle-on").hasClass('active');
+        if(scheduleOn){
+            $('.schduleRow').show();
+            $('#is_scheduled').val(1);
+        }else{
+            $('.schduleRow').hide();
+            $('#is_scheduled').val(0);
+        }
+    })
  function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     //if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))//46 '.'

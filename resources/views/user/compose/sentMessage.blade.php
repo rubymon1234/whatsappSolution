@@ -27,13 +27,7 @@
                     <div class="col-sm">
                         <form id="sendMessageForm" method="POST" action="{{ route('user.compose.sent.message') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label for="schedule"> Schedule : </label>
-                                    <div class="toggle toggle-light toggle-bg-primary toggle2">
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="firstName">Campaign </label>
@@ -105,6 +99,31 @@
                                     </div>
                                  </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-1 form-group">
+                                    {{-- <label for="schedule"> Schedule </label> <br>--}}
+                                    <div class="toggle toggle-light toggle-bg-primary toggle2">
+                                    </div>
+                                    <input type="hidden" name="is_scheduled" id="is_scheduled">
+                                </div>
+                                <div class="col-md-3 form-group schduleRow">
+                                    {{-- <label for="">Date</label> --}}
+                                    <input type="date" class="form-control" id="sch_date" name="sch_date" min="{{ date('Y-m-d')}}">
+                                </div>
+                                <div class="col-md-2 form-group schduleRow">
+                                    {{-- <label for="">Time</label> --}}
+                                    <input type="time" class="form-control" id="sch_time" name="sch_time">
+                                </div>
+                            </div>
+                            {{-- <div class="row schduleRow" >
+                                <div class="col-md-6 form-group">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="">Time</label>
+                                    <input type="time" class="form-control" id="sch_time" name="sch_time">
+                                </div>
+                            </div> --}}
+
                             <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="submit">Send</button>
                         </form>
                     </div>
@@ -117,17 +136,31 @@
     .select2-container .select2-selection--single {
         height: 40px ! important;
     }
+    .toggle-slide {
+        margin-top: 10px;
+    }
 </style>
 <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2-data.js') }}"></script>
 <script src="{{ asset('dist/js/custom-script.js') }}"></script>
 <script type="text/javascript">
-
+    $(document).on('click', '.toggle2', function (e) {
+        var scheduleOn = $(".toggle-on").hasClass('active');
+        if(scheduleOn){
+            $('.schduleRow').show();
+            $('#is_scheduled').val(1);
+        }else{
+            $('.schduleRow').hide();
+            $('#is_scheduled').val(0);
+        }
+    });
         $('#sendMessageForm').submit(function(e){
             e.preventDefault();
             $("#error_message").text('');
+            $("#success_message").text('');
             $("#error_message").hide();
+            $("#success_message").hide();
             valid = validationError();
             if(valid===true){
             //$('#sendBtn').prop('disabled', true);
