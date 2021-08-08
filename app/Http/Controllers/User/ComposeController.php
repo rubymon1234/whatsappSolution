@@ -68,6 +68,7 @@ class ComposeController extends Controller
               	//user data
 	    		$user = Auth::user();
 	    		$user_id = $user->id;
+
 	    		//form data
 	    		$campaign 		= $request->campaign; // campaign name
 	    		$instance_id 	= $request->instance; // instance id
@@ -77,6 +78,22 @@ class ComposeController extends Controller
 
 	    		$validResponse = $this->messageTypeValidation($request->message_type,$request);
 	    		$extensionValidation = $this->typeValidation($request->message_type,$request);
+	    		//campaign start time
+	    		$campaign_start_date = date('Y-m-d');
+	    		$campaign_start_time = date('H:i:s');
+	    		if($request->is_scheduled==1){
+	            	if(isset($request->sch_date) && isset($request->sch_time)){
+	            		$campaign_start_date = $request->sch_date;
+	            		$campaign_start_time = $request->sch_time.':00';
+	            	}else{
+	            		return response()->json([
+					                'success' => false,
+					                'message' =>'success',
+					                'validator' => false,
+					                'response' => 'Schedule Date and Time is in-valid',
+					            ]);
+	            	}
+	            }
 	    		//extension and file size checking
 	    		if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
 	    			//current plan
@@ -85,10 +102,11 @@ class ComposeController extends Controller
 	    			if($currentPlan){
 	    				$daily_count 	= $currentPlan->daily_count;
 	    				$plan_validity 	= $currentPlan->plan_validity;
-	    			$campaignFetch = Campaign::where('user_id',$user_id)
+	    				
+	    				$campaignFetch = Campaign::where('user_id',$user_id)
 	    										->where('current_plan_id',$currentPlan->id)
 	    										->select( DB::raw('sum(count) as total'))
-	    										->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->toArray();
+	    										->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
 	    			//create csv
 		            $num_count =0;
 		            $csv_name ='';
@@ -97,6 +115,7 @@ class ComposeController extends Controller
     					$num_count = $csvDetail['num_count'];
     					$csv_name = $csvDetail['csv_name'];
 		            }
+		            
 		            if(strlen($request->message) >=1000){
 		            		return response()->json([
 						                'success' => false,
@@ -120,10 +139,13 @@ class ComposeController extends Controller
 	    			if(isset($campaignFetch[0]['total'])){ $total = $campaignFetch[0]['total']; }else{ $total = 0; }
 	    				$total = $total + $num_count;
 	    				if($daily_count >=$total){
-	    					$today_date = date('Y-m-d');
+	    					if($request->is_scheduled==1){
+	    						$today_date = $campaign_start_date;
+	    					}else{
+	    						$today_date = date('Y-m-d');
+	    					}
+	    					
     					if($plan_validity >= $today_date){
-
-
 
     						//current instance
     						$getInstance = Instance::find($instance_id);
@@ -151,7 +173,10 @@ class ComposeController extends Controller
     						}else{
     							$campaignInsert->opt_out = 0;
     						}
-    						$campaignInsert->start_at = Carbon::now()->toDateTimeString();
+    						$campaignInsert->start_at = $campaign_start_date.' '.$campaign_start_time;
+    						if($request->is_scheduled==1){
+    							$campaignInsert->is_status = 0; // scheduled
+    						}
     						$campaignInsert->save();
     						$last_inserted_id = $campaignInsert->id;
     						if($num_count <=10){
