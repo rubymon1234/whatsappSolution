@@ -8,6 +8,9 @@ if (isset($argv[1]))
 {
   $id = $argv[1];
 
+  $data = file_get_contents('/var/www/html/whatsappSolution/cronjob/quotes.json', true);
+  $arrayQuotes = json_decode($data,true);
+
   $smsDb->where ('is_status', 2);
   $smsDb->where ('id', $id);
   $row = $smsDb->getOne('wc_campaigns');
@@ -21,15 +24,20 @@ if (isset($argv[1]))
 		$file = $row['media_file_name'];
 		$lead = $row['leads_file'];
     $optOut = $row['opt_out'];
+    $promotional = $row['promotional'];
     if($optOut){
-      $message = $message.'%0A%0AReply \'STOP\' to unsubscribe';
+      $message = $message.'%0AReply \'STOP\' to unsubscribe';
     }
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 					$cdateTime =date("Y-m-d H:i:s");
 					$ctimestamp = strtotime($cdateTime);
-
+          if($promotional){
+            $key = mt_rand(0,1594);
+            $quote = $arrayQuotes[$key]['text'].'- '.$arrayQuotes[$key]['author'];
+            $message = $message.'%0A%0A'.$quote;
+          }
           $smsDb->where ('is_status', 1);
           $smsDb->where ('number', $data['0']);
           $smsDb->getOne('wc_blacklists');
