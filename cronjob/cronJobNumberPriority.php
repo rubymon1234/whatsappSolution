@@ -20,19 +20,21 @@ if (isset($argv[1]))
 		$userId = $row['user_id'];
     $instance = $row['instance_token'];
 		$type = $row['type'];
-		$message = $row['message'];
+		//$message = $row['message'];
 		$file = $row['media_file_name'];
 		$lead = $row['leads_file'];
     $optOut = $row['opt_out'];
     $promotional = $row['promotional'];
-    if($optOut){
-      $message = $message.'%0AReply \'STOP\' to unsubscribe';
-    }
+
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 					$cdateTime =date("Y-m-d H:i:s");
 					$ctimestamp = strtotime($cdateTime);
+          $message = $row['message'];
+          if($optOut){
+            $message = $message.'%0AReply \'STOP\' to unsubscribe';
+          }
           if($promotional){
             $key = mt_rand(0,1594);
             $quote = $arrayQuotes[$key]['text'].'- '.$arrayQuotes[$key]['author'];
@@ -104,7 +106,9 @@ if (isset($argv[1]))
 			      				"status_message" => "$statusMessage",
 			      		);
 		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
+          $message ="";
           sleep(mt_rand(0,10));
+
   		}
       fclose($handle);
 
