@@ -14,7 +14,7 @@ function generateToken()
 
 function createCsv($contacts)
   {
-    $leadPath = '/var/www/html/whatsappSolution/public/uploads/csv/';
+    $leadPath = '/var/www/html/whatsappSolution/public/uploads/scrubCsv/';
     $name = generateToken().'.csv';
     $file = $leadPath.$name;
     if ($contacts) {
@@ -48,7 +48,7 @@ if (isset($argv[1]))
 		$lead = $row['leads_file'];
     $registered = array();
     $notRegistered = array();
-		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
+		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/scrubCsv/'.$lead, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
             $dataPost = array(
