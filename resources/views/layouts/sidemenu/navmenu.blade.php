@@ -80,13 +80,36 @@
                     </ul>
                 </li>
             @endpermission
-            @permission(('user.compose.*'))
+
+
+            @permission(('user.compose.scrub.*'))
+                <li class="nav-item {{ (Route::is('user.compose.scrub.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp11" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="filter"></i></span>
+                        <span class="nav-link-text">Scrubs</span>
+                    </a>
+                    <ul id="auth_drp11" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.scrub.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                              @permission('user.compose.scrub.view')
+                              <li class="nav-item {{ (Route::is('user.compose.scrub.view') ? 'active' : '' ) }}">
+                                  <a class="nav-link" href="{{ route('user.compose.scrub.view') }}">List Scrubs</a>
+                              </li>
+                              @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
+
+
+            @permission(('user.compose.sent.message') || ('user.campaign.view'))
                 <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="message-square"></i></span>
                         <span class="nav-link-text">Messages</span>
                     </a>
-                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') || Route::is('user.campaign.*')? 'show' : '') }} collapse ">
+                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.sent.*') || Route::is('user.campaign.*')? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('user.compose.sent.message')
@@ -101,7 +124,7 @@
                                 @endpermission
                                 @permission('user.compose.scrub.view')
                                 <li class="nav-item {{ (Route::is('user.compose.scrub.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.compose.scrub.view') }}">Scrub List</a>
+                                    <a class="nav-link" href="{{ route('user.compose.scrub.view') }}">List Scrubs</a>
                                 </li>
                                 @endpermission
                             </ul>

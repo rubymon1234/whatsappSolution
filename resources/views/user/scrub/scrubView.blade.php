@@ -6,12 +6,18 @@
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: Scrubing List</h6>
+            <h6 class="hk-pg-title">@yield('title') :: List Scrubs</h6>
         </div>
-        @permission('user.compose.scrub.create')
-            <a class="btn btn-outline-info pull-right" href="{{ route('user.compose.scrub.create') }}"> Create scrub campaign </a>
-        @endpermission
     </div>
+
+    <div class="hk-pg-header mb-0">
+    <div class="d-flex">
+            @permission('user.compose.scrub.create')
+            <a class="btn btn-outline-info pull-right" href="{{ route('user.compose.scrub.create') }}"> Create campaign </a>
+             @endpermission
+        </div>
+        </div>
+
     <style type="text/css">
         .form-control-sm, .custom-select-sm {
             height: calc(1.8125rem + 11px);
@@ -29,7 +35,7 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th>Name</th>
+                                <th>Campaign name</th>
                                 <th>Plan name</th>
                                 <th>Instance name</th>
                                 <th>Count</th>
@@ -50,7 +56,7 @@
                                     <td> <span class="product">{{ $planDetail->plan_name }}</span> </td>
                                     <td >{{$scrub->instance_name }}</td>
                                     <td ><b style="font-weight: bold;"></b>{{ $scrub->count }} </td>
-                                    
+
                                     <td>10</td>
                                     <td>20</td>
                                     <td>

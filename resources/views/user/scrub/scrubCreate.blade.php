@@ -5,7 +5,7 @@
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
     @include('errors.status')
-   <h6 class="hk-pg-title">@yield('title') :: Scrubing Create </h6>
+   <h6 class="hk-pg-title">@yield('title') :: Create Campaign</h6>
    <p class="mb-20"></p>
     <div class="row">
         <div class="col-xl-12">
@@ -16,10 +16,10 @@
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label for="firstName">Scrub name </label>
-                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter scrub name" value="" type="text" value="{{ old('scrub_name') }}">
+                                    <label for="firstName">Campaign name </label>
+                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter campaign name" value="" type="text" value="{{ old('scrub_name') }}">
                                     <div class="invalid-feedback">
-                                        Please provide a valid scrub name.
+                                        Please provide a valid campaign name.
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
