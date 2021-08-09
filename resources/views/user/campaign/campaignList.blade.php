@@ -31,6 +31,7 @@
                                 <th>Type</th>
                                 <th>Count</th>
                                 <th>Message</th>
+                                <th>Sent Time</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -64,6 +65,7 @@
                                         ?>
                                         <?php  echo $string ?>
                                     </td>
+                                    <td>{{ $campaign->start_at }}</td>
                                     <td>
                                         @if($campaign->is_status==0)
                                             <span class="badge badge-warning">Queued</span>
