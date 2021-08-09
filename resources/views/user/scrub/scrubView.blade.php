@@ -44,9 +44,12 @@
                                 <tr>
                                     <td class="serial">{{ $key + $scrubDetail->firstItem()}} </td>
                                     <td> <span class="name">{{ $scrub->scrub_name }}</span> </td>
-                                     <td> <span class="product">{{ $scrub->current_plan_id }}</span> </td>
+                                    @php
+                                    $planDetail = \App\Helpers\Helper::getPlanDetail(Crypt::encrypt($scrub->current_plan_id));
+                                    @endphp
+                                    <td> <span class="product">{{ $planDetail->plan_name }}</span> </td>
                                     <td >{{$scrub->instance_name }}</td>
-                                    <td ><b style="font-weight: bold;"></b>{{ $scrub->ount }} </td>
+                                    <td ><b style="font-weight: bold;"></b>{{ $scrub->count }} </td>
                                     
                                     <td>10</td>
                                     <td>20</td>
