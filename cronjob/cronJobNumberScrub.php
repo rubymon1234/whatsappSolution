@@ -98,9 +98,14 @@ if (isset($argv[1]))
       $registeredFile = createCsv($registered);
       $notRegisteredFile = createCsv($notRegistered);
 
+			$registeredCount = count($registered);
+			$notRegisteredCount = count($notRegistered);
+
       $id = $row['id'];
       $data = Array ('registered_file' => $registeredFile,
                       'not_registered_file' => $notRegisteredFile,
+											'registered_count' => $registeredCount,
+											'not_registered_count' => $notRegisteredCount,
                       'is_status' => '1');
       $smsDb->where('id', $id);
       $return = $smsDb->update ('wc_scrubs', $data);
