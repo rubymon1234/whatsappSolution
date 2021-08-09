@@ -4,8 +4,7 @@
  <!-- select2 CSS -->
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Daterangepicker CSS -->
-    <link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
 <div class="alert alert-danger alert-dismissable" id="error_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -137,7 +136,6 @@
 <!-- Daterangepicker JavaScript -->
 <script src="{{ asset('dist/js/moment.min.js') }}"></script>
 <script src="{{ asset('dist/js/daterangepicker.js') }}"></script>
-{{-- <script src="{{ asset('dist/js/daterangepicker-data.js') }}"></script> --}}
 <style type="text/css">
     .daterangepicker.ltr .drp-calendar.left{
         display: none;

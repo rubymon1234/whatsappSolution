@@ -19,7 +19,7 @@ class CampaignController extends Controller
    	public function getCampaignList()
     {
 
-        $campaignList = Campaign::where('user_id',Auth::user()->id)->orderBy('updated_at','DESC')->paginate(10);
+        $campaignList = Campaign::where('user_id',Auth::user()->id)->orderBy('start_at','DESC')->paginate(10);
 
         return view('user.campaign.campaignList',compact('campaignList'));
     }
