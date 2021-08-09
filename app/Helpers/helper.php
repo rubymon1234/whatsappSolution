@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use DB;
 use Redirect;
 use Validator;
 use App\Models\Domain;
@@ -8,6 +9,7 @@ use App\Models\RoleUser;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Plan;
+use App\Models\CurrentPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -73,5 +75,32 @@ class Helper {
         $charid = strtolower(md5(uniqid(rand(), true)));
         $salt =  substr($charid, 0, 4).substr($charid, 4, 4).substr($charid,9, 4).substr($charid,12, 4);
         return $salt;
+    }
+
+    public static function getUserActivePlans($user_id){
+        $plan = array();
+        $user_id = Crypt::decrypt($user_id);
+        $plans = DB::table('current_plans')->where('current_plans.user_id',$user_id)->where('current_plans.is_status',1)
+                 ->leftJoin('plans', 'plans.id', '=', 'current_plans.plan_id')
+                 ->select('current_plans.*','plans.plan_validity as planValidity','plans.plan_name')
+                 ->first();
+            /*echo "<pre>";
+            print_r($plans);
+            exit();*/
+        if(isset($plans)){
+            $today_date = date('Y-m-d');
+            if($plans->plan_validity >= $today_date){
+                $status = 'Active';
+            }else{
+                $status = 'Expired';
+            }
+            if($plans->plan_validity ==NULL){
+                $status = '<a href="'.route('user.plan.my.plans').'">Pack Need to active</a>';
+            }
+            $plan['plan_name'] = $plans->plan_name;
+            $plan['status'] = $status;
+            $plan['daily'] = $plans->daily_count; 
+        }
+        return $plan;
     }
 }
