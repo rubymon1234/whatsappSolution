@@ -80,7 +80,7 @@
                     </ul>
                 </li>
             @endpermission
-            @permission(('user.instance.*'))
+            @permission(('user.compose.*'))
                 <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="message-square"></i></span>
@@ -89,7 +89,7 @@
                     <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.*') || Route::is('user.campaign.*')? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
-                                @permission('user.recharge.transaction.view')
+                                @permission('user.compose.sent.message')
                                 <li class="nav-item {{ (Route::is('user.compose.sent.message') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.compose.sent.message') }}">Compose</a>
                                 </li>
@@ -97,6 +97,11 @@
                                 @permission('user.campaign.view')
                                 <li class="nav-item {{ (Route::is('user.campaign.view') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.campaign.view') }}">Sent</a>
+                                </li>
+                                @endpermission
+                                @permission('user.compose.scrub.view')
+                                <li class="nav-item {{ (Route::is('user.compose.scrub.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.compose.scrub.view') }}">Scrub List</a>
                                 </li>
                                 @endpermission
                             </ul>

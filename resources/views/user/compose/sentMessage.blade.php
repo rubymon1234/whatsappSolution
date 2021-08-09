@@ -3,21 +3,18 @@
 @section('content')
  <!-- select2 CSS -->
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
 
+<div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
 <div class="alert alert-danger alert-dismissable" id="error_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <p class="errorText"></p>
 </div>
 <div class="alert alert-success alert-dismissable" id="success_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-
 </div>
 <div class="alert alert-warning alert-dismissable" id="warning_message" style="display: none;">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-
 </div>
-
    <h6 class="hk-pg-title">@yield('title') :: Compose </h6>
    <p class="mb-20"></p>
     <div class="row">

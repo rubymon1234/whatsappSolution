@@ -32,6 +32,11 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/sent/message', 'User\ComposeController@getComposeView')->name('user.compose.sent.message')->middleware(['permission:user.compose.sent.message']);
 	Route::post('/sent/message', 'User\ComposeController@postComposeView')->name('user.compose.sent.message')->middleware(['permission:user.compose.sent.message']);
 
+	//SCRUB MANAGEMENT
+	Route::get('/compose/scrub-view', 'User\ScrubController@getScrubView')->name('user.compose.scrub.view')->middleware(['permission:user.compose.scrub.view']);
+	Route::get('/compose/scrub-create', 'User\ScrubController@getScrubCreate')->name('user.compose.sent.create')->middleware(['permission:user.compose.scrub.create']);
+	Route::post('/compose/scrub-create', 'User\ScrubController@postScrubCreate')->name('user.compose.scrub.create')->middleware(['permission:user.compose.scrub.create']);
+
 	//MY PLAN
 	Route::get('/my/plan', 'User\PlanController@getActivePlans')->name('user.plan.my.plans')->middleware(['permission:user.plan.my.plans']);
 	Route::post('/my/plan', 'User\PlanController@postActivePlans')->name('user.plan.my.plans')->middleware(['permission:user.plan.my.plans']);

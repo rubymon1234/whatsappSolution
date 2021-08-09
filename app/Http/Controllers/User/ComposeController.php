@@ -104,8 +104,9 @@ class ComposeController extends Controller
 	    				$plan_validity 	= $currentPlan->plan_validity;
 	    				
 	    				$campaignFetch = Campaign::where('user_id',$user_id)
-	    										->where('current_plan_id',$currentPlan->id)
+	    										->where('current_plan_id',$currentPlan->plan_id)
 	    										->select( DB::raw('sum(count) as total'))
+	    										->whereIn('is_status',[1,2,0])
 	    										->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
 	    			//create csv
 		            $num_count =0;
