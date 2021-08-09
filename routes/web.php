@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	//SCRUB MANAGEMENT
 	Route::get('/compose/scrub-view', 'User\ScrubController@getScrubView')->name('user.compose.scrub.view')->middleware(['permission:user.compose.scrub.view']);
-	Route::get('/compose/scrub-create', 'User\ScrubController@getScrubCreate')->name('user.compose.sent.create')->middleware(['permission:user.compose.scrub.create']);
+	Route::get('/compose/scrub-create', 'User\ScrubController@getScrubCreate')->name('user.compose.scrub.create')->middleware(['permission:user.compose.scrub.create']);
 	Route::post('/compose/scrub-create', 'User\ScrubController@postScrubCreate')->name('user.compose.scrub.create')->middleware(['permission:user.compose.scrub.create']);
 
 	//MY PLAN
