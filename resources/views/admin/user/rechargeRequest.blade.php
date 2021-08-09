@@ -77,8 +77,11 @@
                 <p class="mt-10 mb-20"> {{ $plan->plan_name }}</p>
                 <h6>Daily Count</h6>
                 <p class="mt-10"> {{ $plan->daily_count }} </p>
+                <h6>Scrub Count</h6>
+                <p class="mt-10"> {{ $plan->scrub_count }} </p>
                 <h6>Plan Validity</h6>
                 <p class="mt-10"> {{ $plan->plan_validity }} </p>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

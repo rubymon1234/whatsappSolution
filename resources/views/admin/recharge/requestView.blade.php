@@ -103,6 +103,8 @@
                     <p class="mt-10 mb-20"> {{ $planDetail->plan_name }}</p>
                     <h6>Daily Count</h6>
                     <p class="mt-10"> {{ $planDetail->daily_count }} </p>
+                    <h6>Scrub Count</h6>
+                    <p class="mt-10"> {{ $planDetail->scrub_count }} </p>
                     <h6>Plan Validity</h6>
                     <p class="mt-10"> {{ $planDetail->plan_validity }} </p>
                 </div>

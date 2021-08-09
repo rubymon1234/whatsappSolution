@@ -27,6 +27,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Scrub count count</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="scrub_count" class="form-control" placeholder="Enter scrub count." value="{{ old('scrub_count') }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Validity (Days)</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="plan_validity" class="form-control" placeholder="Enter plan validity." value="{{ old('plan_validity') }}">

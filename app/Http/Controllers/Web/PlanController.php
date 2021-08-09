@@ -45,12 +45,14 @@ class PlanController extends Controller
                 'plan_name' => 'required|unique:plans',
                 'daily_count' => 'required|numeric',
                 'plan_validity' => 'required|numeric',
+                'scrub_count' => 'required|numeric',
             ];
             $messages = [
                 'plan_name.required' => 'Plan Name is required',
                 'plan_name.unique' => 'Plan Name Already Exist',
                 'daily_count.required' => 'Daily count is required',
                 'plan_validity.required' => 'Plan validity is required',
+                'scrub_count.required' => 'scrub count is required',
             ];
 
             $validator = Validator::make(Input::all(), $rule, $messages);
@@ -63,6 +65,7 @@ class PlanController extends Controller
                 $newPlan->plan_name         = $request->get('plan_name');
                 $newPlan->daily_count  = $request->get('daily_count');
                 $newPlan->plan_validity  = $request->get('plan_validity');
+                $newPlan->scrub_count = $request->get('scrub_count');
                 if($newPlan->save())
                     return redirect()->route('global.plan.view')->with('success_message', 'New Plan successfully Added ');
             }
