@@ -51,8 +51,8 @@
                                     <td >{{$scrub->instance_name }}</td>
                                     <td ><b style="font-weight: bold;"></b>{{ $scrub->count }} </td>
                                     
-                                    <td>10</td>
-                                    <td>20</td>
+                                    <td>{{ $scrub->registered_count }}</td>
+                                    <td>{{ $scrub->not_registered_count }}</td>
                                     <td>
                                         @if($scrub->is_status==1)
                                             <span class="badge badge-success">completed</span>
