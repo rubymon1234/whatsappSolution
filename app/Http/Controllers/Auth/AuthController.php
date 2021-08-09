@@ -91,9 +91,11 @@ class AuthController extends Controller
 
         //last week
         $lastWeekStart = $yesterday->subDays($yesterday->dayOfWeek)->subWeek();
+        $lastWeekStartDate = $lastWeekStart->addDays(1);
         $lastWeekStartDate = $lastWeekStart->toDateString();
-        $lastWeekEnd = $lastWeekStart->addDays(7); 
-        $lastWeek = CampaignsOutbound::whereBetween('created_at', [$lastWeekStartDate, $lastWeekEnd->toDateString()])->count();
+        $lastWeekEnd = $lastWeekStart->addDays(6);
+         
+        $lastWeek = CampaignsOutbound::whereBetween('created_at', [$lastWeekStartDate.' 00:00:00', $lastWeekEnd->toDateString().' 23:59:59'])->count();
         //this month
         $dashboardthisMonth= CampaignsOutbound::whereMonth('created_at', date('m'))->count();
         //last month
@@ -133,7 +135,7 @@ class AuthController extends Controller
         $lastWeekEnd = $lastWeekStart->addDays(6);
         
         $lastWeek = CampaignsOutbound::where('user_id',$user_id)->whereBetween('created_at', [$lastWeekStartDate.' 00:00:00', $lastWeekEnd->toDateString().' 23:59:59'])->count();
-        
+
         //this month
         $dashboardthisMonth= CampaignsOutbound::where('user_id',$user_id)->whereMonth('created_at', date('m'))->count();
         //last month
