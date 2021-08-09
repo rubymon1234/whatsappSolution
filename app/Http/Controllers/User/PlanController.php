@@ -23,7 +23,7 @@ class PlanController extends Controller
             ->leftJoin('plans', 'plans.id', '=', 'current_plans.plan_id')
             ->where('current_plans.user_id',Auth::user()->id) // pending for approval
             ->whereIn('current_plans.is_status',['1','2','0']) // pending for approval
-            ->select('users.name','plans.plan_name','current_plans.is_status','plans.daily_count','plans.plan_validity','current_plans.plan_validity as current_validity','current_plans.created_at','current_plans.id as id')
+            ->select('users.name','plans.plan_name','current_plans.is_status','plans.daily_count','plans.plan_validity','current_plans.plan_validity as current_validity','current_plans.created_at','current_plans.id as id','current_plans.scrub_count')
             ->latest('current_plans.updated_at')
             ->paginate(9);
 

@@ -34,6 +34,10 @@
                             <td>daily count</td>
                             <td>@if($crtplan->daily_count) {{ $crtplan->daily_count }} @else {{ $crtplan->daily_count }} Days @endif</td>
                         </tr>
+                        <tr>
+                            <td>scrub count</td>
+                            <td>@if($crtplan->scrub_count) {{ $crtplan->scrub_count }} @else {{ $crtplan->scrub_count }} @endif</td>
+                        </tr>
                          </tr>
                                 </table>
 							</div>
