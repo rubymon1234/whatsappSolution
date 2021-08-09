@@ -122,11 +122,6 @@
                                     <a class="nav-link" href="{{ route('user.campaign.view') }}">Sent</a>
                                 </li>
                                 @endpermission
-                                @permission('user.compose.scrub.view')
-                                <li class="nav-item {{ (Route::is('user.compose.scrub.view') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.compose.scrub.view') }}">List Scrubs</a>
-                                </li>
-                                @endpermission
                             </ul>
                         </li>
                     </ul>
