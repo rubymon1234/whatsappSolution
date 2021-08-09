@@ -7,33 +7,16 @@
         <div class="col-xl-12">
             <div class="hk-row">
             	<div class="col-lg-12 col-sm-12">
-            	<div class="card card-profile-feed">
-					<ul class="list-group list-group-flush">
-                        <li class="list-group-item" style="line-height: 28px;">
-                        	<span>
-                        		Hello <b style="font-weight: bold;">{{ Auth::user()->name }}
-                        		</b>, welcome back!<br>
-You have logged in from <b style="font-weight: bold;">{{ $_SERVER['REMOTE_ADDR'] }}</b> @ {{ date('l jS \of F Y h:i:s A') }}
-                        	</li>
-                        	@php
-				            $activePlan = \App\Helpers\Helper::getUserActivePlans(Crypt::encrypt(Auth::user()->id));
-				            @endphp
-				        @if(isset($activePlan['plan_name']))
-                        
-                        <li class="list-group-item"><span><i class="ion ion-md-home font-18 text-light-20 mr-10"></i><span>Plan name:</span></span><span class="ml-5 text-dark">{{ $activePlan['plan_name'] }}</span></li>
-                        <li class="list-group-item"><span><i class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>Status:</span></span><span class="ml-5 text-dark"><?php echo $activePlan['status'] ?></span></li>
-                        <li class="list-group-item"><span><i class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span></span></span><span class="ml-5 text-dark">Messages/Day {{ $activePlan['daily']}}</span></li>
-                        @else
-                        <li class="list-group-item">
-                        	<span>
-                        		<i class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i>
-                        		<span>WhatsApp Service:</span>
-                        	</span>
-                        	<span class="ml-5 text-dark">InActive</span>
-                        </li>
-                        @endif
-                    </ul>
-				 </div>
+				 @if (Session::has('login_success'))
+				 	<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <span style="line-height: 40px;">
+                        		Hi <b style="font-weight: bold;">{{ Auth::user()->name }}
+                        		</b>, welcome back!<br> </span> You have logged in from <b style="font-weight: bold;">{{ $_SERVER['REMOTE_ADDR'] }}</b> @ {{ date('l jS \of F Y h:i:s A') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                @endif
 				</div>
 				<div class="col-lg-3 col-sm-6">
 					<div class="card card-sm">

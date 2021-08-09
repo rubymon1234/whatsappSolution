@@ -47,6 +47,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	 //REPORT MANAGEMENT
 	Route::get('/report/consolidated', 'User\ReportController@getConsolidatedReport')->name('user.report.consolidated')->middleware(['permission:user.report.consolidated']);
 });
+//PROFILE MANAGEMENT
+Route::get('/my/profile', 'User\UserController@getProfileDetail')->name('global.my.profile')->middleware(['permission:global.my.profile']);
+Route::post('/my/profile', 'User\UserController@postProfileDetail')->name('global.my.profile')->middleware(['permission:global.my.profile']);
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);
 

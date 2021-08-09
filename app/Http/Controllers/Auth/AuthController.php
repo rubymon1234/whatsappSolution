@@ -14,6 +14,7 @@ use App\Models\CampaignsOutbound;
 use App\Helpers\Helper;
 use URL;
 use Redirect;
+use Session;
 use DateTime;
 use \Carbon\Carbon;
 
@@ -54,6 +55,7 @@ class AuthController extends Controller
                         //get user role details
                         $user      = Auth::user(); 
                         $roleSlug   = $user->roles->first()->slug;
+                        Session::flash('login_success', 'Success message here');
                         return redirect()->route($roleSlug)->with('login_success_message', 'Login Successfully');
                     }else{
                        return Redirect::back()

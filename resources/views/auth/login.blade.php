@@ -67,9 +67,9 @@
                                 @endif
                                 </div>
                             </div>
-                             <div class="custom-control custom-checkbox mb-25">
+                             {{-- <div class="custom-control custom-checkbox mb-25">
                                  <a class="d-flex auth-brand font-14">{{ __('Forgot Your Password?') }} </a>
-                            </div>
+                            </div> --}}
                             <button class="btn btn-primary btn-block" type="submit">Login</button>
                         </form>
                     </div>

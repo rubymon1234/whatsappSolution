@@ -84,9 +84,6 @@ class Helper {
                  ->leftJoin('plans', 'plans.id', '=', 'current_plans.plan_id')
                  ->select('current_plans.*','plans.plan_validity as planValidity','plans.plan_name')
                  ->first();
-            /*echo "<pre>";
-            print_r($plans);
-            exit();*/
         if(isset($plans)){
             $today_date = date('Y-m-d');
             if($plans->plan_validity >= $today_date){

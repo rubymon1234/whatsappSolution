@@ -66,7 +66,9 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
-                        <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
+                        @permission('global.my.profile')
+                        <a class="dropdown-item" href="{{ route('global.my.profile')}}"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
+                        @endpermission
                         @permission(('user.plan.my.plans'))
                         <a class="dropdown-item" href="{{ route('user.plan.my.plans') }}"><i class="dropdown-icon zmdi zmdi-card"></i><span>My Plans</span></a>
                         @endpermission
