@@ -109,7 +109,7 @@
                         <span class="feather-icon"><i data-feather="message-square"></i></span>
                         <span class="nav-link-text">Messages</span>
                     </a>
-                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.sent.*') || Route::is('user.campaign.*')? 'show' : '') }} collapse ">
+                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.sent.message') || Route::is('user.campaign.view')? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                                 @permission('user.compose.sent.message')
