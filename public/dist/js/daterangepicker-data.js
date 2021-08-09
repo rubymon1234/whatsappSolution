@@ -69,7 +69,7 @@ $(function() {
     cb(start, end);
 	
 	/* Time picker*/
-	$('.input-timepicker').daterangepicker({
+	/*$('.input-timepicker').daterangepicker({
 		timePicker: true,
 		timePicker24Hour: true,
 		timePickerIncrement: 1,
@@ -79,6 +79,6 @@ $(function() {
 		}
 	}).on('show.daterangepicker', function (ev, picker) {
 		picker.container.find(".calendar-table").hide();
-	});
+	});*/
 
 });

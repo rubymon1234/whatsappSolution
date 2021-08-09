@@ -159,14 +159,14 @@
     <script src="{{ asset('dist/js/jquery.easypiechart.min.js') }}"></script>
 
 	<!-- Flot Charts JavaScript -->
-    <script src="{{ asset('dist/js/excanvas.min.js') }}"></script>
+    {{-- <script src="{{ asset('dist/js/excanvas.min.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.resize.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.time.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset('dist/js/jquery.flot.crosshair.js') }}"></script>
-    <script src="{{ asset('dist/js/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ asset('dist/js/jquery.flot.tooltip.min.js') }}"></script> --}}
 
 	<!-- EChartJS JavaScript -->
     <script src="{{ asset('dist/js/echarts-en.min.js') }}"></script>

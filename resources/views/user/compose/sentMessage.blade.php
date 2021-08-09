@@ -3,6 +3,8 @@
 @section('content')
  <!-- select2 CSS -->
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<!-- Daterangepicker CSS -->
+    <link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
 <div class="alert alert-danger alert-dismissable" id="error_message" style="display: none;">
@@ -109,18 +111,9 @@
                                 </div>
                                 <div class="col-md-2 form-group schduleRow">
                                     {{-- <label for="">Time</label> --}}
-                                    <input type="time" class="form-control" id="sch_time" name="sch_time">
+                                    <input type="text" class="form-control input-timepicker" id="sch_time" name="sch_time">
                                 </div>
                             </div>
-                            {{-- <div class="row schduleRow" >
-                                <div class="col-md-6 form-group">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="">Time</label>
-                                    <input type="time" class="form-control" id="sch_time" name="sch_time">
-                                </div>
-                            </div> --}}
-
                             <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="submit">Send</button>
                         </form>
                     </div>
@@ -141,7 +134,56 @@
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2-data.js') }}"></script>
 <script src="{{ asset('dist/js/custom-script.js') }}"></script>
+<!-- Daterangepicker JavaScript -->
+<script src="{{ asset('dist/js/moment.min.js') }}"></script>
+<script src="{{ asset('dist/js/daterangepicker.js') }}"></script>
+{{-- <script src="{{ asset('dist/js/daterangepicker-data.js') }}"></script> --}}
+<style type="text/css">
+    .daterangepicker.ltr .drp-calendar.left{
+        display: none;
+    }
+    .daterangepicker .drp-selected {
+        display: none;
+    }
+</style>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script type="text/javascript">
+    $('.input-timepicker').daterangepicker({
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 1,
+        timePickerSeconds: true,
+        locale: {
+            format: 'HH:mm:ss'
+        },
+        onSelect: function(d,s) {
+            alert('s');
+        },
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find(".calendar-table").hide();
+    }).change(function(date) {
+    });
+    $('.input-timepicker').val('00:00:00');
+    $('.input-timepicker').change(function(e){
+        selectedDate = $('.input-timepicker').val();
+        myArr = selectedDate.split(" ");
+        $('.input-timepicker').val(myArr[2]);
+    });
+     $('#is_scheduled').on({
+            change : function() {
+                if(this.checked) {
+                    $('.schedule_cls').show();
+                    $('#scheduled_date').prop('required',true);
+                    $('#scheduled_time').prop('required',true);
+                }else{
+                    $('.schedule_cls').hide();
+                    $('#scheduled_date').val('');
+                    $('#scheduled_time').val('');
+                    $('#scheduled_date').prop('required',false);
+                    $('#scheduled_time').prop('required',false);
+                }
+            },
+        });
     $(document).on('click', '.toggle2', function (e) {
         var scheduleOn = $(".toggle-on").hasClass('active');
         if(scheduleOn){

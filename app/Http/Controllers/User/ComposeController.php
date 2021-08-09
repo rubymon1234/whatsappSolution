@@ -84,7 +84,7 @@ class ComposeController extends Controller
 	    		if($request->is_scheduled==1){
 	            	if(isset($request->sch_date) && isset($request->sch_time)){
 	            		$campaign_start_date = $request->sch_date;
-	            		$campaign_start_time = $request->sch_time.':00';
+	            		$campaign_start_time = $request->sch_time;
 	            	}else{
 	            		return response()->json([
 					                'success' => false,

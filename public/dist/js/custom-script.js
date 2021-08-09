@@ -1,4 +1,5 @@
   $(document).ready(function(){
+
         $(".toggle-on").removeClass('active');
         $(".toggle-off").addClass('active');
         $(".toggle-inner").css('width','75px');
@@ -11,7 +12,9 @@
             $('.schduleRow').hide();
             $('#is_scheduled').val(0);
         }
-    })
+
+    });
+  
  function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     //if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))//46 '.'
