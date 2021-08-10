@@ -29,6 +29,7 @@
                                 <th >Reseller Name</th>
                                 <th>Plan Name</th>
                                 <th>Plan Count</th>
+                                <th>Scrub Count</th>
                                 <th>Plan Validity(days)</th>
                                 <th>Request Time</th>
                                 <th>Manage</th>
@@ -46,6 +47,7 @@
                                     </span> </td>
                                     <td> <span class="name">{{ $plan->plan_name }}</span> </td>
                                      <td> <span class="product">{{ $plan->daily_count }}</span> </td>
+                                     <td> <span class="product">{{ $plan->scrub_count }}</span> </td>
                                     <td >{{$plan->plan_validity }}</td>
                                     <td>
                                         {{ $plan->created_at}}

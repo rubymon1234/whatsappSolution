@@ -33,7 +33,7 @@ class RechargeController extends Controller
         $plans = DB::table('plan_requests')
             ->leftJoin('plans', 'plans.id', '=', 'plan_requests.plan_id')
             ->leftJoin('users', 'users.id', '=', 'plan_requests.user_id')
-            ->select('plans.plan_name','plans.id as plan_id','plan_requests.id as id','plans.daily_count','plans.plan_validity','plan_requests.credit','plan_requests.created_at','users.name as user_name','plan_requests.reseller_id')
+            ->select('plans.plan_name','plans.id as plan_id','plan_requests.id as id','plans.daily_count','plans.plan_validity','plan_requests.credit','plan_requests.created_at','users.name as user_name','plan_requests.reseller_id','plans.scrub_count')
             ->where('plan_requests.is_status','=','2') //pending for approval
             ->paginate(10);
 
