@@ -94,6 +94,11 @@
                                         <div class="col-sm-5">
                                             <input type="text" name="name" class="form-control" placeholder="Enter user name." value="{{ Auth::user()->name }}">
                                         </div>
+                                    </div><div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label">mobile</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number." value="{{ Auth::user()->mobile }}">
+                                        </div>
                                     </div><hr>
                                     <div class="form-group row mb-0">
                                         <div class="col-sm-10" >

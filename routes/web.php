@@ -58,6 +58,7 @@ Route::post('/ajax/request-approve', 'Web\AjaxController@postRequestApprove')->n
 Route::post('/ajax/request-reject', 'Auth\AjaxController@postRequestReject')->name('ajax.request.reject')->middleware(['permission:ajax.request.reject']);
 //user campaign cancel
 Route::post('/ajax/cancel-campaign', 'Web\AjaxController@getCancelCampaign')->name('ajax.cancel.campaign');
+Route::post('/ajax/block-user', 'Web\AjaxController@getBlockUser')->name('ajax.block.user');
 
 Route::post('/ajax/current-recharge-status-change', 'Web\AjaxController@postCurrentStatus')->name('ajax.current.status.change');
 

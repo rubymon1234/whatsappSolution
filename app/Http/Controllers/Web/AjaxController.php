@@ -8,6 +8,7 @@ use App\Models\Instance;
 use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
 use App\Models\Plan;
+use App\Models\User;
 use App\Models\CurrentPlan;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
@@ -164,6 +165,27 @@ class AjaxController extends Controller
                 'message' => 'Oops, Something Went Wrong',
             ]);
     	}
-
     }
+   public function getBlockUser(Request $request){
+
+   		try{
+
+   			$userUpdate = User::find(Crypt::decryptString($request->user));
+    		$userUpdate->is_status = $request->status; // block & unblock
+    		if($userUpdate->save()){
+
+    			return response()->json([
+		                'success' => true,
+		                'message' =>'success',
+		                'response' => 'User Details Updated Successfully '
+		            ]);
+    		}
+		}catch(\Exception $e){
+
+			return response()->json([
+	            'success' => false,
+	            'message' => 'Oops, Something Went Wrong',
+	        ]);
+    	}
+   }
 }

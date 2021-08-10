@@ -35,9 +35,11 @@ class UserController extends Controller
 
     		$rule = [
                 'name' => 'required',
+                'mobile' => 'required',
             ];
             $messages = [
                 'name.required' => 'User Name is required',
+                'mobile.required' => 'Mobile Number is required',
             ];
 
             $validator = Validator::make(Input::all(), $rule, $messages);
@@ -47,9 +49,10 @@ class UserController extends Controller
             }else{
 
             	$updateUser = User::find(Auth::user()->id);
-            	$updateUser->name = $request->name;
+                $updateUser->name = $request->name;
+            	$updateUser->mobile = $request->mobile;
             	if($updateUser->save()){
-                    return Redirect::back()->with('success_message', 'User name updated successfully')->withInput(['tab'=>$tab]);;
+                    return Redirect::back()->with('success_message', 'User Detail updated successfully')->withInput(['tab'=>$tab]);;
             	}
             }
     	}elseif($request->update =='change'){

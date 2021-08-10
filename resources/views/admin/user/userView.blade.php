@@ -73,6 +73,8 @@
                                            <span class="badge badge-success">Active</span>
                                         @elseif($user->is_status==2)
                                             <span class="badge badge-warning"> Pending</span>
+                                        @elseif($user->is_status==3)
+                                            <span class="badge badge-danger"> blocked</span>
                                         @endif
                                     </td>
                                     <td>
@@ -84,8 +86,14 @@
                                     @endif
                                     </td>
                                     <td style="text-align: left;">
-                                        <a href="">
-                                            <i class="fa fa-ban" data-toggle="tooltip" data-original-title="Block User" onclick="doubleConfirm({{ $user->id }})"></i></a>&nbsp;&nbsp;
+                                         @if($user->is_status !=3)
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-ban" data-toggle="tooltip" data-original-title="block user" onclick="doubleConfirm('{{ Crypt::encryptString($user->id) }}',3)"></i></a>&nbsp;&nbsp;
+                                        @endif
+                                        @if($user->is_status ==3)
+                                        <a href="javascript:void(0)">
+                                            <i class="fa fa-unlock" data-toggle="tooltip" data-original-title="unBlock user" onclick="doubleConfirm('{{ Crypt::encryptString($user->id) }}',1)"></i></a>&nbsp;&nbsp;
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -119,10 +127,36 @@
     <!-- /Row -->
 </div>
 <script type="text/javascript">
-    function doubleConfirm(permission_id,url){
-        if (confirm('Are you sure you want to block the user ?')){
-
+function doubleConfirm(user, status){
+if (confirm('Are you sure you want to continue ?')){
+    
+    $.ajax(
+        {
+            url: '{{ route('ajax.block.user') }}',
+            dataType: 'json', // what to expect back from the PHP script
+            cache: false,
+            data: { _token: "{{ csrf_token() }}", user : user , status: status } ,
+            type: 'POST',
+            beforeSend: function () {
+                $('.preloader-it').show();
+            },
+            complete: function () {
+                $('.preloader-it').hide();
+            },
+            success: function (result) {
+                $('#loading').hide();
+                if(result.success){
+                    $('.preloader-it').hide();
+                    //alert(result.response);
+                    location.reload();
+                }
+            },
+            error: function (response) {
+                console.log('Server error');
+            }
         }
-    }
+    );
+}
+}
 </script>
 @endsection
