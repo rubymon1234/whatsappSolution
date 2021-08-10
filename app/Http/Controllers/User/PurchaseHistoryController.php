@@ -15,13 +15,14 @@ class PurchaseHistoryController extends Controller
     */
    	public function getPurchaseHistory()
     {
+        
         $purchaseHistory = DB::table('purchase_histories')
             ->leftJoin('plan_requests', 'plan_requests.id', '=', 'purchase_histories.plan_request_id')
             ->leftJoin('users', 'users.id', '=', 'purchase_histories.user_id')
             ->leftJoin('plans', 'plans.id', '=', 'purchase_histories.plan_id')
             ->where('purchase_histories.user_id',Auth::user()->id) // pending for approval
             ->where('purchase_histories.is_status',1) // pending for approval
-            ->select('users.name','plans.plan_name','purchase_histories.is_status','plans.daily_count','plans.plan_validity','plan_requests.credit','purchase_histories.created_at')
+            ->select('users.name','plans.plan_name','purchase_histories.is_status','plans.daily_count','plans.plan_validity','plan_requests.credit','purchase_histories.created_at','plans.scrub_count')
             ->latest('purchase_histories.updated_at')
             ->paginate(10);
 
