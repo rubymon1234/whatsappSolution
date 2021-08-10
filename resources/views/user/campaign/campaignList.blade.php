@@ -79,7 +79,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($campaign->is_status !=3)
+                                        @if($campaign->is_status ==0)
                                         <a href="javascript:void()">
                                             <i class="fa fa-ban" data-toggle="tooltip" data-original-title="Cancel Campaign" onclick="doubleConfirm('{{ Crypt::encryptString($campaign->id) }}')"></i></a>&nbsp;&nbsp;
                                         @endif
