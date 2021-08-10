@@ -33,6 +33,7 @@
                                 <th>Message</th>
                                 <th>Sent Time</th>
                                 <th>Status</th>
+                                <th>Manage</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +74,14 @@
                                         <span class="badge badge-info">Sending</span>
                                         @elseif($campaign->is_status==1)
                                             <span class="badge badge-success">Sent </span>
+                                        @elseif($campaign->is_status==3)
+                                            <span class="badge badge-danger">cancelled </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($campaign->is_status !=3)
+                                        <a href="javascript:void()">
+                                            <i class="fa fa-ban" data-toggle="tooltip" data-original-title="Cancel Campaign" onclick="doubleConfirm('{{ Crypt::encryptString($campaign->id) }}')"></i></a>&nbsp;&nbsp;
                                         @endif
                                     </td>
                                 </tr>
@@ -104,4 +113,37 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function doubleConfirm(campaign_id){
+        if (confirm('Are you sure you want to cancel this campaign ?')){
+            
+            $.ajax(
+                {
+                    url: '{{ route('ajax.cancel.campaign') }}',
+                    dataType: 'json', // what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", campaign_id : campaign_id} ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
+                            $('.preloader-it').hide();
+                            //alert(result.response);
+                            location.reload();
+                        }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
+                    }
+                }
+            );
+        }
+    }
+    </script>
 @endsection

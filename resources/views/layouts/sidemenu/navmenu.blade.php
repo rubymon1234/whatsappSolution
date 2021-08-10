@@ -103,7 +103,7 @@
             @endpermission
 
 
-            @permission(('user.compose.sent.message') || ('user.campaign.view'))
+            @permission(('user.compose.*'))
                 <li class="nav-item {{ (Route::is('user.compose.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp7" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="message-square"></i></span>

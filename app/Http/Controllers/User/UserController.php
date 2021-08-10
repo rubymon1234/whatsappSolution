@@ -62,11 +62,11 @@ class UserController extends Controller
 
 	        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
 	            //Current password and new password are same
-	            return redirect()->back()->with("p_error_message","New Password cannot be same as your current password. Please choose a different password.")->withInput(['tab'=>$tab]);
+	            return redirect()->back()->with("error_message","New Password cannot be same as your current password. Please choose a different password.")->withInput(['tab'=>$tab]);
 	        }
 	        if(strcmp($request->get('new_password'), $request->get('confirm_password')) != 0){
 	            //Current password and new password are same
-	            return redirect()->back()->with("p_error_message","New password & confirm password does not match")->withInput(['tab'=>$tab]);
+	            return redirect()->back()->with("error_message","New password & confirm password does not match")->withInput(['tab'=>$tab]);
 	        }
 	        $currentUser = User::find(Auth::user()->id);
 	        if($currentUser)
@@ -77,10 +77,10 @@ class UserController extends Controller
 	        }
 	        else
 	        {
-	            return redirect()->back()->with("p_error_message","Something went wrong")->withInput(['tab'=>$tab]);
+	            return redirect()->back()->with("error_message","Something went wrong")->withInput(['tab'=>$tab]);
 	        }
 	        
-	        return redirect()->back()->with("p_success_message","Password changed successfully")->withInput(['tab'=>$tab]);
+	        return redirect()->back()->with("success_message","Password changed successfully")->withInput(['tab'=>$tab]);
     	}
     }
 }	

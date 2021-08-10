@@ -9,6 +9,7 @@ use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
 use App\Models\Plan;
 use App\Models\CurrentPlan;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -141,5 +142,28 @@ class AjaxController extends Controller
                 'message' => 'Oops, Something Went Wrong',
             ]);
     	}
+    }
+
+    public function getCancelCampaign(Request $request) {
+
+    	try{
+    		$campaignUpdate = Campaign::find(Crypt::decryptString($request->campaign_id));
+    		$campaignUpdate->is_status = 3; // Cancel
+    		if($campaignUpdate->save()){
+
+    			return response()->json([
+		                'success' => true,
+		                'message' =>'success',
+		                'response' => 'Campaign Successfully Canceled'
+		            ]);
+    		}
+    	}catch(\Exception $e){
+
+			return response()->json([
+                'success' => false,
+                'message' => 'Oops, Something Went Wrong',
+            ]);
+    	}
+
     }
 }
