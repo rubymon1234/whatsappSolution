@@ -46,6 +46,16 @@
                 <h3 style="color: #273b86; font-weight: bold;">{{ $domainDetail->company_name }}</h3>
             </a>
             <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item">
+                    <?php
+                    $Hour = date('H');
+                    $Minutes = date('i');
+                    $Seconds = date('s');
+                    $result = strtotime($Hour.':'.$Minutes.':'.$Seconds) - strtotime('today');
+                    ?>
+                    <input type="hidden" value="{{ $result }}" id="hr_mn_se_seconnds" />
+                    <span style="font-size: 15px;">10-08-2021 <span id="hr_mn_se_timer">{{ date('H:i:s') }}</span></span>
+                </li>
                 <li class="nav-item dropdown dropdown-authentication">
                     <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @php $user = Auth::user() @endphp
@@ -176,6 +186,29 @@
     <!-- Init JavaScript -->
     <script src="{{ asset('dist/js/init.js') }}"></script>
 	<script src="{{ asset('dist/js/dashboard2-data.js') }}"></script>
+    <script type="text/javascript">
+        var timerVar = setInterval(countTimer, 1000);
+        var totalSeconds = document.getElementById('hr_mn_se_seconnds').value;
 
+    function countTimer() {
+        ++totalSeconds;
+        var hour = Math.floor(totalSeconds /3600);
+        var minute = Math.floor((totalSeconds - hour*3600)/60);
+        var seconds = totalSeconds - (hour*3600 + minute*60);
+        if(hour.toString().length == 1)
+        {
+            var hour='0' + hour;
+        }
+        if(minute.toString().length == 1)
+        {
+            var minute='0' + minute;
+        }
+        if(seconds.toString().length == 1)
+        {
+            var seconds='0' + seconds;
+        }
+        document.getElementById("hr_mn_se_timer").innerHTML = hour + ":" + minute + ":" + seconds;
+    }
+    </script>
 </body>
 </html>
