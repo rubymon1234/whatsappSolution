@@ -56,7 +56,7 @@ class UserController extends Controller
 	    	if($request->Update =='Save'){
           
                 $rule = [
-                    'name' => 'required|unique:users',
+                    'name' => 'required',
                     'email' => 'required|email',
                     'password' => 'required',
                     'mobile'        => 'required',
