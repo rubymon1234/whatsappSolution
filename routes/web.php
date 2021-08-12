@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	 //REPORT MANAGEMENT
 	Route::get('/report/consolidated', 'User\ReportController@getConsolidatedReport')->name('user.report.consolidated')->middleware(['permission:user.report.consolidated']);
 });
+Route::group(['middleware' => 'auth'], function () {
 //PROFILE MANAGEMENT
 Route::get('/my/profile', 'User\UserController@getProfileDetail')->name('global.my.profile')->middleware(['permission:global.my.profile']);
 Route::post('/my/profile', 'User\UserController@postProfileDetail')->name('global.my.profile')->middleware(['permission:global.my.profile']);
@@ -61,6 +62,6 @@ Route::post('/ajax/cancel-campaign', 'Web\AjaxController@getCancelCampaign')->na
 Route::post('/ajax/block-user', 'Web\AjaxController@getBlockUser')->name('ajax.block.user');
 
 Route::post('/ajax/current-recharge-status-change', 'Web\AjaxController@postCurrentStatus')->name('ajax.current.status.change');
-
+});
 //Errors
 Route::get('/permission/denid/403', 'Web\HomeController@accessDenied')->name('accessDenied');
