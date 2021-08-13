@@ -69,8 +69,12 @@
                                     </td>
                                     <td>
                                     @if($scrub->is_status==1)
-                                    <a href="{{ asset('uploads/scrubCsv/') }}/{{ $scrub->registered_file }}" class="badge badge-success" download>wh_registered</a>&nbsp;&nbsp;&nbsp;
+                                    @if($scrub->registered_count >0)
+                                    <a href="{{ asset('uploads/scrubCsv/') }}/{{ $scrub->registered_file }}" class="badge badge-success" download>wh_registered</a>
+                                    @endif &nbsp;&nbsp;&nbsp;
+                                    @if($scrub->not_registered_count >0)
                                     <a href="{{ asset('uploads/scrubCsv/') }}/{{ $scrub->not_registered_file }}" class="badge badge-success" download>wh_non_registered</a>
+                                    @endif
                                     @endif
                                 </tr>
                             @empty
