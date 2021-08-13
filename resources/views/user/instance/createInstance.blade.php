@@ -100,7 +100,7 @@
             <div class="modal-content bmd-modalContent">
                 <div class="modal-body" style="height: 500px;">
                   <div class="close-button">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="scanQRCodeModelClose">&times;</span></button>
                   </div>
               <div class="embed-responsive embed-responsive-16by9" style="height: 450px;">
                 <iframe src="" class="qrCode" title="WhatsappScan"></iframe>
@@ -109,8 +109,9 @@
             </div>
         </div>
     </div>
-@endsection
-<script type="text/javascript">
+    <!-- jQuery -->
+    <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
+    <script type="text/javascript">
     function __appQRScan(instance_id){
         if(typeof  instance_id !=='undefined' && instance_id !=''){
             $.ajax(
@@ -142,4 +143,9 @@
             );
         }
     }
+   $(document).on('click', '.scanQRCodeModelClose', function (e) {
+        e.preventDefault();
+        location.reload();
+    });
 </script>
+@endsection
