@@ -101,7 +101,7 @@ if (isset($argv[1]))
 			      				"status_message" => "$statusMessage",
 			      		);
 		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
-          //sleep(mt_rand(1,10));
+          sleep(mt_rand(5,15));
 
   		}
       fclose($handle);
