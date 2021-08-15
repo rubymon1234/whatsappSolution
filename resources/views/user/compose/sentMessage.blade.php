@@ -232,6 +232,7 @@
                         }else{
                             $("#success_message").show();
                             $("#success_message").text(response.response);
+                            $('#sendMessageForm')[0].reset();
                             /*window.setTimeout( function(){
                                 location.reload();
                             }, 4000);*/

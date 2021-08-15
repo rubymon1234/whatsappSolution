@@ -85,7 +85,7 @@ class UserController extends Controller
 	        
 	        return redirect()->back()->with("success_message","Password changed successfully")->withInput(['tab'=>$tab]);
     	}elseif($request->Cancel =='cancel'){
-            return Redirect::back()->with('warning_message', 'User Request is Rollback')->withInput(['tab'=>'']);
+            return Redirect::back()->with('warning_message', 'User request is rollback')->withInput(['tab'=>'']);
         }
     }
 }	

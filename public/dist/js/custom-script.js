@@ -12,7 +12,6 @@
             $('.schduleRow').hide();
             $('#is_scheduled').val(0);
         }
-
     });
   
  function isNumberKey(evt){
@@ -53,7 +52,7 @@ function smsCounter() {
     var maxLength = 1000;
     var counter_text = maxLength - char_count;
     //alert(msg);
-    $('#msg_count_id').empty().html(counter_text);  
+    $('#msg_count_id').empty().html(counter_text); 
 }
 $("#mobile").on({
            
@@ -72,15 +71,10 @@ function checkNumberCount() {
         return el != null && el != "";
     });
     //console.log(myArrayNew);
-    if(myArrayNew.length > 1000) {
-         alert("You've exceeded the 1000 number limit!");
-         event.preventDefault(); // prevent characters from appearing
-     } else {
-        for(var i = 0; i < myArrayNew.length; i++) {
-            if(myArrayNew[i].length > 14 ) {
-                alert("Mobile number length exceeded");
-                event.preventDefault(); // prevent characters from appearing
-            }
+    for(var i = 0; i < myArrayNew.length; i++) {
+        if(myArrayNew[i].length > 14 ) {
+            alert("Mobile number length exceeded");
+            event.preventDefault(); // prevent characters from appearing
         }
     }
     if(myArrayNew==''){
@@ -141,7 +135,6 @@ if(selected_dt==''){
         $('.sel_video').prop('required',false);
         $('#message').prop('required',true);
         $('.sel_msg').show();
-
     }
 }     
 });
