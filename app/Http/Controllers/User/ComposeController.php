@@ -25,7 +25,7 @@ class ComposeController extends Controller
     public function getComposeView(){
 
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)
-    					->where('is_status',1)
+    					->whereIn('is_status',[1,3])
     					->orderBy('updated_at','DESC')
     					->get();
 
@@ -149,7 +149,7 @@ class ComposeController extends Controller
     					if($plan_validity >= $today_date){
 
     						//current instance
-    						$getInstance = Instance::where('id',$instance_id)->where('status',1)->first();
+    						$getInstance = Instance::where('id',$instance_id)->where('is_status',1)->first();
     						if($getInstance){
 
     							//Campaign Creation

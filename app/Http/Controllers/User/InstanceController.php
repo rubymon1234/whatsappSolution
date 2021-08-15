@@ -19,7 +19,7 @@ class InstanceController extends Controller
      * @author Ruban
     */
     public function getInstanceView(){
-    	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[0,1])->orderBy('updated_at','DESC')->paginate(10);
+    	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[0,1,3])->orderBy('updated_at','DESC')->paginate(10);
     	return view('user.instance.createInstance', compact('instanceDetail'));
     }
     /**
