@@ -44,8 +44,12 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	//CAMPAIGN MANAGEMENT
 	 Route::get('/message/campaign-list', 'User\CampaignController@getCampaignList')->name('user.campaign.view')->middleware(['permission:user.campaign.view']);
 
-	 //REPORT MANAGEMENT
+	//REPORT MANAGEMENT
 	Route::get('/report/consolidated', 'User\ReportController@getConsolidatedReport')->name('user.report.consolidated')->middleware(['permission:user.report.consolidated']);
+
+	//CHAT BOT - MESSAGE RESPONSES
+	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);
+
 });
 Route::group(['middleware' => 'auth'], function () {
 //PROFILE MANAGEMENT

@@ -149,55 +149,66 @@ class ComposeController extends Controller
     					if($plan_validity >= $today_date){
 
     						//current instance
-    						$getInstance = Instance::find($instance_id);
+    						$getInstance = Instance::where('id',$instance_id)->where('status',1)->first();
+    						if($getInstance){
 
-    						//Campaign Creation
-    						$campaignInsert = new Campaign();
-    						$campaignInsert->campaign_name = $campaign;
-    						$campaignInsert->user_id = $user_id;
-    						$campaignInsert->reseller_id = $user->reseller_id;
-    						$campaignInsert->current_plan_id = $currentPlan->plan_id;
-    						$campaignInsert->leads_file = $csv_name;//csv
-    						$campaignInsert->instance_token = $getInstance->token;
-    						$campaignInsert->instance_name = $getInstance->instance_name;
-    						$campaignInsert->type = $validResponse['slug'];
-    						$campaignInsert->message = rawurlencode($message);
-    						$campaignInsert->media_file_name = $uploadfilename;
-    						$campaignInsert->count = $num_count;
-    						if($num_count <=10){
-    							$campaignInsert->is_status = 2;
-    						}else{
-    							$campaignInsert->is_status = 0;
-    						}
-    						if($request->optOut =='on'){
-    							$campaignInsert->opt_out = 1;
-    						}else{
-    							$campaignInsert->opt_out = 0;
-    						}
-    						$campaignInsert->start_at = $campaign_start_date.' '.$campaign_start_time;
-    						if($request->is_scheduled==1){
-    							$campaignInsert->is_status = 0; // scheduled
-    						}
-    						$campaignInsert->save();
-    						$last_inserted_id = $campaignInsert->id;
-    						if($num_count <=10){
-    							shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
-    						}
-    						if($campaignInsert){
+    							//Campaign Creation
+	    						$campaignInsert = new Campaign();
+	    						$campaignInsert->campaign_name = $campaign;
+	    						$campaignInsert->user_id = $user_id;
+	    						$campaignInsert->reseller_id = $user->reseller_id;
+	    						$campaignInsert->current_plan_id = $currentPlan->plan_id;
+	    						$campaignInsert->leads_file = $csv_name;//csv
+	    						$campaignInsert->instance_token = $getInstance->token;
+	    						$campaignInsert->instance_name = $getInstance->instance_name;
+	    						$campaignInsert->type = $validResponse['slug'];
+	    						$campaignInsert->message = rawurlencode($message);
+	    						$campaignInsert->media_file_name = $uploadfilename;
+	    						$campaignInsert->count = $num_count;
+	    						if($num_count <=10){
+	    							$campaignInsert->is_status = 2;
+	    						}else{
+	    							$campaignInsert->is_status = 0;
+	    						}
+	    						if($request->optOut =='on'){
+	    							$campaignInsert->opt_out = 1;
+	    						}else{
+	    							$campaignInsert->opt_out = 0;
+	    						}
+	    						$campaignInsert->start_at = $campaign_start_date.' '.$campaign_start_time;
+	    						if($request->is_scheduled==1){
+	    							$campaignInsert->is_status = 0; // scheduled
+	    						}
+	    						$campaignInsert->save();
+	    						$last_inserted_id = $campaignInsert->id;
+	    						if($num_count <=10){
+	    							shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
+	    						}
+	    						if($campaignInsert){
 
+	    							return response()->json([
+							                'success' => true,
+							                'message' =>'success',
+							                'validator' => false,
+							                'response' => 'Campaign created successfully',
+							            ]);
+	    						}
+	    						return response()->json([
+							                'success' => false,
+							                'message' =>'success',
+							                'validator' => false,
+							                'response' => 'Oops, something went wrong',
+							            ]);
+
+    						}else{
     							return response()->json([
-						                'success' => true,
-						                'message' =>'success',
-						                'validator' => false,
-						                'response' => 'Campaign created successfully',
-						            ]);
-    						}
-    						return response()->json([
 						                'success' => false,
 						                'message' =>'success',
 						                'validator' => false,
-						                'response' => 'Oops, something went wrong',
+						                'response' => 'Campaign is running, choose another instance',
 						            ]);
+    						}
+    						
     					}else{
 
     						return response()->json([
