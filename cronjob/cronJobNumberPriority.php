@@ -23,9 +23,9 @@ if (isset($argv[1]))
 		$file = $row['media_file_name'];
 		$lead = $row['leads_file'];
     $optOut = $row['opt_out'];
-    if($optOut){
-      $message = $message.'%0A%0AReply \'STOP\' to unsubscribe';
-    }
+    // if($optOut){
+    //   $message = $message.'%0A%0A*Reply \'STOP\' to unsubscribe*';
+    // }
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -47,7 +47,8 @@ if (isset($argv[1]))
   					    'number' => $data['0'],
   					    'message' => $message,
   					    'type' => $type,
-  							'file' => $file
+  							'file' => $file,
+                'optout' => $optOut
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
