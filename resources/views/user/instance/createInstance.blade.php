@@ -60,6 +60,8 @@
                                     <td style="text-align: left;">
                                         @if($instance->is_status==1)
                                             <span class="badge badge-success">whatsapp_authenticated</span>
+                                        @elseif($instance->is_status==3)
+                                            <span class="badge badge-success">campaign_running</span>
                                         @else
                                         <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Scan</button>
                                         @endif
