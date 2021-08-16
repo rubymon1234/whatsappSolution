@@ -4,5 +4,5 @@ CHECK=$(ps -ef | grep cronJobNumberInit.php | grep -v grep)
 RET=$?
 
 if [ $RET -ne 0 ] ; then
-    /usr/bin/php -q /var/www/html/whatsappSolution/cronjob/cronJobNumberInit.php < /dev/null &
+    $(/usr/bin/php -q /var/www/html/whatsappSolution/cronjob/cronJobNumberInit.php < /dev/null > /dev/null &)
 fi
