@@ -12,7 +12,7 @@
             <section class="hk-sec-wrapper">
                 <div class="row">
                     <div class="col-sm">
-                        <form id="scrubForm" method="POST" action="" enctype="multipart/form-data">
+                        <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.message.add') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-6 form-group">
@@ -23,8 +23,9 @@
                                     </div>
                                 </div>
                                  <div class="col-md-6 form-group">
-                                    <label for="lastName"> Select combination </label>
-                                     <select class="form-control custom-select select2" id="bot_application" name="bot_application" onchange="selectedMessage(this.value)">
+                                    <label for="combination"> Select combination </label>
+                                     <select class="form-control custom-select select2" id="combination" name="combination" onchange="selectedMessage(this.value)" >
+                                        {{-- <?php echo old('combination') == "text" ? 'selected' : '' ?> --}}
                                             <option value="">Select</option>
                                             <option value="text">Text Only</option>
                                             <option value="image">Image</option>
@@ -37,8 +38,8 @@
                             </div>
                             <div class="row" id="sel_text" style="display: none;">
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">
+                                     <label for="text_app_name" class="col-form-label" > Next App </label>
+                                    <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
                                         <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
@@ -49,18 +50,17 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
+                                     <label for="text_app_name1" class="col-form-label">Next App Name </label>
+                                    <select class="form-control custom-select" id="text_app_name1" name="text_app_name1">
                                         <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
                                     </select>
                                 </div>
                             </div>
                             <div id="sel_image" style="display: none;">
                                 <div class="row">
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">
+                                     <label for="image_app_name" class="col-form-label" > Next App </label>
+                                    <select class="form-control custom-select" id="nxt_app_name" name="image_app_name" onchange="__getAppName(this.value)">
                                         <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
@@ -71,26 +71,25 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
+                                     <label for="image_app_name1" class="col-form-label">Next App Name </label>
+                                    <select class="form-control custom-select" id="image_app_name1" name="image_app_name1">
                                         <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
                                            
                                     </select>
                                 </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Select Image:</label>
-                                        <input type="file" class="form-control m_sel_image" id="photo" name="photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
+                                        <label for="image_photo" class="col-form-label m_sel_image">Select Image:</label>
+                                        <input type="file" class="form-control m_sel_image" id="image_photo" name="image_photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
                                     </div>
                                 </div>
                             </div>
                             <div id="sel_video" style="display: none;">
                                 <div class="row">
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">
+                                     <label for="video_app_name" class="col-form-label" > Next App </label>
+                                    <select class="form-control custom-select" id="video_app_name" name="video_app_name" onchange="__getAppName(this.value)">
                                         <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
@@ -101,161 +100,171 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
+                                     <label for="video_app_name1" class="col-form-label">Next App Name </label>
+                                    <select class="form-control custom-select" id="video_app_name1" name="video_app_name1">
                                         <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
                                            
                                     </select>
                                 </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Select Image:</label>
-                                        <input type="file" class="form-control m_sel_image" id="photo" name="photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
+                                        <label for="video" class="col-form-label m_sel_image">Select Image:</label>
+                                        <input type="file" class="form-control m_sel_image" id="video" name="video" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
                                     </div>
                                 </div>
                             </div>
                             <div id="capture" style="display: none;">
                                 <div class="row">
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">   
+                                     <label for="capture_app_name" class="col-form-label" > Next App </label>
+                                    <select class="form-control custom-select" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
                                         <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
-                                            <option value="capture">Capture</option>
-                                            <option value="api">Api</option>
-                                            <option value="menu">Menu</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
+                                     <label for="capture_app_name1" class="col-form-label">Next App Name </label>
+                                    <select class="form-control custom-select" id="capture_app_name1" name="capture_app_name1">
                                         <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
                                            
                                     </select>
                                 </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Input validator</label>
-                                        <select class="form-control custom-select" id="success_app_name" name="success_app_name">   
+                                        <label for="" class="col-form-label m_sel_image">Success Application </label>
+                                        <select class="form-control custom-select" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
+                                            <option value="">Select Next App</option>
+                                            <option value="text">Text</option>
+                                            <option value="image">Image</option>
+                                            <option value="video">Video</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="" class="col-form-label m_sel_image">Success Application value</label>
+                                        <select class="form-control custom-select" id="capture_success_app_value" name="capture_success_app_value">   
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="capture_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
+                                        <select class="form-control custom-select" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">    
+                                            <option value="">Select Next App</option>
+                                            <option value="text">Text</option>
+                                            <option value="image">Image</option>
+                                            <option value="video">Video</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="capture_failure_app_value" class="col-form-label m_sel_image">failed Application value</label>
+                                        <select class="form-control custom-select" id="capture_failure_app_value" name="capture_failure_app_value">   
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="validator" class="col-form-label m_sel_image">Input validator</label>
+                                        <select class="form-control custom-select" id="validator" name="validator">   
                                         <option value="">Input Validator</option>
                                             <option value="text">Alpha-numeric</option>
                                             <option value="image">Numeric</option>
                                             <option value="video">Email</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Success Application </label>
-                                        <select class="form-control custom-select" id="success_app_name" name="success_app_name">   
-                                            <option value="">sdsr</option>
-                                            <option value="">sdsr</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Success Application value</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">failed Application name</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">failed Application value</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             <div id="api" style="display: none;">
                                 <div class="row">
-                                <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">   
-                                        <option value="">Select Next App</option>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_app_name" class="col-form-label" > Next App </label>
+                                        <select class="form-control custom-select" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
+                                            <option value="">Select Next App</option>
+                                                <option value="text">Text</option>
+                                                <option value="image">Image</option>
+                                                <option value="video">Video</option>
+                                                <option value="capture">Capture</option>
+                                                <option value="api">Api</option>
+                                                <option value="menu">Menu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_app_name1" class="col-form-label">Next App Name </label>
+                                        <select class="form-control custom-select" id="api_app_name1" name="api_app_name1">
+                                            <option value="">Select Next App</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
+                                        <select class="form-control custom-select" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
+                                            <option value="">Select Next App</option>
+                                                <option value="text">Text</option>
+                                                <option value="image">Image</option>
+                                                <option value="video">Video</option>
+                                                <option value="capture">Capture</option>
+                                                <option value="api">Api</option>
+                                                <option value="menu">Menu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
+                                        <select class="form-control custom-select" id="api_success_app_value" name="api_success_app_value">   
+                                        
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
+                                        <select class="form-control custom-select" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
+                                            <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
                                             <option value="menu">Menu</option>
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
+                                        <select class="form-control custom-select" id="api_failure_app_value" name="api_failure_app_value">   
+                                        
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
-                                        <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
-                                           
-                                    </select>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="parameter_input" class="col-form-label m_sel_image">Parameter Input</label>
+                                        <input class="form-control" id="parameter_input" name="parameter_input" placeholder="Enter input" value="" type="text">
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="parameter_mobile" class="col-form-label m_sel_image">Parameter Mobile</label>
+                                        <input class="form-control" id="parameter_mobile" name="parameter_mobile" placeholder="Enter Mobile" value="" type="text">
+                                    </div>
                                 </div>
-                                </div>
+
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="" class="col-form-label m_sel_image">Url</label>
                                         <input class="form-control" id="url" name="url" placeholder="Enter url" value="" type="text">
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Success Application </label>
-                                        <select class="form-control custom-select" id="success_app_name" name="success_app_name">   
-                                            <option value="">sdsr</option>
-                                            <option value="">sdsr</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">Success Application value</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">failed Application name</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">failed Application value</label>
-                                        <select class="form-control custom-select" id="success_app_value" name="success_app_value">   
-                                        <option value="">Input Validator</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div id="location" style="display: none;">
                                 <div class="row">
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label" > Next App </label>
-                                    <select class="form-control custom-select" id="nxt_app_name" name="nxt_app_name">   
+                                     <label for="location_app_name" class="col-form-label" > Next App </label>
+                                    <select class="form-control custom-select" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">   
                                         <option value="">Select Next App</option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
@@ -266,22 +275,21 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="bot_application" class="col-form-label">Next App Name </label>
-                                    <select class="form-control custom-select" id="nxt_app_name1" name="nxt_app_name1">
+                                     <label for="location_app_name1" class="col-form-label">Next App Name </label>
+                                    <select class="form-control custom-select" id="location_app_name1" name="location_app_name1">
                                         <option value="">Select Next App</option>
-                                            <option value="text">Text</option>
                                            
                                     </select>
                                 </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">lat</label>
-                                        <input class="form-control" id="url" name="url" placeholder="Enter url" value="" type="text">
+                                        <label for="latitude" class="col-form-label m_sel_image">lat</label>
+                                        <input class="form-control" id="latitude" name="latitude" placeholder="Enter lat" value="" type="text">
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label for="" class="col-form-label m_sel_image">long</label>
-                                        <input class="form-control" id="url" name="url" placeholder="Enter url" value="" type="text">
+                                        <label for="longitude" class="col-form-label m_sel_image">long</label>
+                                        <input class="form-control" id="longitude" name="longitude" placeholder="Enter Long" value="" type="text">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -294,7 +302,7 @@
                             <div class="row">
                             <div class="col-md-6 form-group" id="message">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="1000" id="message" name="message"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="message" name="message"></textarea>
                                  </div>
                              </div>
                             
@@ -338,6 +346,10 @@
             $("#message").hide();
         }
     }
+    // let oldCobminationValue = "{{ old('combination') }}";
+    // if(oldCobminationValue != "") {
+    //     selectedMessage(oldCobminationValue);
+    // }
     function __appQRScan(instance_id){
         if(typeof  instance_id !=='undefined' && instance_id !=''){
             $.ajax(
@@ -369,5 +381,59 @@
             );
         }
     }
+
+    function __getAppName(combination){
+        $.ajax(
+            {
+                url: '{{ route('ajax.message.request.appname') }}',
+                dataType: 'json', // what to expect back from the PHP script
+                cache: false,
+                data: { _token: "{{ csrf_token() }}", combination : combination } ,
+                type: 'POST' ,
+                beforeSend: function () {
+                    $('.preloader-it').show();
+                },
+                complete: function () {
+                    $('.preloader-it').hide();
+                },
+                success: function (result) {
+                    $('.preloader-it').hide();
+                    $('#'+ $("#combination").val() +'_app_name1').html(result.response);
+                },
+                error: function (response) {
+                    $('.preloader-it').hide();
+                    $('#'+ $("#combination").val() +'_app_name1').html(result.response);
+                }
+            }
+        );
+    }
+
+    function __getSuccessFailureName(combination, isForSuccess = true){
+        console.log('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'_app_value');
+        $.ajax(
+            {
+                url: '{{ route('ajax.message.request.appname') }}',
+                dataType: 'json', // what to expect back from the PHP script
+                cache: false,
+                data: { _token: "{{ csrf_token() }}", combination : combination } ,
+                type: 'POST' ,
+                beforeSend: function () {
+                    $('.preloader-it').show();
+                },
+                complete: function () {
+                    $('.preloader-it').hide();
+                },
+                success: function (result) {
+                    $('.preloader-it').hide();
+                    $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').html(result.response);
+                },
+                error: function (response) {
+                    $('.preloader-it').hide();
+                    $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').html(result.response);
+                }
+            }
+        );
+    }
+
 </script>
 @endsection

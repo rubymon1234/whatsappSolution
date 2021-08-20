@@ -14,6 +14,13 @@ use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\ApiApplication;
+use App\Models\TextApplication;
+use App\Models\CaptureApplication;
+use App\Models\ImageApplication;
+use App\Models\LocationApplication;
+use App\Models\VideoApplication;
+use Exception;
 
 class AjaxController extends Controller
 {
@@ -188,4 +195,58 @@ class AjaxController extends Controller
 	        ]);
     	}
    }
+
+   public function getNextAppName(Request $request) {
+	   $response = "<option value=''>Choose App Name</option>";
+	   try {
+		   $nameList = [];
+		   switch ($request->combination) {
+			   	case 'text':
+					$nameList = TextApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+				   break;
+
+				case 'image':
+					$nameList = ImageApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+
+				case 'video':
+					$nameList = VideoApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+
+				case 'capture':
+					$nameList = CaptureApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+
+				case 'api':
+					$nameList = ApiApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+							
+				case 'location':
+					$nameList = LocationApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+					
+			   	default:
+				   # code...
+				   break;
+		   }
+		   foreach($nameList as $row) {
+			   $response .= "<option value='" . $row->id . "'>" . $row->name . "</option>";
+		   }
+		   if(count($nameList) == 0) {
+				$response .= "<option value='null'>null</option>";
+		   }
+		   return response()->json([
+			'success' => true,
+			'message' => 'Success',
+			'response' => $response
+		]);
+	   } catch (\Exception $e) {
+			return response()->json([
+				'success' => false,
+				'message' => 'Oops, Something Went Wrong',
+				'response' => $response
+			]);
+	   }
+   }
+
 }

@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	//CHAT BOT - MESSAGE RESPONSES
 	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);
 
+	Route::post('/message/add-responses', 'User\ChatBot\MessageResponseController@addMessageResponse')->name('user.chat.bot.message.add');
+
 });
 Route::group(['middleware' => 'auth'], function () {
 //PROFILE MANAGEMENT
@@ -64,6 +66,12 @@ Route::post('/ajax/request-reject', 'Auth\AjaxController@postRequestReject')->na
 //user campaign cancel
 Route::post('/ajax/cancel-campaign', 'Web\AjaxController@getCancelCampaign')->name('ajax.cancel.campaign');
 Route::post('/ajax/block-user', 'Web\AjaxController@getBlockUser')->name('ajax.block.user');
+
+// Message Request - AJax section starts
+
+Route::post('/ajax/message-request/next-app-name', 'Web\AjaxController@getNextAppName')->name('ajax.message.request.appname');
+
+// ends
 
 Route::post('/ajax/current-recharge-status-change', 'Web\AjaxController@postCurrentStatus')->name('ajax.current.status.change');
 });
