@@ -26,7 +26,7 @@
         .form-control-sm, .custom-select-sm {
             height: calc(1.8125rem + 11px);
         }
-        label{
+        label {
             margin-bottom: 0px ! important;
         }
     </style>
