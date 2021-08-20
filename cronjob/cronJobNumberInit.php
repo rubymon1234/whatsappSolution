@@ -6,7 +6,7 @@ $today = date("d-m-y");
 
 while (true) {
   $cdateTime =date("Y-m-d H:i:s");
-  $totalProcess = 10;
+  $totalProcess = 50;
   $freeProcess = 0;
   $runningProcess = shell_exec("ps -ef | grep cronJobNumberPriority.php | grep -v grep | wc -l");
   @$freeProcess = $totalProcess - $runningProcess;
@@ -25,18 +25,43 @@ while (true) {
   			  $smsDb->where ('is_status', 0);
   			  $smsDb->where ('user_id', $userId);
   			  $row = $smsDb->getOne('wc_campaigns');
+          $leadCount = $row['count'];
   			  $totalLeads = $smsDb->count;
 
-  			 // echo "SINGLE - campaigID = $userId = $totalLeads\sn";
-  			  $id = $row['id'];
-  			  $data = Array ('is_status' => '2');
-  			  $smsDb->where('id', $id);
-  			  $smsDb->where ('start_at', $cdateTime, "<=");
-  			  $smsDb->update ('wc_campaigns', $data);
+          $instance = $row['instance_token'];
+          $smsDb->where ('is_status', 2);
+  			  $smsDb->where ('instance_token', $instance);
+          $smsDb->getOne('wc_campaigns');
+          $currentCampaignCount = $smsDb->count;
 
-  			  if ($totalLeads > 0) {
-            shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
-  			  }
+          if($leadCount > '10'){
+            if ($currentCampaignCount == '0'){
+              // echo "SINGLE - campaigID = $userId = $totalLeads\sn";
+               $id = $row['id'];
+               $data = Array ('is_status' => '2');
+               $smsDb->where('id', $id);
+               $smsDb->where ('start_at', $cdateTime, "<=");
+               $smsDb->update ('wc_campaigns', $data);
+
+               if ($totalLeads > 0) {
+                 //echo 'CAMPAIGN-SINGLE > 10 -'.$instance;
+                 shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+               }
+            }
+          }else{
+            // echo "SINGLE - campaigID = $userId = $totalLeads\sn";
+             $id = $row['id'];
+             $data = Array ('is_status' => '2');
+             $smsDb->where('id', $id);
+             $smsDb->where ('start_at', $cdateTime, "<=");
+             $smsDb->update ('wc_campaigns', $data);
+
+             if ($totalLeads > 0) {
+               //echo 'CAMPAIGN-SINGLE < 10 -'.$instance;
+               shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+             }
+          }
+
   			}
     	}else {
 
@@ -54,13 +79,34 @@ while (true) {
   			     // echo "FULL - campaigID = $userId = $totalLeads\n";
   			      if ($totalLeads > 0) {
     					  foreach ($results as $row) {
-  					  	  $id = $row['id'];
-                  $data = Array ('is_status' => '2');
-  					  	  $smsDb->where('id', $id);
-  					  	  $smsDb->update ('wc_campaigns', $data);
+                  $instance = $row['instance_token'];
+                  $leadCount = $row['count'];
 
-  						    shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
-    					  }
+                  $smsDb->where ('is_status', 2);
+          			  $smsDb->where ('instance_token', $instance);
+                  $smsDb->getOne('wc_campaigns');
+                  $currentCampaignCount = $smsDb->count;
+
+                  if($leadCount > '10'){
+                    if ($currentCampaignCount == '0'){
+                      $id = $row['id'];
+                      $data = Array ('is_status' => '2');
+                      $smsDb->where('id', $id);
+                      $smsDb->update ('wc_campaigns', $data);
+                      //echo 'CAMPAIGN-FULL > 10 -'.$instance;
+                      shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+                    }
+                  }else{
+                    $id = $row['id'];
+                    $data = Array ('is_status' => '2');
+                    $smsDb->where('id', $id);
+                    $smsDb->update ('wc_campaigns', $data);
+                    //echo 'CAMPAIGN-FULL < 10 -'.$instance;
+                    shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$id.' 2> /dev/null > /dev/null  &');
+
+                  }
+
+                }
   		       }
   		   	}
 			  }
