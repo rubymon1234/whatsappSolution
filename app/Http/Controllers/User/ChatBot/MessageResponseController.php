@@ -17,6 +17,7 @@ use App\Models\CaptureApplication;
 use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
+use App\Models\TimeConditionApplication;
 
 class MessageResponseController extends Controller
 {
@@ -34,8 +35,6 @@ class MessageResponseController extends Controller
         $rule = [
             'combination' => 'required',
             'scrub_name' => 'required',
-            $request->get("combination") . '_app_name1' => 'required',
-            $request->get("combination") . '_app_name' => 'required',
             'message' => ($this->isMessageRequired($request->get("combination")) ? 'required' : ''),
             'location' => ($request->get("combination") == 'location' ? 'required': ''),
             'validator' => ($request->get("combination") == 'capture' ? 'required': '')
@@ -136,6 +135,27 @@ class MessageResponseController extends Controller
                     $textEntry->message = rawurlencode($request->get("location"));
                     $textEntry->next_app_value = $this->getAppName($request->get("location_app_name1"), $request->get("location_app_name1"));
                     $textEntry->next_app_name = $this->getAppName($request->get("location_app_name1"), $request->get("location_app_name"));
+                    $textEntry->save();
+                    break;
+    
+                case 'timeCondition':
+                    $textEntry = new TimeConditionApplication();
+                    $textEntry->user_id = Auth::user()->id;
+                    $textEntry->reseller_id = Auth::user()->reseller_id;
+                    $textEntry->name = $request->get("scrub_name");
+                    $textEntry->start_time = $request->get("startTime");
+                    $textEntry->end_time = $request->get("endTime");
+                    $textEntry->sun = (int)$request->get("sun");
+                    $textEntry->mon = (int)$request->get("mon");
+                    $textEntry->tue = (int)$request->get("tue");
+                    $textEntry->wed = (int)$request->get("wed");
+                    $textEntry->thu = (int)$request->get("thu");
+                    $textEntry->fri = (int)$request->get("fri");
+                    $textEntry->sat = (int)$request->get("sat");
+                    $textEntry->success_app_value = $this->getAppName($request->get("timeCondition_success_app_value"), $request->get("timeCondition_success_app_value"));
+                    $textEntry->success_app_name = $this->getAppName($request->get("timeCondition_success_app_value"), $request->get("timeCondition_success_app_name"));
+                    $textEntry->failed_app_name = $this->getAppName($request->get("timeCondition_failure_app_value"), $request->get("timeCondition_failure_app_name"));
+                    $textEntry->failed_app_value = $this->getAppName($request->get("timeCondition_failure_app_value"), $request->get("timeCondition_failure_app_value"));
                     $textEntry->save();
                     break;
     

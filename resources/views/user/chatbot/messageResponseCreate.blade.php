@@ -6,6 +6,11 @@
 <link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
     @include('errors.status')
+    <style>
+        .errorClass {
+            border-color: #dd4b39;
+        }
+    </style>
    <h6 class="hk-pg-title">@yield('title') :: Create Messages</h6>
    <p class="mb-20"></p>
     <div class="row">
@@ -18,7 +23,7 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="firstName"> Name </label>
-                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter campaign name" value="" type="text" value="{{ old('scrub_name') }}">
+                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter name" value="" type="text" value="{{ old('scrub_name') }}">
                                     <div class="invalid-feedback">
                                         Please provide a valid name.
                                     </div>
@@ -150,8 +155,8 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="" class="col-form-label m_sel_image">Success Application value</label>
-                                        <select class="form-control custom-select" id="capture_success_app_value" name="capture_success_app_value">   
-                                            
+                                        <select class="form-control custom-select" id="capture_success_app_value" name="capture_success_app_value" onchange="__checkAppValueCondition(this.value, 'capture_success_app_name')">
+                                            <option value="null">null</option>
                                         </select>
                                     </div>
                                 </div>
@@ -170,8 +175,8 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="capture_failure_app_value" class="col-form-label m_sel_image">failed Application value</label>
-                                        <select class="form-control custom-select" id="capture_failure_app_value" name="capture_failure_app_value">   
-                                            
+                                        <select class="form-control custom-select" id="capture_failure_app_value" name="capture_failure_app_value" onchange="__checkAppValueCondition(this.value, 'capture_failure_app_name')">   
+                                            <option value="null">null</option>
                                         </select>
                                     </div>
                                 </div>
@@ -224,8 +229,8 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="api_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                        <select class="form-control custom-select" id="api_success_app_value" name="api_success_app_value">   
-                                        
+                                        <select class="form-control custom-select" id="api_success_app_value" name="api_success_app_value" onchange="__checkAppValueCondition(this.value, 'api_success_app_name')">   
+                                            <option value="null">null</option>
                                         </select>
                                     </div>
                                     
@@ -245,8 +250,8 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="api_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                        <select class="form-control custom-select" id="api_failure_app_value" name="api_failure_app_value">   
-                                        
+                                        <select class="form-control custom-select" id="api_failure_app_value" name="api_failure_app_value" onchange="__checkAppValueCondition(this.value, 'api_failure_app_name')">   
+                                            <option value="null">null</option>
                                         </select>
                                     </div>
                                 </div>
@@ -333,8 +338,8 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="timeCondition_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                        <select class="form-control custom-select" id="timeCondition_success_app_value" name="timeCondition_success_app_value">   
-                                        
+                                        <select class="form-control custom-select" id="timeCondition_success_app_value" name="timeCondition_success_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_success_app_name')">   
+                                            <option value="null">null</option>
                                         </select>
                                     </div>
                                     
@@ -354,16 +359,46 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="timeCondition_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                        <select class="form-control custom-select" id="timeCondition_failure_app_value" name="timeCondition_failure_app_value">   
-                                        
+                                        <select class="form-control custom-select" id="timeCondition_failure_app_value" name="timeCondition_failure_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_failure_app_name')">   
+                                            <option value="null">null</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1 form-group">
+                                        <label for="sun" class="col-form-label m_sel_image">Sun</label>
+                                        <input type="checkbox" id="sun" name="sun" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="mon" class="col-form-label m_sel_image">Mon</label>
+                                        <input type="checkbox" id="mon" name="mon" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="tue" class="col-form-label m_sel_image">Tue</label>
+                                        <input type="checkbox"  id="tue" name="tue" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="wed" class="col-form-label m_sel_image">Wed</label>
+                                        <input type="checkbox" id="wed" name="wed" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="thu" class="col-form-label m_sel_image">Thu</label>
+                                        <input type="checkbox" id="thu" name="thu" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="fri" class="col-form-label m_sel_image">Fri</label>
+                                        <input type="checkbox" id="fri" name="fri" value="1">
+                                    </div>
+                                    <div class="col-sm-1 form-group">
+                                        <label for="sat" class="col-form-label m_sel_image">Sat</label>
+                                        <input type="checkbox" id="sat" name="sat" value="1">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                             <div class="col-md-6 form-group" id="message">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="message" name="message"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="message"></textarea>
                                  </div>
                              </div>
                             
@@ -372,7 +407,7 @@
                                 <label class="control-label" for="inputError" style="color: #dd4b39"><i class="fa fa-times-circle-o" ></i> {{ implode(' | ', $errors->all(':message')) }} .</label>
                                 <br>
                             @endif
-                            <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="submit">Create</button>
+                            <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="button">Create</button>
                         </form>
                     </div>
                 </div>
@@ -385,6 +420,7 @@
 <script src="{{ asset('dist/js/daterangepicker.js') }}"></script>
 <script type="text/javascript">
     function selectedMessage(slug){
+        $("select").removeClass("errorClass");
         $("#sel_text").hide();
         $("#sel_image").hide();
         $("#sel_video").hide();
@@ -392,6 +428,7 @@
         $("#api").hide();
         $("#location").hide();
         $("#message").show();
+        $("#timeCondition").hide();
 
         if(slug=='text'){
             $("#sel_text").show();
@@ -524,5 +561,37 @@
             picker.container.find(".calendar-table").hide();
         })
 
+$("#sendBtn").click(function(event) {
+    event.preventDefault();
+    if(!__appValueValidationCheck()) {
+        $("form").submit();
+    }
+});
+
+function __appValueValidationCheck() {
+    let hasFormError = false;
+    $("select").removeClass("errorClass");
+    hasFormError = __defaultValidation();
+    $("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value']").each((e, value) => {
+        if($(value).is(":visible") && $(value).val() == "") {
+            $(value).addClass("errorClass");
+            hasFormError = true;
+        }
+    });
+    return hasFormError;
+}
+
+function __defaultValidation() {
+    let hasError = false;
+    let fieldName = ["scrub_name", "messageText", "latitude", "longitude", "parameter_input", "parameter_mobile"];
+    fieldName.forEach((value, index) => {
+        $("#" + value).removeClass("errorClass");
+        if($("#" + value).is(":visible") && $("#" + value).val() == "") {
+            $("#" + value).addClass("errorClass");
+            hasError = true;
+        }
+    })
+    return hasError;
+}
 </script>
 @endsection

@@ -20,6 +20,7 @@ use App\Models\CaptureApplication;
 use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
+use App\Models\TimeConditionApplication;
 use Exception;
 
 class AjaxController extends Controller
@@ -223,6 +224,10 @@ class AjaxController extends Controller
 							
 				case 'location':
 					$nameList = LocationApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+					
+				case 'timeCondition':
+					$nameList = TimeConditionApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
 					break;
 					
 			   	default:
