@@ -31,15 +31,9 @@
                                  <div class="col-md-6 form-group">
                                     <label for="combination"> Select combination </label>
                                      <select class="form-control custom-select select2" id="combination" name="combination" onchange="selectedMessage(this.value)" >
-                                        {{-- <?php echo old('combination') == "text" ? 'selected' : '' ?> --}}
-                                            <option value="">Select</option>
-                                            <option value="text">Text Only</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
-                                            <option value="capture">Capture</option>
-                                            <option value="api">Api</option>
-                                            <option value="location">Location</option>
-                                            <option value="timeCondition">Time Condition</option>
+                                        @foreach($combinationList as $key => $combination)
+                                            <option value="{{ $key }}">{{ $combination }}</option>
+                                        @endforeach
                                     </select>
                                  </div>
                             </div>
