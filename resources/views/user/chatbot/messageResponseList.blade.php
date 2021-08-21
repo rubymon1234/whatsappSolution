@@ -17,6 +17,7 @@
                 <div class="col-md-3 form-group">
                     <label for="firstName"> </label>
                     <select class="form-control select2" name="combination">
+                        <option value="">All</option>
                         @foreach($combinationList as $key => $combination)
                             <option <?php echo Request::get('combination') == $key ? 'selected' : '' ?> value="{{ $key }}">{{ $combination }}</option>
                         @endforeach

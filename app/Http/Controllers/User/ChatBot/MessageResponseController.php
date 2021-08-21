@@ -253,7 +253,6 @@ class MessageResponseController extends Controller
     protected function getDefaultCombinationList(): array
     {
         return array(
-            '' => 'Select combinationList',
             'text' => "Text Only",
             'image' => "Image",
             'video' => "Video",
