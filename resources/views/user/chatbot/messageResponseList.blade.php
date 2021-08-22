@@ -67,7 +67,7 @@
                                     <td >{{ $data->message }}</td>
                                     <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="#" class="btn btn-info">Edit</a></td>
+                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class="btn btn-info">Edit</a></td>
                                 </tr>
                             @empty
                                 <tr>

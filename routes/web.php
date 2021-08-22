@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::get('/message/consolidated', 'User\ChatBot\MessageResponseController@listMessageResponse')->name('user.chat.bot.message.list');
 
+	Route::get('/message/edit-response/{id}', 'User\ChatBot\MessageResponseController@getMessageResponseDetail')->name('user.chat.bot.message.edit');
+
 });
 Route::group(['middleware' => 'auth'], function () {
 //PROFILE MANAGEMENT
