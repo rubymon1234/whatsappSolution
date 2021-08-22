@@ -226,8 +226,8 @@
                 }
             });
             if ($("#name").val() == "") {
-                    $("#nextWrapper").hide();
-                    $("#initialWrapper").show();
+                $("#nextWrapper").hide();
+                $("#initialWrapper").show();
                 $("#name").addClass("errorClass");
                 hasFormError = true;
             }
