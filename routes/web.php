@@ -56,6 +56,10 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::get('/message/edit-response/{id}', 'User\ChatBot\MessageResponseController@getMessageResponseDetail')->name('user.chat.bot.message.edit');
 
+	Route::get('/menu/add', 'User\MenuController@addMenuList')->name('user.menu.add');
+
+	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.menu.saveUpdate');
+
 });
 Route::group(['middleware' => 'auth'], function () {
 //PROFILE MANAGEMENT
