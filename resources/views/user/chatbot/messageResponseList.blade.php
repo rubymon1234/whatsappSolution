@@ -27,8 +27,9 @@
                     <label for="lastName">  </label>
                     <input type="text" class="form-control form-control-sm new" placeholder="name" aria-controls="datable_1" name="name" value="{{ Request::get('name') }}">
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-4 form-group">
                 <button class="btn btn-tool btn-danger" name="search" value="search" style="margin-top: 19px;">Search </button>
+                <a class="btn btn-tool btn-info" href ="{{ route('user.chat.bot.message.create') }}" style="margin-top: 19px;">Create Response Message </a>
                 </div>
             </div>
         </form>

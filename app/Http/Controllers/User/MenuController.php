@@ -29,7 +29,7 @@ class MenuController extends Controller
         $validator = Validator::make(Input::all(), $rule, $messages);
 
         if ($validator->fails()) {
-            return redirect()->route('user.menu.saveUpdate')->withInput(Input::all())->withErrors($validator);
+            return redirect()->route('user.chat.bot.menu.create')->withInput(Input::all())->withErrors($validator);
         } else {
             $interactiveMenu = new InteractiveMenu();
             $interactiveMenu->user_id = Auth::user()->id;
@@ -50,7 +50,7 @@ class MenuController extends Controller
                     $menuInput->save();
                 }
             }
-            return redirect()->route('user.menu.add')->with('success_message', 'Menu Added Successfully!!');
+            return redirect()->route('user.chat.bot.menu.create')->with('success_message', 'Menu Added Successfully!!');
         }
     }
 }

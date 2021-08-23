@@ -50,15 +50,15 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	//CHAT BOT - MESSAGE RESPONSES
 	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);
 
-	Route::post('/message/add-responses', 'User\ChatBot\MessageResponseController@addMessageResponse')->name('user.chat.bot.message.add');
+	Route::post('/message/add-responses', 'User\ChatBot\MessageResponseController@addMessageResponse')->name('user.chat.bot.message.add')->middleware(['permission:user.chat.bot.message.create']);
 
-	Route::get('/message/consolidated', 'User\ChatBot\MessageResponseController@listMessageResponse')->name('user.chat.bot.message.list');
+	Route::get('/message/consolidated', 'User\ChatBot\MessageResponseController@listMessageResponse')->name('user.chat.bot.message.list')->middleware(['permission:user.chat.bot.message.list']);
 
-	Route::get('/message/edit-response/{id}', 'User\ChatBot\MessageResponseController@getMessageResponseDetail')->name('user.chat.bot.message.edit');
+	Route::get('/message/edit-response/{id}', 'User\ChatBot\MessageResponseController@getMessageResponseDetail')->name('user.chat.bot.message.edit')->middleware(['permission:user.chat.bot.message.update']);
 
-	Route::get('/menu/add', 'User\MenuController@addMenuList')->name('user.menu.add');
+	Route::get('/menu/add', 'User\MenuController@addMenuList')->name('user.chat.bot.menu.create')->middleware(['permission:user.chat.bot.menu.create']);
 
-	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.menu.saveUpdate');
+	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.chat.bot.menu.update')->middleware(['permission:user.chat.bot.menu.update']);
 
 });
 Route::group(['middleware' => 'auth'], function () {
