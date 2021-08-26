@@ -15,15 +15,6 @@
         <form name="searchForm" action="" method="get">
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <label for="firstName"> </label>
-                    <select class="form-control select2" name="combination">
-                        <option value="">All</option>
-                        @foreach($combinationList as $key => $combination)
-                            <option <?php echo Request::get('combination') == $key ? 'selected' : '' ?> value="{{ $key }}">{{ $combination }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-3 form-group">
                     <label for="lastName">  </label>
                     <input type="text" class="form-control form-control-sm new" placeholder="name" aria-controls="datable_1" name="name" value="{{ Request::get('name') }}">
                 </div>
@@ -52,22 +43,18 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>App Name</th>
-                                <th>Message</th>
-                                <th>Combination Type</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($messageList as $key=>$data)
+                            @forelse($menuList as $key=>$data)
                                 <tr>
-                                    <td class="serial">{{ $key + $messageList->firstItem()}} </td>
+                                    <td class="serial">{{ $key + $menuList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ $data->app_name }}</span></td>
-                                    <td >{{ $data->message }}</td>
-                                    <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class="btn btn-info">Edit</a></td>
+                                    <td ><a href="#" class="btn btn-info">Edit</a></td>
                                 </tr>
                             @empty
                                 <tr>
@@ -77,17 +64,17 @@
                         </tbody>
                     </table>
                     <br>
-                    @if($messageList->total()!=0)
+                    @if($menuList->total()!=0)
                         <div class="hk-row">
                             <div class="col-sm-12 col-md-5">
                                 <div class="dataTables_info" id="datable_1_info" role="status" aria-live="polite">
-                                    Showing {{$messageList->firstItem()}} to {{$messageList->lastItem()}} of {{$messageList->total()}} entries
+                                    Showing {{$menuList->firstItem()}} to {{$menuList->lastItem()}} of {{$menuList->total()}} entries
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-7">
                                 <div class="dataTables_paginate paging_simple_numbers pull-right" id="datable_1_paginate">
                                     <ul class="pagination">
-                                        {{ $messageList->appends(Request::get('name'))->links() }}
+                                        {{ $menuList->appends(Request::get('name'))->links() }}
                                     </ul>
                                 </div>
                             </div>

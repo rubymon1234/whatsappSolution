@@ -53,4 +53,13 @@ class MenuController extends Controller
             return redirect()->route('user.menu.add')->with('success_message', 'Menu Added Successfully!!');
         }
     }
+
+    public function getMenuList(Request $request) {
+        $menuList = InteractiveMenu::where("user_id", Auth::user()->id)->where("reseller_id", Auth::user()->reseller_id);
+        if($request->get("name")) {
+           $menuList = $menuList->where("name", $request->get("name"));
+        }
+        $menuList = $menuList->paginate(10);
+        return view('user.menu.menuLinkList', ["menuList"=>$menuList]);
+    }
 }

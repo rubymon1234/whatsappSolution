@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::get('/menu/add', 'User\MenuController@addMenuList')->name('user.menu.add');
 
+	Route::get('/menu/list', 'User\MenuController@getMenuList')->name('user.menu.list');
+
 	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.menu.saveUpdate');
 
 });
