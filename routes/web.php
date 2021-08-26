@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::get('/menu/add', 'User\MenuController@addMenuList')->name('user.chat.bot.menu.create')->middleware(['permission:user.chat.bot.menu.create']);
 
-	Route::get('/menu/list', 'User\MenuController@getMenuList')->name('user.menu.list');
+	Route::get('/menu/list', 'User\MenuController@getMenuList')->name('user.chat.bot.menu.list')->middleware(['permission:user.chat.bot.menu.list']);
 
 	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.chat.bot.menu.update')->middleware(['permission:user.chat.bot.menu.update']);
 

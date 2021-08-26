@@ -20,6 +20,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                 <button class="btn btn-tool btn-danger" name="search" value="search" style="margin-top: 19px;">Search </button>
+                <a class="btn btn-tool btn-info" href ="{{ route('user.chat.bot.menu.create') }}" style="margin-top: 19px;">Create Menu </a>
                 </div>
             </div>
         </form>
