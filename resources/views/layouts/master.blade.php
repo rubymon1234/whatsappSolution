@@ -54,7 +54,7 @@
                     $result = strtotime($Hour.':'.$Minutes.':'.$Seconds) - strtotime('today');
                     ?>
                     <input type="hidden" value="{{ $result }}" id="hr_mn_se_seconnds" />
-                    <span style="font-size: 15px;">10-08-2021 <span id="hr_mn_se_timer">{{ date('H:i:s') }}</span></span>
+                    <span style="font-size: 15px;">{{date('d-m-Y')}} <span id="hr_mn_se_timer">{{ date('H:i:s') }}</span></span>
                 </li>
                 <li class="nav-item dropdown dropdown-authentication">
                     <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

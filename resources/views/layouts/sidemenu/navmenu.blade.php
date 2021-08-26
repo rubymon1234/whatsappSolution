@@ -127,6 +127,31 @@
                     </ul>
                 </li>
             @endpermission
+
+            @permission(('user.chat.bot.*'))
+                <li class="nav-item {{ (Route::is('user.chat.bot.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp_bot" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="message-circle"></i></span>
+                        <span class="nav-link-text">Interactive Bot</span>
+                    </a>
+                    <ul id="auth_drp_bot" class="nav flex-column collapse-level-1 {{ (Route::is('user.chat.bot.*')? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.chat.bot.message.list')
+                                <li class="nav-item {{ (Route::is('user.chat.bot.message.list') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.chat.bot.message.list') }}">List Responses</a>
+                                </li>
+                                @endpermission
+                                @permission('user.chat.bot.menu.create')
+                                <li class="nav-item {{ (Route::is('user.chat.bot.menu.create') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.chat.bot.menu.create') }}">List Menu</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             @permission(('admin.user.*'))
                 <li class="nav-item {{ (Route::is('admin.user.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp" aria-expanded="true">
