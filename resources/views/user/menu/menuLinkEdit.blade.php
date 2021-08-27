@@ -1,604 +1,369 @@
 @extends('layouts.master')
-@section('title', 'Message Response')
+@section('title', 'Menu')
 @section('content')
- <!-- select2 CSS -->
-<link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
-<div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
-    @include('errors.status')
-    <style>
-        .errorClass {
-            border-color: #dd4b39;
-        }
-    </style>
-   <h6 class="hk-pg-title">@yield('title') :: Edit Messages</h6>
-   <p class="mb-20"></p>
-    <div class="row">
-        <div class="col-xl-12">
-            <section class="hk-sec-wrapper">
-                <div class="row">
-                    <div class="col-sm">
-                        <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.message.add') }}" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="id" value="{{ $id }}">
-                            <input type="hidden" name="combination" value="{{ Request::get("combination") }}">
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label for="firstName"> Name </label>
-                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter name" type="text" value="{{ $name }}">
-                                    <div class="invalid-feedback">
-                                        Please provide a valid name.
-                                    </div>
-                                </div>
-                                 <div class="col-md-6 form-group">
-                                    <label for="combination"> Select combination </label>
-                                     <select class="form-control custom-select select2" id="combination" onchange="selectedMessage(this.value)" readonly disabled>
-                                        <option value="">Select combinationList</option>
-                                        @foreach($combinationList as $key => $combination)
-                                            <option <?php echo Request::get("combination") == $key ? 'selected' : '' ?> value="{{ $key }}">{{ $combination }}</option>
-                                        @endforeach
-                                    </select>
-                                 </div>
-                            </div>
-                            @if (Request::get("combination") === 'text')
-                                <div class="row" id="sel_text" style="display: none;">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="text_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="text_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select" id="text_app_name1" name="text_app_name1" onchange="__checkAppValueCondition(this.value, 'text_app_name')">
-                                            <option value="null">null</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (Request::get("combination") === 'image')
-                                <div id="sel_image" style="display: none;">
-                                    <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="image_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select" id="image_app_name" name="image_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="image_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select" id="image_app_name1" name="image_app_name1" onchange="__checkAppValueCondition(this.value, 'image_app_name')">
-                                            <option value="null">null</option>
-                                            
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="image_photo" class="col-form-label m_sel_image">Select Image:</label>
-                                            <input type="file" class="form-control m_sel_image" id="image_photo" name="image_photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (Request::get("combination") === 'video')
-                                <div id="sel_video" style="display: none;">
-                                    <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="video_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select" id="video_app_name" name="video_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="video_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select" id="video_app_name1" name="video_app_name1" onchange="__checkAppValueCondition(this.value, 'video_app_name')">
-                                            <option value="null">null</option>
-                                            
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="video" class="col-form-label m_sel_image">Select Image:</label>
-                                            <input type="file" class="form-control m_sel_image" id="video" name="video" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (Request::get("combination") === 'capture')
-                                <div id="capture" style="display: none;">
-                                    <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="capture_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="capture_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select" id="capture_app_name1" name="capture_app_name1" onchange="__checkAppValueCondition(this.value, 'capture_app_name')">
-                                            <option value="null">null</option>
-                                            
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
-                                                <option  value="text">Text</option>
-                                                <option  value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="" class="col-form-label m_sel_image">Success Application value</label>
-                                            <select class="form-control custom-select" id="capture_success_app_value" name="capture_success_app_value" onchange="__checkAppValueCondition(this.value, 'capture_success_app_name')">
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="capture_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">    
-                                                <option value="null">null</option>
-                                                <option  value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="capture_failure_app_value" class="col-form-label m_sel_image">failed Application value</label>
-                                            <select class="form-control custom-select" id="capture_failure_app_value" name="capture_failure_app_value" onchange="__checkAppValueCondition(this.value, 'capture_failure_app_name')">   
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="validator" class="col-form-label m_sel_image">Input validator</label>
-                                            <select class="form-control custom-select" id="validator" name="validator"> 
-                                                <option <?php echo $validator == 'Alpha-numeric' ? "selected" : "" ?> value="Alpha-numeric">Alpha-numeric</option>
-                                                <option <?php echo $validator == 'Numeric' ? "selected" : "" ?> value="Numeric">Numeric</option>
-                                                <option <?php echo $validator == 'Email' ? "selected" : "" ?> value="Email">Email</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @if (Request::get("combination") === 'api')
-                                <div id="api" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_app_name" class="col-form-label" >Next App Name</label>
-                                            <select class="form-control custom-select" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
-                                                <option value="null">null</option>
-                                                    <option value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option value="api">Api</option>
-                                                    <option value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_app_name1" class="col-form-label">Next App Value </label>
-                                            <select class="form-control custom-select" id="api_app_name1" name="api_app_name1" onchange="__checkAppValueCondition(this.value, 'api_app_name')">
-                                                <option value="null">null</option>
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
-                                                    <option  value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option  value="api">Api</option>
-                                                    <option value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                            <select class="form-control custom-select" id="api_success_app_value" name="api_success_app_value" onchange="__checkAppValueCondition(this.value, 'api_success_app_name')">   
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="api_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                            <select class="form-control custom-select" id="api_failure_app_value" name="api_failure_app_value" onchange="__checkAppValueCondition(this.value, 'api_failure_app_name')">   
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="parameter_input" class="col-form-label m_sel_image">Parameter Input</label>
-                                            <input class="form-control" id="parameter_input" name="parameter_input" placeholder="Enter input" value="{{ $parameter_input }}" type="text">
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="parameter_mobile" class="col-form-label m_sel_image">Parameter Mobile</label>
-                                            <input class="form-control" id="parameter_mobile" name="parameter_mobile" placeholder="Enter Mobile" value="{{ $parameter_mobile }}" type="text">
-                                        </div>
-                                    </div>
+    <!-- select2 CSS -->
+    <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
+    <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
+        @include('errors.status')
+        <style>
+            .errorClass {
+                border-color: #dd4b39;
+            }
 
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="" class="col-form-label m_sel_image">Url</label>
-                                            <input class="form-control" id="url" name="url" placeholder="Enter url" value="{{ $url }}" type="text">
-                                        </div>
+        </style>
+        <h6 class="hk-pg-title">@yield('title') :: Edit Menu</h6>
+        <p class="mb-20"></p>
+        <div class="row">
+            <div class="col-xl-12">
+                <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.menu.update') }}"
+                    enctype="multipart/form-data">
+                    <section class="hk-sec-wrapper" id="initialWrapper">
+                        <div class="row">
+                            <div class="col-sm">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="keySet" id="keySetId">
+                                <input type="hidden" name="id" id="id" value="{{ $id }}">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="firstName"> Name </label>
+                                        <input class="form-control" id="name" name="name" placeholder="Enter name"
+                                            type="text" value="{{ $name }}">
+                                        
                                     </div>
                                 </div>
-                            @endif
-                            @if (Request::get("combination") === 'location')
-                                <div id="location" style="display: none;">
-                                    <div class="row">
+                                <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="location_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">   
+                                        <label for="appName" class="col-form-label">App Name</label>
+                                        <select class="form-control custom-select" id="appName" name="appName"
+                                            onchange="__getAppName(this.value, 'appValue')">
                                             <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
+                                            <option value="text">Text</option>
+                                            <option value="image">Image</option>
+                                            <option value="video">Video</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label for="location_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select" id="location_app_name1" name="location_app_name1" onchange="__checkAppValueCondition(this.value, 'location_app_name')">
+                                        <label for="appValue" class="col-form-label">App Value </label>
+                                        <select class="form-control custom-select" id="appValue" name="appValue"
+                                            onchange="__checkAppValueCondition(this.value, 'appName')">
                                             <option value="null">null</option>
-                                            
+
                                         </select>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
+                                        <select class="form-control custom-select" id="invalidAppName" name="invalidAppName"
+                                            onchange="__getAppName(this.value, 'invalidAppValue')">
+                                            <option value="null">null</option>
+                                            <option value="text">Text</option>
+                                            <option value="image">Image</option>
+                                            <option value="video">Video</option>
+                                            <option value="capture">Capture</option>
+                                            <option value="api">Api</option>
+                                            <option value="menu">Menu</option>
+                                        </select>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="latitude" class="col-form-label m_sel_image">lat</label>
-                                            <input class="form-control" id="latitude" name="latitude" placeholder="Enter lat" value="{{ $lattitude }}" type="text">
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="longitude" class="col-form-label m_sel_image">long</label>
-                                            <input class="form-control" id="longitude" name="longitude" placeholder="Enter Long" value="{{ $longitude }}" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="lastName">Location</label>
-                                        <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter location"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  id="location" name="location">{{ $message }}</textarea>
-                                        </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="" class="col-form-label m_sel_image">Invalid App value</label>
+                                        <select class="form-control custom-select" id="invalidAppValue"
+                                            name="invalidAppValue"
+                                            onchange="__checkAppValueCondition(this.value, 'invalidAppName')">
+                                            <option value="null">null</option>
+                                        </select>
                                     </div>
                                 </div>
-                            @endif
-                            @if (Request::get("combination") === 'timeCondition')
-                                <div id="timeCondition" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-md-6 form-group schduleRow">
-                                            <label for="startTime">Start Time</label>
-                                            <input type="text" class="form-control input-timepicker" id="startTime" name="startTime" value="{{ $start_time }}">
-                                        </div>
-                                        <div class="col-md-6 form-group schduleRow">
-                                            <label for="endTime">End Time</label>
-                                            <input type="text" class="form-control input-timepicker" id="endTime" name="endTime" value="{{ $end_time }}">
+                                @if ($errors->any())
+                                    <label class="control-label" for="inputError" style="color: #dd4b39"><i
+                                            class="fa fa-times-circle-o"></i>
+                                        {{ implode(' | ', $errors->all(':message')) }} .</label>
+                                    <br>
+                                @endif
+                                <button class="btn btn-primary pull-center" id="nextButton" style="margin-left: 45%;"
+                                    type="button">Next</button>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="hk-sec-wrapper" id="nextWrapper" style="display: none">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="card bg-light mb-3">
+                                            <div class="card-header">Menu Summary
+                                                <button class="btn btn-primary pull-center" id="backBtn"
+                                                    style="float: right;" type="button">Edit</button>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-text name">Name : <span>Hai</span></p>
+                                                <p class="card-text appName">App Name : <span>Hai</span>
+                                                <p class="card-text invalidAppName">Invalid App Name : <span>Hai</span></p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="timeCondition_success_app_name" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select" id="timeCondition_success_app_name" name="timeCondition_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
+                                    <div class="card bg-light mb-3 col-sm-6">
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Key</th>
+                                                        <th scope="col">App Name</th>
+                                                        <th scope="col">App Value</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="keyData">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 form-group">
+                                                <label for="keyAppName" class="col-form-label">App Name</label>
+                                                <select class="form-control custom-select" id="keyAppName" name="keyAppName"
+                                                    onchange="__getAppName(this.value, 'keyAppValue')">
+                                                    <option value="null">null</option>
                                                     <option value="text">Text</option>
                                                     <option value="image">Image</option>
                                                     <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option value="api">Api</option>
-                                                    <option value="menu">Menu</option>
-                                            </select>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6 form-group">
+                                                <label for="keyAppValue" class="col-form-label">App Value </label>
+                                                <select class="form-control custom-select" id="keyAppValue" name="keyAppValue"
+                                                    onchange="__checkAppValueCondition(this.value, 'keyAppName')">
+                                                    <option value="null">null</option>
+
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="timeCondition_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                            <select class="form-control custom-select" id="timeCondition_success_app_value" name="timeCondition_success_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_success_app_name')">   
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="timeCondition_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select" id="timeCondition_failure_app_name" name="timeCondition_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 form-group">
-                                            <label for="timeCondition_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                            <select class="form-control custom-select" id="timeCondition_failure_app_value" name="timeCondition_failure_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_failure_app_name')">   
-                                                <option value="null">null</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-1 form-group">
-                                            <label for="sun" class="col-form-label m_sel_image">Sun</label>
-                                            <input type="checkbox" id="sun" name="sun" value="1" <?php echo $sun == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="mon" class="col-form-label m_sel_image">Mon</label>
-                                            <input type="checkbox" id="mon" name="mon" value="1" <?php echo $mon == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="tue" class="col-form-label m_sel_image">Tue</label>
-                                            <input type="checkbox"  id="tue" name="tue" value="1" <?php echo $tue == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="wed" class="col-form-label m_sel_image">Wed</label>
-                                            <input type="checkbox" id="wed" name="wed" value="1" <?php echo $wed == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="thu" class="col-form-label m_sel_image">Thu</label>
-                                            <input type="checkbox" id="thu" name="thu" value="1" <?php echo $thu == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="fri" class="col-form-label m_sel_image">Fri</label>
-                                            <input type="checkbox" id="fri" name="fri" value="1" <?php echo $fri == 1 ? "checked" : "" ?>>
-                                        </div>
-                                        <div class="col-sm-1 form-group">
-                                            <label for="sat" class="col-form-label m_sel_image">Sat</label>
-                                            <input type="checkbox" id="sat" name="sat" value="1" <?php echo $sat == 1 ? "checked" : "" ?>>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="inputKey"> Key </label>
+                                                <input class="form-control" id="inputKey" name="inputKey" placeholder="Enter Key" value=""
+                                                    type="text" value="{{ old('inputKey') }}">
+                                                <div class="key-exist" style="display: none; color: red;">
+                                                    Key already exist!!
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <button class="btn btn-primary pull-center" id="addKey" style="margin-top: 30px;" type="button" onclick="addToKeySet();">Create</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                            <div class="row">
-                            <div class="col-md-6 form-group" id="message">
-                                    <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="message">{{ $message }}</textarea>
-                                 </div>
-                             </div>
-                            
-                            
-                            @if ($errors->any())
-                                <label class="control-label" for="inputError" style="color: #dd4b39"><i class="fa fa-times-circle-o" ></i> {{ implode(' | ', $errors->all(':message')) }} .</label>
-                                <br>
-                            @endif
-                            <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;" type="button">Update</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
+                                @if ($errors->any())
+                                    <label class="control-label" for="inputError" style="color: #dd4b39"><i
+                                            class="fa fa-times-circle-o"></i>
+                                        {{ implode(' | ', $errors->all(':message')) }} .</label>
+                                    <br>
+                                @endif
+                                <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;"
+                                    type="button">Create</button>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<script src="{{ asset('dist/js/jquery.min.js') }}"></script>
-<script src="{{ asset('dist/js/moment.min.js') }}"></script>
-<script src="{{ asset('dist/js/daterangepicker.js') }}"></script>
-<script type="text/javascript">
-    function selectedMessage(slug){
-        $("select").removeClass("errorClass");
-        $("#sel_text").hide();
-        $("#sel_image").hide();
-        $("#sel_video").hide();
-        $("#capture").hide();
-        $("#api").hide();
-        $("#location").hide();
-        $("#message").show();
-        $("#timeCondition").hide();
-
-        if(slug=='text'){
-            $("#sel_text").show();
-        }else if(slug=='image'){
-            $("#sel_image").show();
-        }else if(slug =='video'){
-            $("#sel_video").show();
-        }else if(slug =='capture'){
-            $("#capture").show();
-            $("#message").hide();
-        }else if (slug =='api') {
-            $("#api").show();
-            $("#message").hide();
-        }else if(slug =='location'){
-            $("#location").show();
-            $("#message").hide();
-        }else if(slug =='timeCondition'){
-            $("#timeCondition").show();
-            $("#message").hide();
-        }
-    }
-
-    function __getAppName(combination, isDefault=false){
-        let appValue = "{{ (empty($app_value) ? 'null' : $app_value) }}".toLowerCase();
-        $.ajax(
-            {
+    <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+    var keyList = [];
+        function __getAppName(combination, targetId, needDefaultValue=false, defaultValue="") {
+            $.ajax({
                 url: '{{ route('ajax.message.request.appname') }}',
                 dataType: 'json', // what to expect back from the PHP script
                 cache: false,
-                data: { _token: "{{ csrf_token() }}", combination : combination } ,
-                type: 'POST' ,
-                beforeSend: function () {
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    combination: combination
+                },
+                type: 'POST',
+                beforeSend: function() {
                     $('.preloader-it').show();
                 },
-                complete: function () {
+                complete: function() {
                     $('.preloader-it').hide();
                 },
-                success: function (result) {
+                success: function(result) {
                     $('.preloader-it').hide();
-                    $('#'+ $("#combination").val() +'_app_name1').html(result.response);
-                    if(isDefault) {
-                        $('#'+ $("#combination").val() +'_app_name1').val(appValue);
+                    $('#' + targetId).html(result.response);
+                    if(needDefaultValue) {
+                        $('#' + targetId).val(defaultValue);
                     }
                 },
-                error: function (response) {
+                error: function(response) {
                     $('.preloader-it').hide();
-                    $('#'+ $("#combination").val() +'_app_name1').html(result.response);
-                    if(isDefault) {
-                        $('#'+ $("#combination").val() +'_app_name1').val(appValue);
+                    $('#' + targetId).html(result.response);
+                    if(needDefaultValue) {
+                        $('#' + targetId).val(defaultValue);
                     }
                 }
-            }
-        );
-    }
+            });
+        }
 
-    function __getSuccessFailureName(combination, isForSuccess = true, isDefault=false){
-    let successAppValue = "{{ (empty($success_app_value) ? 'null' : $success_app_value) }}".toLowerCase();
-    let failureAppValue = "{{ (empty($failed_app_value) ? 'null' : $failed_app_value) }}".toLowerCase();
-        $.ajax(
-            {
-                url: '{{ route('ajax.message.request.appname') }}',
+        function __checkAppValueCondition(value, targetId) {
+            let appNameElementVal = $("#" + targetId).val();
+            if ((value == 'null' || value == null) && (appNameElementVal != 'null' && appNameElementVal != null)) {
+                alert("Next App name should be null if Next App value is null");
+                $("#" + targetId).val("null");
+            }
+        }
+
+        $("#sendBtn").click(function(event) {
+            event.preventDefault();
+            if (!__appValueValidationCheck()) {
+                $("#keySetId").val(JSON.stringify(keyList));
+                $("form").submit();
+            }
+        });
+
+        function __appValueValidationCheck() {
+            let hasFormError = false;
+            $("select").removeClass("errorClass");
+            $("#appValue, #invalidAppValue").each((e, value) => {
+                if ($(value).val() == "") {
+                    $("#nextWrapper").hide();
+                    $("#initialWrapper").show();
+                    $(value).addClass("errorClass");
+                    hasFormError = true;
+                }
+            });
+            if ($("#name").val() == "") {
+                $("#nextWrapper").hide();
+                $("#initialWrapper").show();
+                $("#name").addClass("errorClass");
+                hasFormError = true;
+            }
+            return hasFormError;
+        }
+
+        $("#nextButton").click(function() {
+            $("#nextWrapper").show();
+            $("#initialWrapper").hide();
+            $(".card-text.name span").text($("#name").val());
+            $(".card-text.appName span").text($("#appName").val());
+            $(".card-text.invalidAppName span").text($("#invalidAppName").val());
+        });
+
+        $("#backBtn").click(function() {
+            $("#nextWrapper").hide();
+            $("#initialWrapper").show();
+        });
+        function __listKeyValues() {
+            let response = "";
+            keyList.forEach((value, key) => {
+                response += "<tr><th scope='row'>"+ value.inputKey +"</th><td>"+ value.keyAppName +"</td><td>"+ value.keyAppValue +"</td><td><button type='button'onclick='removeKey("+ key +")' class='btn btn-link'>Remove</button></td></tr>";
+            });
+            $("#keyData").html(response);
+        }
+
+        function addToKeySet() {
+            if(__checkValidEntry()) {
+                if(!__checkKeyExist()) {
+                    $(".key-exist").hide();
+                    keyList.push({
+                        "inputKey": $("#inputKey").val(),
+                        "keyAppName": $("#keyAppName").val(),
+                        "keyAppValue": $("#keyAppValue option:selected").text(),
+                        "keyAppValueInInt":  $("#keyAppValue").val()
+                    });
+                    __listKeyValues();
+                    __getAppName("null", 'keyAppValue');
+                    $("#inputKey").val("");
+                    $("#keyAppName").val("null");
+                    $("#keyAppValue").val("null");
+                } else {
+                    $(".key-exist").show();
+                }
+            }
+        }
+
+        function __checkKeyExist() {
+            response = false;
+            if($("#inputKey").val() == "") {
+                $(".key-exist").text("Key should not be empty");
+                return true;
+            } else {
+                keyList.forEach((value, key) => {
+                    if(value.inputKey == $("#inputKey").val()) {
+                        response = true;
+                    }
+                });
+                $(".key-exist").text("Key already exist!! ");
+            }
+            return response;
+        }
+
+        function __checkValidEntry() {
+            response = true;
+            let appName = $("#keyAppName").val();
+            let appValue = $("#keyAppValue").val();
+            if(appValue == "" || (appValue == "null" && appName != 'null')) {
+                response = false;
+                alert("Next App name should be null if Next App value is null");
+            }
+            return response;
+        }
+
+        function removeKey(index) {
+            $.ajax({
+                url: '{{ route('user.menu.delete.key') }}',
                 dataType: 'json', // what to expect back from the PHP script
                 cache: false,
-                data: { _token: "{{ csrf_token() }}", combination : combination } ,
-                type: 'POST' ,
-                beforeSend: function () {
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: keyList[index]['id']
+                },
+                type: 'POST',
+                beforeSend: function() {
                     $('.preloader-it').show();
                 },
-                complete: function () {
+                complete: function() {
                     $('.preloader-it').hide();
                 },
-                success: function (result) {
+                success: function(result) {
                     $('.preloader-it').hide();
-                    $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').html(result.response);
-                    if(isDefault) {
-                        $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').val(isForSuccess ? successAppValue : failureAppValue);
-                    }
+                    keyList.splice(index, 1);
+                    __listKeyValues();
                 },
-                error: function (response) {
-                    $('.preloader-it').hide();
-                    $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').html(result.response);
-                    if(isDefault) {
-                        $('#'+ $("#combination").val() + (isForSuccess ? '_success_' : '_failure_') +'app_value').val(isForSuccess ? successAppValue : failureAppValue);
-                    }
+                error: function(response) {
+                    $('.preloader-it').hide();    
+                    keyList.splice(index, 1);
+                    __listKeyValues();
                 }
-            }
-        );
-    }
-
-    function __checkAppValueCondition(value, targetId) {
-        let appNameElementVal = $("#" + targetId).val();
-        if((value == 'null' || value == null) && (appNameElementVal != 'null' && appNameElementVal != null)) {
-            alert("Next App name should be null if Next App value is null");
-            $("#" + targetId).val("null");
+            });
         }
-    }
 
-    $('.input-timepicker').daterangepicker({
-        timePicker: true,
-        datePicker: false,
-        timePicker24Hour: true,
-        timePickerIncrement: 1,
-        timePickerSeconds: true,
-        singleDatePicker: true,
-        locale: {
-            format: 'HH:mm:ss'
+        function __loadDefaultValues() {
+            let appName = "{{ $app_name }}".toLowerCase();
+            let appValue = "{{ $app_value }}";
+            let invalidAppName = "{{ $invalid_app_name }}".toLowerCase();
+            let invalidAppValue = "{{ $invalid_app_value }}";
+            __getAppName(appName, 'appValue', true, appValue);
+            $("#appName").val(appName);
+            __getAppName(invalidAppName, 'invalidAppValue', true, invalidAppValue);
+            $("#invalidAppName").val(invalidAppName);
+
+            <?php 
+                for($i=0; $i< count($menuInput) ; $i++) {
+                    foreach($allMenu as $menu) {
+                        if(($menu->type === $menuInput[$i]->keyAppName) && $menu->id == $menuInput[$i]->keyAppValueInInt) {
+                            $menuInput[$i]->keyAppValue = $menu->name;                        
+                        }
+                    }
+                   ?>
+                   keyList.push(<?php echo $menuInput[$i] ?>)
+                   <?php 
+                }
+            ?>
+            __listKeyValues();
         }
-    }).on('show.daterangepicker', function (ev, picker) {
-            picker.container.find(".calendar-table").hide();
-        })
 
-$("#sendBtn").click(function(event) {
-    event.preventDefault();
-    if(!__appValueValidationCheck()) {
-        $("form").submit();
-    }
-});
-
-function __appValueValidationCheck() {
-    let hasFormError = false;
-    $("select").removeClass("errorClass");
-    hasFormError = __defaultValidation();
-    $("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value']").each((e, value) => {
-        if($(value).is(":visible") && $(value).val() == "") {
-            $(value).addClass("errorClass");
-            hasFormError = true;
-        }
-    });
-    return hasFormError;
-}
-
-function __defaultValidation() {
-    let hasError = false;
-    let fieldName = ["scrub_name", "messageText", "latitude", "longitude", "parameter_input", "parameter_mobile"];
-    fieldName.forEach((value, index) => {
-        $("#" + value).removeClass("errorClass");
-        if($("#" + value).is(":visible") && $("#" + value).val() == "") {
-            $("#" + value).addClass("errorClass");
-            hasError = true;
-        }
-    })
-    return hasError;
-}
-function setEditValues() {
-    let successAppName = "{{ (empty($success_app_name) ? 'null' : $success_app_name) }}".toLowerCase();
-    let failureAppName = "{{ (empty($failed_app_name) ? 'null' : $failed_app_name) }}".toLowerCase();
-    let appName = "{{ (empty($app_name) ? 'null' : $app_name) }}".toLowerCase();
-    $("[id*='success_app_name']").each((e, value) => {
-        $(value).val(successAppName);
-    });
-    $("[id*='failure_app_name']").each((e, value) => {
-        $(value).val(failureAppName);
-    });
-    selectedMessage('{{ Request::get("combination") }}');
-    $('#'+ '{{ Request::get("combination") }}' +'_app_name').val(appName);
-    __getAppName(appName, true);
-    __getSuccessFailureName(successAppName, true, true);
-    __getSuccessFailureName(failureAppName, false, true);
-}
-
-setEditValues();
-</script>
+        __loadDefaultValues();
+        
+    </script>
 @endsection

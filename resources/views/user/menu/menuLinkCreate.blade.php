@@ -16,7 +16,7 @@
         <p class="mb-20"></p>
         <div class="row">
             <div class="col-xl-12">
-                <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.menu.create') }}"
+                <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.menu.update') }}"
                     enctype="multipart/form-data">
                     <section class="hk-sec-wrapper" id="initialWrapper">
                         <div class="row">

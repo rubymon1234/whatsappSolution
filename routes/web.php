@@ -60,6 +60,10 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::get('/menu/list', 'User\MenuController@getMenuList')->name('user.menu.list');
 
+	Route::get('/menu/edit/{id}', 'User\MenuController@editMenuList')->name('user.menu.edit');
+
+	Route::post('/menu/remove-key', 'User\MenuController@removeMenuKey')->name('user.menu.delete.key');
+
 	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.chat.bot.menu.update')->middleware(['permission:user.chat.bot.menu.update']);
 
 });

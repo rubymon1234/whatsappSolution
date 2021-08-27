@@ -54,7 +54,7 @@
                                     <td> <span class="name">{{ $data->name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ $data->app_name }}</span></td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="#" class="btn btn-info">Edit</a></td>
+                                    <td ><a href="{{ route('user.menu.edit', Crypt::encrypt($data->id)) }}" class="btn btn-info">Edit</a></td>
                                 </tr>
                             @empty
                                 <tr>
