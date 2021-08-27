@@ -143,8 +143,8 @@
                                 </li>
                                 @endpermission
                                 @permission('user.chat.bot.menu.create')
-                                <li class="nav-item {{ (Route::is('user.chat.bot.menu.create') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.chat.bot.menu.create') }}">List Menu</a>
+                                <li class="nav-item {{ (Route::is('user.chat.bot.menu.list') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.chat.bot.menu.list') }}">List Menu</a>
                                 </li>
                                 @endpermission
                             </ul>
