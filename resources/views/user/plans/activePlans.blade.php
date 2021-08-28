@@ -38,6 +38,10 @@
                             <td>scrub count</td>
                             <td>@if($crtplan->scrub_count) {{ $crtplan->scrub_count }} @else {{ $crtplan->scrub_count }} @endif</td>
                         </tr>
+                        <tr>
+                            <td>Bot Instance count</td>
+                            <td>@if($crtplan->bot_instance_count) {{ $crtplan->bot_instance_count }} @else {{ $crtplan->bot_instance_count }} @endif</td>
+                        </tr>
                          </tr>
                                 </table>
 							</div>

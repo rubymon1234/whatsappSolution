@@ -33,6 +33,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Bot instance count(N)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="bot_instance_count" class="form-control" placeholder="Enter Bot instance count." value="{{ old('bot_instance_count') }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Validity (Days)</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="plan_validity" class="form-control" placeholder="Enter plan validity." value="{{ old('plan_validity') }}">

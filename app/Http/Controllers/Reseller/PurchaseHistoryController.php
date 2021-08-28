@@ -20,7 +20,7 @@ class PurchaseHistoryController extends Controller
             ->leftJoin('users', 'users.id', '=', 'purchase_histories.user_id')
             ->leftJoin('plans', 'plans.id', '=', 'purchase_histories.plan_id')
             ->where('purchase_histories.reseller_id',Auth::user()->id) //pending for approval
-            ->select('users.name','plans.plan_name','purchase_histories.is_status','plans.daily_count','plans.plan_validity','plan_requests.credit','purchase_histories.created_at','plans.scrub_count')
+            ->select('users.name','plans.plan_name','purchase_histories.is_status','plans.daily_count','plans.plan_validity','plan_requests.credit','purchase_histories.created_at','plans.scrub_count','plans.bot_instance_count')
             ->latest('purchase_histories.updated_at')
             ->paginate(10);
 

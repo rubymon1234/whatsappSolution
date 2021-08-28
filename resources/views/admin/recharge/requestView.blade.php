@@ -30,6 +30,7 @@
                                 <th>Plan Name</th>
                                 <th>Plan Count</th>
                                 <th>Scrub Count</th>
+                                <th>Bot Instance Count</th>
                                 <th>Plan Validity(days)</th>
                                 <th>Request Time</th>
                                 <th>Manage</th>
@@ -48,6 +49,7 @@
                                     <td> <span class="name">{{ $plan->plan_name }}</span> </td>
                                      <td> <span class="product">{{ $plan->daily_count }}</span> </td>
                                      <td> <span class="product">{{ $plan->scrub_count }}</span> </td>
+                                     <td> <span class="product">{{ $plan->bot_instance_count }}</span> </td>
                                     <td >{{$plan->plan_validity }}</td>
                                     <td>
                                         {{ $plan->created_at}}

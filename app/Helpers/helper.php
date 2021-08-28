@@ -67,6 +67,7 @@ class Helper {
     	return $user;
     }
     public static function getPlanDetail($plan_id){
+
     	$plan_id = Crypt::decrypt($plan_id);
     	return $planDetail = Plan::find($plan_id);
     }

@@ -45,6 +45,7 @@ class PlanController extends Controller
                 'plan_name' => 'required|unique:plans',
                 'daily_count' => 'required|numeric',
                 'plan_validity' => 'required|numeric',
+                'bot_instance_count' => 'required|numeric',
                 'scrub_count' => 'required|numeric',
             ];
             $messages = [
@@ -52,6 +53,7 @@ class PlanController extends Controller
                 'plan_name.unique' => 'Plan Name Already Exist',
                 'daily_count.required' => 'Daily count is required',
                 'plan_validity.required' => 'Plan validity is required',
+                'bot_instance_count.required' => 'Bot Instance count is required',
                 'scrub_count.required' => 'scrub count is required',
             ];
 
@@ -66,6 +68,7 @@ class PlanController extends Controller
                 $newPlan->daily_count  = $request->get('daily_count');
                 $newPlan->plan_validity  = $request->get('plan_validity');
                 $newPlan->scrub_count = $request->get('scrub_count');
+                $newPlan->bot_instance_count = $request->get('bot_instance_count');
                 if($newPlan->save())
                     return redirect()->route('global.plan.view')->with('success_message', 'New Plan successfully Added ');
             }

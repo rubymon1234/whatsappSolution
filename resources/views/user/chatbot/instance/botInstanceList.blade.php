@@ -4,7 +4,7 @@
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
-    <h6 class="hk-sec-title">@yield('title') :: List Permission
+    <h6 class="hk-sec-title">@yield('title') :: List Instance
         @permission('user.chat.bot.instance.create')
         <a class="btn btn-outline-info pull-right" href="{{ route('user.chat.bot.instance.create') }}"> Assign Instance </a>
         @endpermission
@@ -28,6 +28,7 @@
                                 <th >#</th>
                                 <th>name</th>
                                 <th>Instance token</th>
+                                <th>Plan name</th>
                                 <th>App name</th>
                                 <th>App value</th>
                                 <th>Status</th>
@@ -40,7 +41,11 @@
                                 <tr>
                                     <td class="serial">{{ $key + $chatInstanceList->firstItem()}} </td>
                                     <td> <span class="name">{{ $instance->name }}</span> </td>
-                                     <td> <span class="product">{{ $instance->instance_token }}</span> </td>
+                                    <td> <span class="product">{{ $instance->instance_token }}</span> </td>
+                                    @php
+                                    $planDetail = \App\Helpers\Helper::getPlanDetail(Crypt::encrypt($instance->plan_id));
+                                    @endphp
+                                    <td> <span class="name">{{ $planDetail->plan_name }}</span> </td>
                                      <td> {{ $instance->app_name }}</td>
                                     @php
                                     $appValue = \App\Helpers\Helper::getNextAppNameView(strtolower($instance->app_name),Crypt::encryptString($instance->app_value));

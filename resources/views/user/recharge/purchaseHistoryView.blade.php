@@ -28,6 +28,7 @@
                                 <th>Plan name</th>
                                 <th>Plan count</th>
                                 <th>Scrub count</th>
+                                <th>Bot Instance count</th>
                                 <th>Plan validity(days)</th>
                                 <th>Credit</th>
                                 <th>Date</th>
@@ -41,6 +42,7 @@
                                     <td> <span class="name">{{ $transaction->plan_name }}</span> </td>
                                      <td> <span class="product">{{ $transaction->daily_count }}</span> </td>
                                      <td> {{ $transaction->scrub_count }}</td>
+                                     <td> {{ $transaction->bot_instance_count }}</td>
                                     <td >{{$transaction->plan_validity }}</td>
                                     <td ><b style="font-weight: bold;">Rs: </b>{{ $transaction->credit }} </td>
                                     <td>

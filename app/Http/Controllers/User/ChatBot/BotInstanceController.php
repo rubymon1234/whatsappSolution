@@ -69,7 +69,10 @@ class BotInstanceController extends Controller
     		if(isset($currentPlan->bot_instance_count)){ $bot_instance_count = $currentPlan->bot_instance_count; }else{
     			$bot_instance_count = 0;
     		}
-    		$instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->count();
+            if(!isset($currentPlan)){
+                return redirect()->route('user.chat.bot.instance.create')->with('error_message', 'plan is not active');
+            }
+    		$instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('plan_id',$currentPlan->plan_id)->count();
     		
     		if($bot_instance_count > $instanceCount){
     			if($valid_result['status'] ==true){
@@ -78,7 +81,8 @@ class BotInstanceController extends Controller
          		$intanceDetail = Instance::find($request->instance)->first();
 
          		$chatInstance = new ChatInstance(); 
-         		$chatInstance->user_id = $user->id;  
+                $chatInstance->user_id = $user->id;  
+         		$chatInstance->plan_id = $currentPlan->plan_id;  
          		$chatInstance->reseller_id = $user->reseller_id;  
          		$chatInstance->name = $request->bot_instance_name;  
          		$chatInstance->instance_token = $intanceDetail->token;  

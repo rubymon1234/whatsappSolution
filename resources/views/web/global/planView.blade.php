@@ -43,6 +43,7 @@
                                 <th>Plan name</th>
                                 <th>Daily count</th>
                                 <th>Scrub count</th>
+                                <th>Bot instance count</th>
                                 <th>Plan validity</th>
                                 <th>Status</th>
                                 @permission('global.plan.update')
@@ -57,6 +58,7 @@
                                     <td> <span class="name">{{ $plan->plan_name }}</span> </td>
                                     <td> <span class="product">{{ $plan->daily_count }}</span> </td>
                                     <td> <span class="product">{{ $plan->scrub_count }}</span> </td>
+                                    <td> <span class="product">{{ $plan->bot_instance_count }}</span> </td>
                                     <td> <span class="product">{{ $plan->plan_validity }}</span> </td>
                                     <td>
                                         @if($plan->is_status==0)
