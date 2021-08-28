@@ -59,9 +59,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $instance->created_at}}
+                                        {{ $instance->created_at }}
                                     </td>
-                                    <td> </td>
+                                    <td><a href="{{ route('user.chat.bot.instance.update' ,Crypt::encrypt($instance->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Plan" ></i></a>&nbsp;&nbsp; </td>
                                 </tr>
                             @empty
                                 <tr>

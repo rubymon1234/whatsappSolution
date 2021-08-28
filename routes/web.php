@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/message/instance-create', 'User\ChatBot\BotInstanceController@getInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
 	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);	
 
+	Route::get('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@getInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);
+	Route::post('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@postInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);
 
 });
 Route::group(['middleware' => 'auth'], function () {

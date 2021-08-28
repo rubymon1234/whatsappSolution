@@ -57,6 +57,7 @@ class AjaxController extends Controller
 	                $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
 	                $currentPlanInsert->daily_count = $planDetail->daily_count;
 	                $currentPlanInsert->scrub_count = $planDetail->scrub_count;
+	                $currentPlanInsert->bot_instance_count = $planDetail->bot_instance_count;
 	                $currentPlanInsert->user_id = $planApproveDetail->user_id;
 	                $currentPlanInsert->reseller_id = $planApproveDetail->reseller_id;
 	                $currentPlanInsert->is_status = 2;
@@ -234,8 +235,19 @@ class AjaxController extends Controller
 				   # code...
 				   break;
 		   }
+		   $selected ='';
 		   foreach($nameList as $row) {
-			   $response .= "<option value='" . $row->id . "'>" . $row->name . "</option>";
+		   	if(isset($request->app_value)){
+		   		if($row->id == $request->app_value){
+		   			$selected = 'selected';
+		   		}else{
+		   			$selected = '';
+		   		}
+		   	}else{
+		   		$selected ='';
+		   	}
+			   $response .= "<option value='" . $row->id . "' " . $selected . ">" . $row->name . "</option>";
+		   	
 		   }
 		   if(count($nameList) == 0) {
 				$response .= "<option value=''></option>";

@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="firstName"> Name </label>
-                                    <input class="form-control" id="bot_instance_name" name="bot_instance_name" placeholder="Enter bot instance name" value="" type="text" value="{{ old('bot_instance_name') }}">
+                                    <input class="form-control" id="bot_instance_name" name="bot_instance_name" placeholder="Enter bot instance name"  type="text" value="{{ old('bot_instance_name') }}">
                                     <div class="invalid-feedback">
                                         Please provide a valid bot instance name.
                                     </div>

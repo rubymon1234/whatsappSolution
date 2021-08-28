@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User\ChatBot;
 
 use DB;
+use Crypt;
 use Carbon\Carbon;
+use App\Models\Plan;
 use App\Models\CurrentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -40,6 +42,83 @@ class BotInstanceController extends Controller
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[1])->orderBy('updated_at','DESC')->get();
 
     	return view('user.chatbot.instance.botInstanceCreate',["combinationList" => $this->getDefaultCombinationList(),"instanceDetail" => $instanceDetail]);
+    }
+    public function getInstanceUpdate($id){
+
+        $chat_id = Crypt::decrypt($id);
+        $instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[1])->orderBy('updated_at','DESC')->get();
+
+       $botInstanceDetail = ChatInstance::find($chat_id);
+       //planDetail
+       $planDetail = Plan::where('is_status',1)->where('bot_instance_count','>=','1')->get();
+
+        return view('user.chatbot.instance.botInstanceEdit',["combinationList" => $this->getDefaultCombinationList(),"instanceDetail" => $instanceDetail,'botInstanceDetail' => $botInstanceDetail ,'planDetail' => $planDetail]);
+    }
+    public function postInstanceUpdate(Request $request,$id){
+       $rule = [
+            'bot_instance_name' => 'required',
+            'instance' => 'required',
+            'combination' => 'required',
+        ];
+        $messages = [
+            'bot_instance_name.required' => 'campaign name is required',
+            'instance.required' => 'instance name is required',
+            'combination.required' => 'combination is required',
+        ];
+
+        //validation error
+        $validator = Validator::make(Input::all(), $rule, $messages);
+        
+        if ($validator->fails()) {
+
+            return redirect()->route('user.chat.bot.instance.create')->withInput(Input::all())->withErrors($validator);
+         }else{
+
+            $chat_id = Crypt::decrypt($id);
+            $user = Auth::user();
+
+            $valid_result = $this->__appValidation($request);
+            //current plan
+            $currentPlan    = CurrentPlan::where('is_status',1)->where('user_id',$user->id)->where('plan_id',$request->plan_id)->first();
+            if(isset($currentPlan->bot_instance_count)){ $bot_instance_count = $currentPlan->bot_instance_count; }else{
+                $bot_instance_count = 0;
+            }
+
+            if(!isset($currentPlan)){
+                return redirect()->back()->with("error_message",'plan is not active')->withInput(['plan_id'=>$request->plan_id]);
+            }
+
+            $instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('plan_id',$currentPlan->plan_id)->count();
+            
+            if($bot_instance_count > $instanceCount){
+                if($valid_result['status'] ==true){
+                
+                //get instance
+                $intanceDetail = Instance::find($request->instance)->first();
+
+                $chatInstance = ChatInstance::find($chat_id); 
+                $chatInstance->user_id = $user->id;  
+                $chatInstance->plan_id = $currentPlan->plan_id;  
+                $chatInstance->reseller_id = $user->reseller_id;  
+                $chatInstance->name = $request->bot_instance_name;
+                $chatInstance->combination = $request->combination;
+                $chatInstance->instance_token = $intanceDetail->token;  
+                $chatInstance->app_name = strtoupper($request->text_app_name);  
+                $chatInstance->app_value = $request->text_app_name1;  
+
+                if($chatInstance->save()){
+                    return redirect()->route('user.chat.bot.instance.list')->with('success_message', 'Bot Instance Update Successfully');
+                }
+
+                return redirect()->back()->with("error_message",'Oops , Something went wrong')->withInput(['tab'=>0]);
+            }
+        
+        }else{
+            return redirect()->back()->with("error_message",'Instance count is exceeded')->withInput(['tab'=>0]);
+        }
+
+            return redirect()->back()->with("error_message",$valid_result['message'])->withInput(['tab'=>0]);
+         } 
     }
     public function postInstanceCreate(Request $request){
 
@@ -84,7 +163,8 @@ class BotInstanceController extends Controller
                 $chatInstance->user_id = $user->id;  
          		$chatInstance->plan_id = $currentPlan->plan_id;  
          		$chatInstance->reseller_id = $user->reseller_id;  
-         		$chatInstance->name = $request->bot_instance_name;  
+                $chatInstance->name = $request->bot_instance_name;
+         		$chatInstance->combination = $request->combination;
          		$chatInstance->instance_token = $intanceDetail->token;  
          		$chatInstance->app_name = strtoupper($request->text_app_name);  
          		$chatInstance->app_value = $request->text_app_name1;  
