@@ -41,7 +41,7 @@ class BotInstanceController extends Controller
 
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[1])->orderBy('updated_at','DESC')->get();
 
-    	return view('user.chatbot.instance.botInstanceCreate',["combinationList" => $this->getDefaultCombinationList(),"instanceDetail" => $instanceDetail]);
+    	return view('user.chatbot.instance.botInstanceCreate',["instanceDetail" => $instanceDetail]);
     }
     public function getInstanceUpdate($id){
 
@@ -52,19 +52,17 @@ class BotInstanceController extends Controller
        //planDetail
        $planDetail = Plan::where('is_status',1)->where('bot_instance_count','>=','1')->get();
 
-        return view('user.chatbot.instance.botInstanceEdit',["combinationList" => $this->getDefaultCombinationList(),"instanceDetail" => $instanceDetail,'botInstanceDetail' => $botInstanceDetail ,'planDetail' => $planDetail]);
+        return view('user.chatbot.instance.botInstanceEdit',["instanceDetail" => $instanceDetail,'botInstanceDetail' => $botInstanceDetail ,'planDetail' => $planDetail]);
     }
     public function postInstanceUpdate(Request $request,$id){
-        
+
        $rule = [
             'bot_instance_name' => 'required',
             'instance' => 'required',
-            'combination' => 'required',
         ];
         $messages = [
             'bot_instance_name.required' => 'campaign name is required',
             'instance.required' => 'instance name is required',
-            'combination.required' => 'combination is required',
         ];
 
         //validation error
@@ -102,7 +100,7 @@ class BotInstanceController extends Controller
                 $chatInstance->plan_id = $currentPlan->plan_id;  
                 $chatInstance->reseller_id = $user->reseller_id;  
                 $chatInstance->name = $request->bot_instance_name;
-                $chatInstance->combination = $request->combination;
+                //$chatInstance->combination = $request->combination;
                 $chatInstance->instance_token = $intanceDetail->token;  
                 $chatInstance->app_name = strtoupper($request->text_app_name);  
                 $chatInstance->app_value = $request->text_app_name1;  
@@ -126,12 +124,10 @@ class BotInstanceController extends Controller
     	$rule = [
             'bot_instance_name' => 'required',
             'instance' => 'required',
-            'combination' => 'required',
         ];
         $messages = [
             'bot_instance_name.required' => 'campaign name is required',
             'instance.required' => 'instance name is required',
-            'combination.required' => 'combination is required',
         ];
 
         //validation error
@@ -165,7 +161,7 @@ class BotInstanceController extends Controller
          		$chatInstance->plan_id = $currentPlan->plan_id;  
          		$chatInstance->reseller_id = $user->reseller_id;  
                 $chatInstance->name = $request->bot_instance_name;
-         		$chatInstance->combination = $request->combination;
+         		//$chatInstance->combination = $request->combination;
          		$chatInstance->instance_token = $intanceDetail->token;  
          		$chatInstance->app_name = strtoupper($request->text_app_name);  
          		$chatInstance->app_value = $request->text_app_name1;  

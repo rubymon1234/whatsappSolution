@@ -39,17 +39,8 @@
                                  </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label for="combination"> Select combination </label>
-                                     <select class="form-control custom-select select2" id="combination" name="combination" onchange="selectedMessage(this.value)" >
-                                        <option value="">Select combinationList</option>
-                                        @foreach($combinationList as $key => $combination)
-                                            <option value="{{ $key }}">{{ $combination }}</option>
-                                        @endforeach
-                                    </select>
-                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="text_app_name" class="col-form-label" >Next App Name</label>
+                                     <label for="text_app_name" class="col-form-label" > App Name</label>
                                     <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
                                         <option value=""></option>
                                             <option value="text">Text</option>
@@ -61,7 +52,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                     <label for="text_app_name1" class="col-form-label">Next App Value </label>
+                                     <label for="text_app_name1" class="col-form-label"> App Value </label>
                                     <select class="form-control custom-select" id="text_app_name1" name="text_app_name1" onchange="__checkAppValueCondition(this.value, 'text_app_name')">
                                         <option value=""></option>
                                     </select>
