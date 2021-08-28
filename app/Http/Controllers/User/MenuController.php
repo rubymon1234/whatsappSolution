@@ -67,6 +67,7 @@ class MenuController extends Controller
         if($request->get("name")) {
            $menuList = $menuList->where("name", $request->get("name"));
         }
+        $menuList = $menuList->orderBy("created_at", "DESC");
         $menuList = $menuList->paginate(10);
         return view('user.menu.menuLinkList', ["menuList"=>$menuList]);
     }

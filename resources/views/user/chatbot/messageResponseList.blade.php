@@ -65,7 +65,22 @@
                                     <td class="serial">{{ $key + $messageList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ $data->app_name }}</span></td>
-                                    <td >{{ $data->message }}</td>
+                                    <td>
+                                        
+                                        <?php
+                                        $string = strip_tags(rawurldecode($data->message));
+                                        if (strlen($string) > 10) {
+
+                                            // truncate string
+                                            $stringCut = substr($string, 0, 10);
+                                            $endPoint = strrpos($stringCut, ' ');
+                                            //if the string doesn't contain any space then it will cut without word basis.
+                                            $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                            $string .= '... <i class="fa fa-eye" data-toggle="tooltip" data-original-title="'.rawurldecode($data->message).'" ></i>';
+                                        }
+                                        ?>
+                                        <?php  echo $string ?>
+                                    </td>
                                     <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
                                     <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class="btn btn-info">Edit</a></td>

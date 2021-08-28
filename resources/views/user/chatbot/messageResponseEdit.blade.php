@@ -31,9 +31,9 @@
                                     </div>
                                 </div>
                                  <div class="col-md-6 form-group">
-                                    <label for="combination"> Select combination </label>
+                                    <label for="combination"> Select Response </label>
                                      <select class="form-control custom-select select2" id="combination" onchange="selectedMessage(this.value)" readonly disabled>
-                                        <option value="">Select combinationList</option>
+                                        <option value="">Select Reeponse</option>
                                         @foreach($combinationList as $key => $combination)
                                             <option <?php echo Request::get("combination") == $key ? 'selected' : '' ?> value="{{ $key }}">{{ $combination }}</option>
                                         @endforeach
@@ -315,7 +315,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="lastName">Location</label>
-                                        <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter location"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  id="location" name="location">{{ $message }}</textarea>
+                                        <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter location"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  id="location" name="location">{{ rawurldecode($message) }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -408,7 +408,7 @@
                             <div class="row">
                             <div class="col-md-6 form-group" id="message">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="message">{{ $message }}</textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="message">{{ rawurldecode($message) }}</textarea>
                                  </div>
                              </div>
                             

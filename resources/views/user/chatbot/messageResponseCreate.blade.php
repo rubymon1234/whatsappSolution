@@ -29,9 +29,9 @@
                                     </div>
                                 </div>
                                  <div class="col-md-6 form-group">
-                                    <label for="combination"> Select combination </label>
+                                    <label for="combination"> Select Response </label>
                                      <select class="form-control custom-select select2" id="combination" name="combination" onchange="selectedMessage(this.value)" >
-                                        <option value="">Select combinationList</option>
+                                        <option value="">Select Response</option>
                                         @foreach($combinationList as $key => $combination)
                                             <option value="{{ $key }}">{{ $combination }}</option>
                                         @endforeach
@@ -303,7 +303,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="lastName">Location</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter location"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  id="location" name="location"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter location"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  id="locationText" name="location"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -422,6 +422,7 @@
         $("#capture").hide();
         $("#api").hide();
         $("#location").hide();
+        $("#locationText").hide();
         $("#message").show();
         $("#timeCondition").hide();
 
@@ -439,6 +440,7 @@
             $("#message").hide();
         }else if(slug =='location'){
             $("#location").show();
+            $("#locationText").show();
             $("#message").hide();
         }else if(slug =='timeCondition'){
             $("#timeCondition").show();
@@ -566,8 +568,9 @@ $("#sendBtn").click(function(event) {
 function __appValueValidationCheck() {
     let hasFormError = false;
     $("select").removeClass("errorClass");
+    $("#locationText").removeClass("errorClass");
     hasFormError = __defaultValidation();
-    $("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value']").each((e, value) => {
+    $("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value'], [id*='locationText']").each((e, value) => {
         if($(value).is(":visible") && $(value).val() == "") {
             $(value).addClass("errorClass");
             hasFormError = true;
@@ -578,7 +581,7 @@ function __appValueValidationCheck() {
 
 function __defaultValidation() {
     let hasError = false;
-    let fieldName = ["scrub_name", "messageText", "latitude", "longitude", "parameter_input", "parameter_mobile"];
+    let fieldName = ["scrub_name", "messageText", "latitude", "longitude", "parameter_input", "parameter_mobile", "locationText"];
     fieldName.forEach((value, index) => {
         $("#" + value).removeClass("errorClass");
         if($("#" + value).is(":visible") && $("#" + value).val() == "") {

@@ -250,7 +250,7 @@ class AjaxController extends Controller
 		   	
 		   }
 		   if(count($nameList) == 0) {
-				$response .= "<option value=''></option>";
+				$response .= "<option value='null'></option>";
 		   }
 		   return response()->json([
 			'success' => true,

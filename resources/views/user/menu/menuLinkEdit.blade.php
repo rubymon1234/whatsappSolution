@@ -37,7 +37,7 @@
                                         <label for="appName" class="col-form-label">App Name</label>
                                         <select class="form-control custom-select" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
@@ -47,7 +47,7 @@
                                         <label for="appValue" class="col-form-label">App Value </label>
                                         <select class="form-control custom-select" id="appValue" name="appValue"
                                             onchange="__checkAppValueCondition(this.value, 'appName')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
 
                                         </select>
                                     </div>
@@ -57,7 +57,7 @@
                                         <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
                                         <select class="form-control custom-select" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
@@ -71,7 +71,7 @@
                                         <select class="form-control custom-select" id="invalidAppValue"
                                             name="invalidAppValue"
                                             onchange="__checkAppValueCondition(this.value, 'invalidAppName')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                                 <label for="keyAppName" class="col-form-label">App Name</label>
                                                 <select class="form-control custom-select" id="keyAppName" name="keyAppName"
                                                     onchange="__getAppName(this.value, 'keyAppValue')">
-                                                    <option value="null">null</option>
+                                                    <option value="null"></option>
                                                     <option value="text">Text</option>
                                                     <option value="image">Image</option>
                                                     <option value="video">Video</option>
@@ -134,7 +134,7 @@
                                                 <label for="keyAppValue" class="col-form-label">App Value </label>
                                                 <select class="form-control custom-select" id="keyAppValue" name="keyAppValue"
                                                     onchange="__checkAppValueCondition(this.value, 'keyAppName')">
-                                                    <option value="null">null</option>
+                                                    <option value="null"></option>
 
                                                 </select>
                                             </div>
