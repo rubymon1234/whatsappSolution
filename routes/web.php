@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/message/instance-list', 'User\ChatBot\BotInstanceController@getInstanceList')->name('user.chat.bot.instance.list')->middleware(['permission:user.chat.bot.instance.list']);
 	
 	Route::get('/message/instance-create', 'User\ChatBot\BotInstanceController@getInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
-	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
+	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);	
 
 
 });

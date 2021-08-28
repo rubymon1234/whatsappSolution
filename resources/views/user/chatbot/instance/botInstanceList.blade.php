@@ -32,6 +32,7 @@
                                 <th>App value</th>
                                 <th>Status</th>
                                 <th>created at</th>
+                                <th>Manage</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +42,10 @@
                                     <td> <span class="name">{{ $instance->name }}</span> </td>
                                      <td> <span class="product">{{ $instance->instance_token }}</span> </td>
                                      <td> {{ $instance->app_name }}</td>
-                                    <td >{{$instance->app_balue }}</td>
+                                    @php
+                                    $appValue = \App\Helpers\Helper::getNextAppNameView(strtolower($instance->app_name),Crypt::encryptString($instance->app_value));
+                                    @endphp
+                                    <td >{{ $appValue }}</td>
                                     <td>
                                         @if($instance->is_status==1)
                                             <span class="badge badge-success">Active</span>
@@ -52,6 +56,7 @@
                                     <td>
                                         {{ $instance->created_at}}
                                     </td>
+                                    <td> </td>
                                 </tr>
                             @empty
                                 <tr>

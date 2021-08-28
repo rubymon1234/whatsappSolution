@@ -14,6 +14,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\ApiApplication;
+use App\Models\TextApplication;
+use App\Models\CaptureApplication;
+use App\Models\ImageApplication;
+use App\Models\LocationApplication;
+use App\Models\VideoApplication;
+use App\Models\TimeConditionApplication;
+use Exception;
 
 class Helper {
 	
@@ -100,4 +108,54 @@ class Helper {
         }
         return $plan;
     }
+    public static function getNextAppNameView($combination,$id) {
+        $response = '';
+       try {
+           $nameList = [];
+           
+            $id     = Crypt::decryptString($id);
+           switch ($combination) {
+                case 'text':
+                    $nameList = TextApplication::where("id", $id)->select("name")->get();
+                   break;
+
+                case 'image':
+                    $nameList = ImageApplication::where("id", $id)->select("name")->get();
+                    break;
+
+                case 'video':
+                    $nameList = VideoApplication::where("id", $id)->select("name")->get();
+                    break;
+
+                case 'capture':
+                    $nameList = CaptureApplication::where("id", $id)->select("name")->get();
+                    break;
+
+                case 'api':
+                    $nameList = ApiApplication::where("id", $id)->select("name")->get();
+                    break;
+                            
+                case 'location':
+                    $nameList = LocationApplication::where("id", $id)->select("name")->get();
+                    break;
+                    
+                case 'timeCondition':
+                    $nameList = TimeConditionApplication::where("id", $id)->select("name")->get();
+                    break;
+                    
+                default:
+                   # code...
+                   break;
+           }
+          foreach($nameList as $row) {
+               $response = $row->name;
+           }
+           if(count($nameList) == 0) {
+                $response = "";
+           }
+           return $response;
+       } catch (\Exception $e) {
+            return $response;
+       }
+   }
 }

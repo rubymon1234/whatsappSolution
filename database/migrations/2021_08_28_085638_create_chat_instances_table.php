@@ -15,6 +15,7 @@ class CreateChatInstancesTable extends Migration
     {
         Schema::create('chat_instances', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->integer('user_id')->unsigned();
             $table->integer('reseller_id')->unsigned();
             $table->string('instance_token');

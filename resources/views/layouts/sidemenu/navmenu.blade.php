@@ -137,6 +137,11 @@
                     <ul id="auth_drp_bot" class="nav flex-column collapse-level-1 {{ (Route::is('user.chat.bot.*')? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
+                                @permission('user.chat.bot.instance.list')
+                                <li class="nav-item {{ (Route::is('user.chat.bot.instance.list') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.chat.bot.instance.list') }}"> List Instance</a>
+                                </li>
+                                @endpermission
                                 @permission('user.chat.bot.message.list')
                                 <li class="nav-item {{ (Route::is('user.chat.bot.message.list') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.chat.bot.message.list') }}">List Responses</a>

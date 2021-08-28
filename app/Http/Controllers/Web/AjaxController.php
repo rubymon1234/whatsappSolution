@@ -238,7 +238,7 @@ class AjaxController extends Controller
 			   $response .= "<option value='" . $row->id . "'>" . $row->name . "</option>";
 		   }
 		   if(count($nameList) == 0) {
-				$response .= "<option value='null'></option>";
+				$response .= "<option value=''></option>";
 		   }
 		   return response()->json([
 			'success' => true,
@@ -253,5 +253,4 @@ class AjaxController extends Controller
 			]);
 	   }
    }
-
 }

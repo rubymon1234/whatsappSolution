@@ -18,14 +18,14 @@
             <section class="hk-sec-wrapper">
                 <div class="row">
                     <div class="col-sm">
-                        <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.message.add') }}" enctype="multipart/form-data">
+                        <form id="scrubForm" method="POST" action="{{ route('user.chat.bot.instance.create') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="firstName"> Name </label>
-                                    <input class="form-control" id="scrub_name" name="scrub_name" placeholder="Enter name" value="" type="text" value="{{ old('scrub_name') }}">
+                                    <input class="form-control" id="bot_instance_name" name="bot_instance_name" placeholder="Enter bot instance name" value="" type="text" value="{{ old('bot_instance_name') }}">
                                     <div class="invalid-feedback">
-                                        Please provide a valid name.
+                                        Please provide a valid bot instance name.
                                     </div>
                                 </div>
                                  <div class="col-md-6 form-group">
@@ -33,7 +33,7 @@
                                      <select class="form-control custom-select select2" id="instance" name="instance">
                                         <option value="">Select Instance</option>
                                             @foreach($instanceDetail as $instance)
-                                                <option value="{{$instance->id}}">{{$instance->instance_name }}</option>
+                                                <option value="{{$instance->id}}" >{{$instance->instance_name }}</option>
                                             @endforeach
                                     </select>
                                  </div>
@@ -51,7 +51,7 @@
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" >Next App Name</label>
                                     <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
-                                        <option value="null"></option>
+                                        <option value=""></option>
                                             <option value="text">Text</option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
@@ -63,7 +63,7 @@
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name1" class="col-form-label">Next App Value </label>
                                     <select class="form-control custom-select" id="text_app_name1" name="text_app_name1" onchange="__checkAppValueCondition(this.value, 'text_app_name')">
-                                        <option value="null"></option>
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>
@@ -150,12 +150,13 @@ function __appValueValidationCheck() {
     let hasFormError = false;
     $("select").removeClass("errorClass");
     hasFormError = __defaultValidation();
-    $("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value']").each((e, value) => {
+    /*$("[id*='failure_app_value'], [id*='app_name1'], [id*='success_app_value']").each((e, value) => {
         if($(value).is(":visible") && $(value).val() == "") {
             $(value).addClass("errorClass");
             hasFormError = true;
         }
-    });
+    });*/
+    hasFormError = false;
     return hasFormError;
 }
 
