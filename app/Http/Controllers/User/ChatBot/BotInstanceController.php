@@ -55,6 +55,7 @@ class BotInstanceController extends Controller
         return view('user.chatbot.instance.botInstanceEdit',["combinationList" => $this->getDefaultCombinationList(),"instanceDetail" => $instanceDetail,'botInstanceDetail' => $botInstanceDetail ,'planDetail' => $planDetail]);
     }
     public function postInstanceUpdate(Request $request,$id){
+        
        $rule = [
             'bot_instance_name' => 'required',
             'instance' => 'required',

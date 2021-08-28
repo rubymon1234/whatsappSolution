@@ -55,7 +55,7 @@ class MenuController extends Controller
                 }
             }
             if($request->get("id")) {
-                return redirect()->route('user.menu.list')->with('success_message', 'Menu Updated Successfully!!');
+                return redirect()->route('user.chat.bot.menu.list')->with('success_message', 'Menu Updated Successfully!!');
             } else {
                 return redirect()->route('user.chat.bot.menu.create')->with('success_message', 'Menu Added Successfully!!');
             }
