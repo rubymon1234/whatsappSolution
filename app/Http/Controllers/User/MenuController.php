@@ -32,7 +32,6 @@ class MenuController extends Controller
 
         $validator = Validator::make(Input::all(), $rule, $messages);
 
-        // dd($request->all());
         if ($validator->fails()) {
             return redirect()->back()->withInput(Input::all())->withErrors($validator);
         } else {

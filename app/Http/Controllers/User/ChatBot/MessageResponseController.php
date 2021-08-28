@@ -71,9 +71,20 @@ class MessageResponseController extends Controller
                     $textEntry->app_value = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name1"));
                     $textEntry->app_name = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name"));
                     if ($request->file()) {
-                        $fileName = time() . '_' . $request->image_photo->getClientOriginalName();
-                        $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
-                        $textEntry->file_name = 'storage/app/' . $filePath;
+                        $extension = ['jpeg','png','jpg'];
+                        $ext = strtolower($request->file('image_photo')->getClientOriginalExtension());
+                        $fileSize = $request->file('image_photo')->getSize();
+                        if($fileSize <=4000000){
+                            if(in_array($ext, $extension)){ 
+                                $fileName = time() . '_' . $request->image_photo->getClientOriginalName();
+                                $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                $textEntry->file_name = 'storage/app/' . $filePath;
+                            } else {
+                                return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
+                            }
+                        } else {
+                            return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
+                        }
                     }
                     $textEntry->save();
                     break;
@@ -87,9 +98,20 @@ class MessageResponseController extends Controller
                     $textEntry->next_app_value = $this->getAppName($request->get("video_app_name1"), $request->get("video_app_name1"));
                     $textEntry->next_app_name = $this->getAppName($request->get("video_app_name1"), $request->get("video_app_name"));
                     if ($request->file()) {
-                        $fileName = time() . '_' . $request->video->getClientOriginalName();
-                        $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
-                        $textEntry->file_name = 'storage/app/' . $filePath;
+                        $extension = ['mp4','3gpp'];
+                        $ext = strtolower($request->file('video')->getClientOriginalExtension());
+                        $fileSize = $request->file('video')->getSize();
+                        if($fileSize <=4000000){
+                            if(in_array($ext, $extension)){ 
+                                $fileName = time() . '_' . $request->video->getClientOriginalName();
+                                $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                $textEntry->file_name = 'storage/app/' . $filePath;
+                            } else {
+                                return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
+                            }
+                        } else {
+                            return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
+                        }
                     }
                     $textEntry->save();
                     break;
