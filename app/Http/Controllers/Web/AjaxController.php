@@ -198,7 +198,7 @@ class AjaxController extends Controller
    }
 
    public function getNextAppName(Request $request) {
-	   $response = "<option value=''>Choose App Name</option>";
+	   $response = "";
 	   try {
 		   $nameList = [];
 		   switch ($request->combination) {
@@ -238,7 +238,7 @@ class AjaxController extends Controller
 			   $response .= "<option value='" . $row->id . "'>" . $row->name . "</option>";
 		   }
 		   if(count($nameList) == 0) {
-				$response .= "<option value='null'>null</option>";
+				$response .= "<option value='null'></option>";
 		   }
 		   return response()->json([
 			'success' => true,

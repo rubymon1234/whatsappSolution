@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	Route::post('/message/add-responses', 'User\ChatBot\MessageResponseController@addMessageResponse')->name('user.chat.bot.message.add')->middleware(['permission:user.chat.bot.message.create']);
 
-	Route::get('/message/consolidated', 'User\ChatBot\MessageResponseController@listMessageResponse')->name('user.chat.bot.message.list')->middleware(['permission:user.chat.bot.message.list']);
+	Route::get('/message/response-list', 'User\ChatBot\MessageResponseController@listMessageResponse')->name('user.chat.bot.message.list')->middleware(['permission:user.chat.bot.message.list']);
 
 	Route::get('/message/edit-response/{id}', 'User\ChatBot\MessageResponseController@getMessageResponseDetail')->name('user.chat.bot.message.edit')->middleware(['permission:user.chat.bot.message.update']);
 
@@ -65,6 +65,13 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::post('/menu/remove-key', 'User\MenuController@removeMenuKey')->name('user.menu.delete.key');
 
 	Route::post('/menu/save-update', 'User\MenuController@saveUpdate')->name('user.chat.bot.menu.update')->middleware(['permission:user.chat.bot.menu.update']);
+
+	//BOT INSTANCE
+	Route::get('/message/instance-list', 'User\ChatBot\BotInstanceController@getInstanceList')->name('user.chat.bot.instance.list')->middleware(['permission:user.chat.bot.instance.list']);
+	
+	Route::get('/message/instance-create', 'User\ChatBot\BotInstanceController@getInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
+	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
+
 
 });
 Route::group(['middleware' => 'auth'], function () {
