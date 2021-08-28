@@ -70,7 +70,7 @@ class BotInstanceController extends Controller
         
         if ($validator->fails()) {
 
-            return redirect()->route('user.chat.bot.instance.create')->withInput(Input::all())->withErrors($validator);
+            return redirect()->route('user.chat.bot.instance.update')->withInput(Input::all())->withErrors($validator);
          }else{
 
             $chat_id = Crypt::decrypt($id);
@@ -89,32 +89,27 @@ class BotInstanceController extends Controller
 
             $instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('plan_id',$currentPlan->plan_id)->count();
             
-            if($bot_instance_count > $instanceCount){
-                if($valid_result['status'] ==true){
-                
-                //get instance
-                $intanceDetail = Instance::find($request->instance)->first();
+            if($valid_result['status'] ==true){
+            
+            //get instance
+            $intanceDetail = Instance::find($request->instance)->first();
 
-                $chatInstance = ChatInstance::find($chat_id); 
-                $chatInstance->user_id = $user->id;  
-                $chatInstance->plan_id = $currentPlan->plan_id;  
-                $chatInstance->reseller_id = $user->reseller_id;  
-                $chatInstance->name = $request->bot_instance_name;
-                //$chatInstance->combination = $request->combination;
-                $chatInstance->instance_token = $intanceDetail->token;  
-                $chatInstance->app_name = strtoupper($request->text_app_name);  
-                $chatInstance->app_value = $request->text_app_name1;  
+            $chatInstance = ChatInstance::find($chat_id); 
+            $chatInstance->user_id = $user->id;  
+            $chatInstance->plan_id = $currentPlan->plan_id;  
+            $chatInstance->reseller_id = $user->reseller_id;  
+            $chatInstance->name = $request->bot_instance_name;
+            //$chatInstance->combination = $request->combination;
+            $chatInstance->instance_token = $intanceDetail->instance_name;  
+            $chatInstance->app_name = strtoupper($request->text_app_name);  
+            $chatInstance->app_value = $request->text_app_name1;  
 
-                if($chatInstance->save()){
-                    return redirect()->route('user.chat.bot.instance.list')->with('success_message', 'Bot Instance Update Successfully');
-                }
+            if($chatInstance->save()){
+                return redirect()->route('user.chat.bot.instance.list')->with('success_message', 'Bot Instance Update Successfully');
+            }
 
                 return redirect()->back()->with("error_message",'Oops , Something went wrong')->withInput(['tab'=>0]);
             }
-        
-        }else{
-            return redirect()->back()->with("error_message",'Instance count is exceeded')->withInput(['tab'=>0]);
-        }
 
             return redirect()->back()->with("error_message",$valid_result['message'])->withInput(['tab'=>0]);
          } 
@@ -162,7 +157,7 @@ class BotInstanceController extends Controller
          		$chatInstance->reseller_id = $user->reseller_id;  
                 $chatInstance->name = $request->bot_instance_name;
          		//$chatInstance->combination = $request->combination;
-         		$chatInstance->instance_token = $intanceDetail->token;  
+         		$chatInstance->instance_token = $intanceDetail->instance_name;  
          		$chatInstance->app_name = strtoupper($request->text_app_name);  
          		$chatInstance->app_value = $request->text_app_name1;  
 
