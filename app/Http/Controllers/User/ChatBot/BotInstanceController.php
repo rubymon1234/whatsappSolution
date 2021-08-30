@@ -41,7 +41,18 @@ class BotInstanceController extends Controller
 
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[1])->orderBy('updated_at','DESC')->get();
 
-    	return view('user.chatbot.instance.botInstanceCreate',["instanceDetail" => $instanceDetail]);
+        //planDetail
+        $planDetail = DB::table('current_plans')
+                            ->join('plans', 'plans.id', '=', 'current_plans.plan_id')
+                            ->where('current_plans.bot_instance_count','>=','1')
+                            ->where('current_plans.user_id',Auth::user()->id)
+                            ->where('current_plans.plan_validity', '>=', Carbon::today()->toDateString())
+                            ->select('plans.id as pId','current_plans.id as currentPid','current_plans.bot_instance_count','current_plans.user_id','current_plans.plan_validity','plans.plan_name')
+                            ->get();
+                            /*echo "<pre>";
+        print_r($planDetail);
+        exit();*/
+    	return view('user.chatbot.instance.botInstanceCreate',["instanceDetail" => $instanceDetail,'planDetail' => $planDetail]);
     }
     public function getInstanceUpdate($id){
 
@@ -50,7 +61,13 @@ class BotInstanceController extends Controller
 
        $botInstanceDetail = ChatInstance::find($chat_id);
        //planDetail
-       $planDetail = Plan::where('is_status',1)->where('bot_instance_count','>=','1')->get();
+        $planDetail = DB::table('current_plans')
+                            ->join('plans', 'plans.id', '=', 'current_plans.plan_id')
+                            ->where('current_plans.bot_instance_count','>=','1')
+                            ->where('current_plans.user_id',Auth::user()->id)
+                            ->where('current_plans.plan_validity', '>=', Carbon::today()->toDateString())
+                            ->select('plans.id as pId','current_plans.id as currentPid','current_plans.bot_instance_count','current_plans.user_id','current_plans.plan_validity','plans.plan_name')
+                            ->get();
 
         return view('user.chatbot.instance.botInstanceEdit',["instanceDetail" => $instanceDetail,'botInstanceDetail' => $botInstanceDetail ,'planDetail' => $planDetail]);
     }
@@ -71,24 +88,35 @@ class BotInstanceController extends Controller
         if ($validator->fails()) {
 
             return redirect()->route('user.chat.bot.instance.update')->withInput(Input::all())->withErrors($validator);
+            
          }else{
 
             $chat_id = Crypt::decrypt($id);
             $user = Auth::user();
 
             $valid_result = $this->__appValidation($request);
+            $instanceCountt = ChatInstance::find($chat_id);
             //current plan
-            $currentPlan    = CurrentPlan::where('is_status',1)->where('user_id',$user->id)->where('plan_id',$request->plan_id)->first();
-            if(isset($currentPlan->bot_instance_count)){ $bot_instance_count = $currentPlan->bot_instance_count; }else{
-                $bot_instance_count = 0;
+            if($instanceCountt->current_plan_id == $request->current_plan_id){
+                $bot_instance_count = 1;
+                $currentPlan = array();
+            }else{
+                    $currentPlan    = CurrentPlan::find($request->current_plan_id);
+                if(isset($currentPlan->bot_instance_count)){ $bot_instance_count = $currentPlan->bot_instance_count; }else{
+                    $bot_instance_count = 0;
+                }
             }
-
-            if(!isset($currentPlan)){
-                return redirect()->back()->with("error_message",'plan is not active')->withInput(['plan_id'=>$request->plan_id]);
-            }
-
-            $instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('plan_id',$currentPlan->plan_id)->count();
             
+            if(!isset($currentPlan)){
+                return redirect()->back()->with("error_message",'plan is not active')->withInput(['plan_id'=>$request->current_plan_id]);
+            }
+            if($instanceCountt->current_plan_id == $request->current_plan_id){
+                $instanceCount = 0;
+            }else{
+              $instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('current_plan_id',$request->current_plan_id)->count();
+            }
+
+            if($bot_instance_count > $instanceCount){
             if($valid_result['status'] ==true){
             
             //get instance
@@ -96,10 +124,9 @@ class BotInstanceController extends Controller
 
             $chatInstance = ChatInstance::find($chat_id); 
             $chatInstance->user_id = $user->id;  
-            $chatInstance->plan_id = $currentPlan->plan_id;  
+            $chatInstance->current_plan_id = $request->current_plan_id;  //current plan id 
             $chatInstance->reseller_id = $user->reseller_id;  
             $chatInstance->name = $request->bot_instance_name;
-            //$chatInstance->combination = $request->combination;
             $chatInstance->instance_token = $intanceDetail->instance_name;  
             $chatInstance->app_name = strtoupper($request->text_app_name);  
             $chatInstance->app_value = $request->text_app_name1;  
@@ -110,6 +137,9 @@ class BotInstanceController extends Controller
 
                 return redirect()->back()->with("error_message",'Oops , Something went wrong')->withInput(['tab'=>0]);
             }
+        }else{
+            return redirect()->back()->with("error_message",'Instance count is exceeded')->withInput(['tab'=>0]);
+        }
 
             return redirect()->back()->with("error_message",$valid_result['message'])->withInput(['tab'=>0]);
          } 
@@ -119,10 +149,12 @@ class BotInstanceController extends Controller
     	$rule = [
             'bot_instance_name' => 'required',
             'instance' => 'required',
+            'current_plan_id' => 'required',
         ];
         $messages = [
             'bot_instance_name.required' => 'campaign name is required',
             'instance.required' => 'instance name is required',
+            'current_plan_id.required' => 'plan name is required',
         ];
 
         //validation error
@@ -131,19 +163,20 @@ class BotInstanceController extends Controller
         if ($validator->fails()) {
 
             return redirect()->route('user.chat.bot.instance.create')->withInput(Input::all())->withErrors($validator);
+            
          }else{
 
          	$user = Auth::user();
          	$valid_result = $this->__appValidation($request);
          	//current plan
-    		$currentPlan 	= CurrentPlan::where('is_status',1)->where('user_id',$user->id)->first();
+    		$currentPlan 	= CurrentPlan::find($request->current_plan_id);
     		if(isset($currentPlan->bot_instance_count)){ $bot_instance_count = $currentPlan->bot_instance_count; }else{
     			$bot_instance_count = 0;
     		}
             if(!isset($currentPlan)){
                 return redirect()->route('user.chat.bot.instance.create')->with('error_message', 'plan is not active');
             }
-    		$instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('plan_id',$currentPlan->plan_id)->count();
+    		$instanceCount = ChatInstance::where('user_id',$user->id)->where('is_status',1)->where('current_plan_id',$request->current_plan_id)->count();
     		
     		if($bot_instance_count > $instanceCount){
     			if($valid_result['status'] ==true){
@@ -153,7 +186,7 @@ class BotInstanceController extends Controller
 
          		$chatInstance = new ChatInstance(); 
                 $chatInstance->user_id = $user->id;  
-         		$chatInstance->plan_id = $currentPlan->plan_id;  
+         		$chatInstance->current_plan_id = $currentPlan->id;  //current plan id
          		$chatInstance->reseller_id = $user->reseller_id;  
                 $chatInstance->name = $request->bot_instance_name;
          		//$chatInstance->combination = $request->combination;

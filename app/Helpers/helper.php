@@ -71,6 +71,16 @@ class Helper {
     	$plan_id = Crypt::decrypt($plan_id);
     	return $planDetail = Plan::find($plan_id);
     }
+    public static function getPlanDetailView($current_plan_id){
+
+        $current_plan_id = Crypt::decrypt($current_plan_id);
+        $planDetail = DB::table('current_plans')
+                            ->join('plans', 'plans.id', '=', 'current_plans.plan_id')
+                            ->where('current_plans.id','=',$current_plan_id)
+                            ->select('plans.id as pId','current_plans.id as currentPid','current_plans.bot_instance_count','current_plans.user_id','current_plans.plan_validity','plans.plan_name')
+                            ->first();
+        return $planDetail;
+    }
     public static function generateToken()
     {
         mt_srand((double)microtime()*10000);

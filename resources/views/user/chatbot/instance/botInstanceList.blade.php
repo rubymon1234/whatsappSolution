@@ -43,7 +43,7 @@
                                     <td> <span class="name">{{ $instance->name }}</span> </td>
                                     <td> <span class="product">{{ $instance->instance_token }}</span> </td>
                                     @php
-                                    $planDetail = \App\Helpers\Helper::getPlanDetail(Crypt::encrypt($instance->plan_id));
+                                    $planDetail = \App\Helpers\Helper::getPlanDetailView(Crypt::encrypt($instance->current_plan_id));
                                     @endphp
                                     <td> <span class="name">{{ $planDetail->plan_name }}</span> </td>
                                      <td> {{ $instance->app_name }}</td>

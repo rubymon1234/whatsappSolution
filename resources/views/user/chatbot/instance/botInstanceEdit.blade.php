@@ -42,10 +42,10 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="combination"> Select Plans </label>
-                                     <select class="form-control custom-select select2" id="plan_id" name="plan_id">
+                                     <select class="form-control custom-select select2" id="current_plan_id" name="current_plan_id">
                                         <option value="">Select Plan</option>
                                             @foreach($planDetail as $plan)
-                                                <option value="{{$plan->id}}" {{ ((int)$plan->id ===(int)$botInstanceDetail->plan_id) ? 'selected' : '' }}>{{$plan->plan_name }} </option>
+                                                <option value="{{$plan->currentPid}}" {{ ((int)$plan->currentPid ===(int)$botInstanceDetail->current_plan_id) ? 'selected' : '' }}>{{$plan->plan_name }} </option>
                                             @endforeach
                                     </select>
                                  </div>

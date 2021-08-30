@@ -39,6 +39,15 @@
                                  </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="combination"> Select Plans </label>
+                                     <select class="form-control custom-select select2" id="current_plan_id" name="current_plan_id">
+                                        <option value="">Select Plan</option>
+                                            @foreach($planDetail as $plan)
+                                                <option value="{{$plan->currentPid}}">{{$plan->plan_name }} </option>
+                                            @endforeach
+                                    </select>
+                                 </div>
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" > App Name</label>
                                     <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
