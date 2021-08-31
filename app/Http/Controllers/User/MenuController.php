@@ -69,7 +69,15 @@ class MenuController extends Controller
         }
         $menuList = $menuList->orderBy("created_at", "DESC");
         $menuList = $menuList->paginate(10);
-        return view('user.menu.menuLinkList', ["menuList"=>$menuList]);
+
+        $text = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
+        $image = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);
+        $capture = DB::table('capture_applications')->select("name", DB::raw("'CAPTURE' as type"), "id")->where("user_id", Auth::user()->id);
+        $location = DB::table('location_applications')->select("name", DB::raw("'LOCATION' as type"), "id")->where("user_id", Auth::user()->id);
+        $timeCondition = DB::table('time_condition_applications')->select("name", DB::raw("'TIME CONDITION' as type"), "id")->where("user_id", Auth::user()->id);
+        $video = DB::table('video_applications')->select("name", DB::raw("'VIDEO' as type"), "id")->where("user_id", Auth::user()->id);
+        $video = $video->union($image)->union($text)->union($capture)->union($location)->union($timeCondition)->get();
+        return view('user.menu.menuLinkList', ["menuList"=>$menuList, "allData" => $video]);
     }
 
     public function editMenuList(Request $request, $id) {

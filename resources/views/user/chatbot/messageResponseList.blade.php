@@ -53,6 +53,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>App Name</th>
+                                <th>App Value</th>
                                 <th>Message</th>
                                 <th>Combination Type</th>
                                 <th>Created At</th>
@@ -64,7 +65,17 @@
                                 <tr>
                                     <td class="serial">{{ $key + $messageList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
-                                    <td><span style="font-weight: bold;">{{ $data->app_name }}</span></td>
+                                    <td><span style="font-weight: bold;">{{ strtoupper($data->app_name) }}</span></td>
+                                    <?php 
+                                        $appName = "";
+                                        foreach($allData as $menu) {
+                                            if(($menu->type === $data->app_name) && $menu->id == $data->app_value) {
+                                                  $appName =  strtoupper($menu->name);                  
+                                            }
+                                        }
+                                    
+                                    ?>
+                                    <td >{{ $appName }}</td>
                                     <td>
                                         
                                         <?php
@@ -83,7 +94,7 @@
                                     </td>
                                     <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class="btn btn-info">Edit</a></td>
+                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class=""><i class="fa fa-edit"></i></a></td>
                                 </tr>
                             @empty
                                 <tr>
@@ -119,6 +130,11 @@
     .select2-container .select2-selection--single {
         height: 40px ! important;
     }
+
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
+    text-transform: uppercase;
+  }
 </style>
 <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>

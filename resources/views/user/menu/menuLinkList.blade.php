@@ -44,6 +44,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>App Name</th>
+                                <th>App Value</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
@@ -53,9 +54,19 @@
                                 <tr>
                                     <td class="serial">{{ $key + $menuList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
-                                    <td><span style="font-weight: bold;">{{ $data->app_name }}</span></td>
+                                    <td><span style="font-weight: bold;">{{ strtoupper($data->app_name) }}</span></td>
+                                    <?php 
+                                        $appName = "";
+                                        foreach($allData as $menu) {
+                                            if(($menu->type === $data->app_name) && $menu->id == $data->app_value) {
+                                                  $appName =  strtoupper($menu->name);                  
+                                            }
+                                        }
+                                    
+                                    ?>
+                                    <td >{{ $appName }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="{{ route('user.menu.edit', Crypt::encrypt($data->id)) }}" class="btn btn-info">Edit</a></td>
+                                    <td ><a href="{{ route('user.menu.edit', Crypt::encrypt($data->id)) }}" class=""><i class="fa fa-edit"></i></a></td>
                                 </tr>
                             @empty
                                 <tr>
@@ -91,6 +102,10 @@
     .select2-container .select2-selection--single {
         height: 40px ! important;
     }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
+    text-transform: uppercase;
+  }
 </style>
 <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>

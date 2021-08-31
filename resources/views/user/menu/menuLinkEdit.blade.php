@@ -35,7 +35,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="appName" class="col-form-label">App Name</label>
-                                        <select class="form-control custom-select" id="appName" name="appName"
+                                        <select class="form-control custom-select select2" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
                                             <option value="null"></option>
                                             <option value="text">Text</option>
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="appValue" class="col-form-label">App Value </label>
-                                        <select class="form-control custom-select" id="appValue" name="appValue"
+                                        <select class="form-control custom-select select2" id="appValue" name="appValue"
                                             onchange="__checkAppValueCondition(this.value, 'appName')">
                                             <option value="null"></option>
 
@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
-                                        <select class="form-control custom-select" id="invalidAppName" name="invalidAppName"
+                                        <select class="form-control custom-select select2" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
                                             <option value="null"></option>
                                             <option value="text">Text</option>
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="" class="col-form-label m_sel_image">Invalid App value</label>
-                                        <select class="form-control custom-select" id="invalidAppValue"
+                                        <select class="form-control custom-select select2" id="invalidAppValue"
                                             name="invalidAppValue"
                                             onchange="__checkAppValueCondition(this.value, 'invalidAppName')">
                                             <option value="null"></option>
@@ -122,7 +122,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 form-group">
                                                 <label for="keyAppName" class="col-form-label">App Name</label>
-                                                <select class="form-control custom-select" id="keyAppName" name="keyAppName"
+                                                <select class="form-control custom-select select2" id="keyAppName" name="keyAppName"
                                                     onchange="__getAppName(this.value, 'keyAppValue')">
                                                     <option value="null"></option>
                                                     <option value="text">Text</option>
@@ -132,7 +132,7 @@
                                             </div>
                                             <div class="col-sm-6 form-group">
                                                 <label for="keyAppValue" class="col-form-label">App Value </label>
-                                                <select class="form-control custom-select" id="keyAppValue" name="keyAppValue"
+                                                <select class="form-control custom-select select2" id="keyAppValue" name="keyAppValue"
                                                     onchange="__checkAppValueCondition(this.value, 'keyAppName')">
                                                     <option value="null"></option>
 
@@ -161,7 +161,7 @@
                                     <br>
                                 @endif
                                 <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;"
-                                    type="button">Create</button>
+                                    type="button">Update</button>
                             </div>
                         </div>
                     </section>
@@ -267,8 +267,8 @@
                     $(".key-exist").hide();
                     keyList.push({
                         "inputKey": $("#inputKey").val(),
-                        "keyAppName": $("#keyAppName").val(),
-                        "keyAppValue": $("#keyAppValue option:selected").text(),
+                        "keyAppName": $("#keyAppName").val().toUpperCase(),
+                        "keyAppValue": $("#keyAppValue option:selected").text().toUpperCase(),
                         "keyAppValueInInt":  $("#keyAppValue").val()
                     });
                     __listKeyValues();
@@ -339,10 +339,10 @@
         }
 
         function __loadDefaultValues() {
-            let appName = "{{ $app_name }}".toLowerCase();
+            let appName = "{{ $app_name }}";
             let appValue = "{{ $app_value }}";
-            let invalidAppName = "{{ $invalid_app_name }}".toLowerCase();
-            let invalidAppValue = "{{ $invalid_app_value }}";
+            let invalidAppName = "{{ $invalid_app_name }}".toUpperCase();
+            let invalidAppValue = "{{ $invalid_app_value }}".toUpperCase();
             __getAppName(appName, 'appValue', true, appValue);
             $("#appName").val(appName);
             __getAppName(invalidAppName, 'invalidAppValue', true, invalidAppValue);
@@ -366,4 +366,15 @@
         __loadDefaultValues();
         
     </script>
+    <style type="text/css">
+        .select2-container .select2-selection--single {
+            height: 40px ! important;
+        }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
+    text-transform: uppercase;
+  }
+    </style>
+    <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('dist/js/select2-data.js') }}"></script>
 @endsection
