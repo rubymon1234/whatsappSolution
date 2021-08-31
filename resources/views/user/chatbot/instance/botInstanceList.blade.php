@@ -65,7 +65,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8"> No instance logs in the list</td>
+                                    <td colspan="9"> No instance logs in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>

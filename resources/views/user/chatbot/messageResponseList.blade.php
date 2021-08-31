@@ -87,7 +87,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7"> No Data in the list</td>
+                                    <td colspan="8"> No Data in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
