@@ -14,7 +14,7 @@ class AddBotColumsToChatInstanceTable extends Migration
     public function up()
     {
         Schema::table('chat_instances', function (Blueprint $table) {
-           $table->string('plan_id')->after('user_id');
+           $table->string('current_plan_id')->after('user_id');
         });
     }
 
