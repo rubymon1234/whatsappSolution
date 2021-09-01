@@ -60,6 +60,8 @@
                                             <option value="video" {{ ('video' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>VIDEO</option>
                                             <option value="capture" {{ ('capture' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>CAPTURE</option>
                                             <option value="api" {{ ('api' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>API</option>
+                                            <option value="timeCondition" {{ ('timeCondition' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>TIME CONDITION</option>
+                                            <option value="location" {{ ('location' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>LOCATION</option>
                                             <option value="menu" {{ ('menu' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>MENU</option>
                                     </select>
                                 </div>

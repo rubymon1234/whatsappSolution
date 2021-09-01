@@ -54,12 +54,14 @@
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" > App Name</label>
                                     <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
-                                        <option value=""></option>
+                                            <option value=""></option>
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
+                                            <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                     </select>
                                 </div>

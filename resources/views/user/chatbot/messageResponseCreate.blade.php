@@ -55,6 +55,7 @@
                                                 <option value="capture">CAPTURE</option>
                                                 <option value="api">API</option>
                                                 <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
                                     </select>
                                 </div>
@@ -88,6 +89,7 @@
                                                 <option value="capture">CAPTURE</option>
                                                 <option value="api">API</option>
                                                 <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
                                     </select>
                                 </div>
@@ -123,6 +125,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                     </select>
                                 </div>
@@ -165,6 +168,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -186,6 +190,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -241,6 +246,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -263,6 +269,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -321,6 +328,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                     </select>
                                 </div>
@@ -354,6 +362,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -376,6 +385,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>

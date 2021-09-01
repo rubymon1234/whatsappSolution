@@ -63,6 +63,7 @@
                                             <option value="capture">CAPTURE</option>
                                             <option value="api">API</option>
                                             <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
                                         </select>
                                     </div>
@@ -131,6 +132,7 @@
                                                     <option value="capture">CAPTURE</option>
                                                     <option value="api">API</option>
                                                     <option value="timeCondition">TIME CONDITION</option>
+                                                    <option value="location">LOCATION</option>
                                                     <option value="menu">MENU</option>
                                                 </select>
                                             </div>
@@ -254,7 +256,7 @@
         function __listKeyValues() {
             let response = "";
             keyList.forEach((value, key) => {
-                response += "<tr><th scope='row'>"+ value.inputKey +"</th><td>"+ value.keyAppName +"</td><td>"+ value.keyAppValue +"</td><td><button type='button'onclick='removeKey("+ key +")' class='btn btn-link'>Remove</button></td></tr>";
+                response += "<tr><th style='text-transform: lowercase;'>"+ value.inputKey +"</th><td>"+ value.keyAppName +"</td><td>"+ value.keyAppValue +"</td><td><button type='button'onclick='removeKey("+ key +")' class='btn btn-link'>Remove</button></td></tr>";
             });
             $("#keyData").html(response);
         }
@@ -263,8 +265,9 @@
             if(__checkValidEntry()) {
                 if(!__checkKeyExist()) {
                     $(".key-exist").hide();
+                    inputKey = $("#inputKey").val();
                     keyList.push({
-                        "inputKey": $("#inputKey").val(),
+                        "inputKey": inputKey.toLowerCase(),
                         "keyAppName": $("#keyAppName").val().toUpperCase(),
                         "keyAppValue": $("#keyAppValue option:selected").text().toUpperCase(),
                         "keyAppValueInInt":  $("#keyAppValue").val()
