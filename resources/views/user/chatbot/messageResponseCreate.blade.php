@@ -54,6 +54,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                     </select>
                                 </div>
@@ -86,6 +87,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                     </select>
                                 </div>
@@ -120,6 +122,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                     </select>
                                 </div>
@@ -161,6 +164,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                         </select>
                                     </div>
@@ -181,6 +185,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                             <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                         </select>
                                     </div>
@@ -236,6 +241,7 @@
                                                 <option value="video">Video</option>
                                                 <option value="capture">Capture</option>
                                                 <option value="api">Api</option>
+                                                 <option value="timeCondition">Time Condition</option>
                                                 <option value="menu">Menu</option>
                                         </select>
                                     </div>
@@ -314,6 +320,7 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                     </select>
                                 </div>
@@ -346,6 +353,7 @@
                                                 <option value="video">Video</option>
                                                 <option value="capture">Capture</option>
                                                 <option value="api">Api</option>
+                                                 <option value="timeCondition">Time Condition</option>
                                                 <option value="menu">Menu</option>
                                         </select>
                                     </div>
@@ -367,6 +375,8 @@
                                             <option value="video">Video</option>
                                             <option value="capture">Capture</option>
                                             <option value="api">Api</option>
+                                             <option value="timeCondition">Time Condition</option>
+                                            <option value="timeCondition">Time Condition</option>
                                             <option value="menu">Menu</option>
                                         </select>
                                     </div>
