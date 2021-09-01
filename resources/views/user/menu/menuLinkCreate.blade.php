@@ -264,18 +264,17 @@
             if(__checkValidEntry()) {
                 if(!__checkKeyExist()) {
                     $(".key-exist").hide();
-                    inputKey = $("#inputKey").val();
                     keyList.push({
-                        "inputKey": inputKey.toLowerCase(),
+                        "inputKey": $("#inputKey").val().toLowerCase(),
                         "keyAppName": $("#keyAppName").val().toUpperCase(),
                         "keyAppValue": $("#keyAppValue option:selected").text().toUpperCase(),
                         "keyAppValueInInt":  $("#keyAppValue").val()
                     });
                     __listKeyValues();
-                    __getAppName("null", 'keyAppValue');
+                    __getAppName("", 'keyAppValue');
                     $("#inputKey").val("");
-                    $("#keyAppName").val("null");
-                    $("#keyAppValue").val("null");
+                    $("#keyAppName").val("");
+                    $("#keyAppValue").val("");
                 } else {
                     $(".key-exist").show();
                 }
@@ -322,7 +321,7 @@
 
 
   .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
   }
     </style>
     <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
