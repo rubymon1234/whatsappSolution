@@ -36,7 +36,7 @@
                                         <label for="appName" class="col-form-label">App Name</label>
                                         <select class="form-control custom-select select2" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
@@ -56,7 +56,7 @@
                                         <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
                                         <select class="form-control custom-select select2" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
@@ -125,7 +125,7 @@
                                                 <label for="keyAppName" class="col-form-label">App Name</label>
                                                 <select class="form-control custom-select select2" id="keyAppName" name="keyAppName"
                                                     onchange="__getAppName(this.value, 'keyAppValue')">
-                                                    <option value="null"></option>
+                                                    <option value=""></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
                                                     <option value="video">VIDEO</option>
@@ -140,7 +140,7 @@
                                                 <label for="keyAppValue" class="col-form-label">App Value </label>
                                                 <select class="form-control custom-select select2" id="keyAppValue" name="keyAppValue"
                                                     onchange="__checkAppValueCondition(this.value, 'keyAppName')">
-                                                    <option value="null"></option>
+                                                    <option value=""></option>
 
                                                 </select>
                                             </div>
