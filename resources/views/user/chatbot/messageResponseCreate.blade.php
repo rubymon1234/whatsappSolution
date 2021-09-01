@@ -133,7 +133,24 @@
                                 </div>
                             </div>
                             <div id="capture" style="display: none;">
-                                
+                                <div class="row">
+                                <div class="col-sm-6 form-group">
+                                     <label for="capture_app_name" class="col-form-label" >Next App Name</label>
+                                    <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
+                                        <option value="null"></option>
+                                            <option value="text">Text</option>
+                                            <option value="image">Image</option>
+                                            <option value="video">Video</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                     <label for="capture_app_name1" class="col-form-label">Next App Value </label>
+                                    <select class="form-control custom-select select2" id="capture_app_name1" name="capture_app_name1" onchange="__checkAppValueCondition(this.value, 'capture_app_name')">
+                                        <option value="null"></option>
+                                           
+                                    </select>
+                                </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="" class="col-form-label m_sel_image">Success Application </label>
@@ -185,27 +202,30 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                <div class="col-sm-6 form-group">
-                                     <label for="capture_app_name" class="col-form-label" >Next App Name</label>
-                                    <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
-                                        <option value="null"></option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                     <label for="capture_app_name1" class="col-form-label">Next App Value </label>
-                                    <select class="form-control custom-select select2" id="capture_app_name1" name="capture_app_name1" onchange="__checkAppValueCondition(this.value, 'capture_app_name')">
-                                        <option value="null"></option>
-                                           
-                                    </select>
-                                </div>
-                                </div>
+                                
                             </div>
                             <div id="api" style="display: none;">
-                                
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_app_name" class="col-form-label" >App Name</label>
+                                        <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
+                                            <option value="null"></option>
+                                                <option value="text">Text</option>
+                                                <option value="image">Image</option>
+                                                <option value="video">Video</option>
+                                                {{-- <option value="capture">Capture</option>
+                                                <option value="api">Api</option>
+                                                <option value="menu">Menu</option> --}}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="api_app_name1" class="col-form-label">App Value </label>
+                                        <select class="form-control custom-select select2" id="api_app_name1" name="api_app_name1" onchange="__checkAppValueCondition(this.value, 'api_app_name')">
+                                            <option value="null"></option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
@@ -264,27 +284,7 @@
                                         <input class="form-control" id="url" name="url" placeholder="Enter url" value="" type="text">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="api_app_name" class="col-form-label" >App Name</label>
-                                        <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null"></option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                {{-- <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option> --}}
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="api_app_name1" class="col-form-label">App Value </label>
-                                        <select class="form-control custom-select select2" id="api_app_name1" name="api_app_name1" onchange="__checkAppValueCondition(this.value, 'api_app_name')">
-                                            <option value="null"></option>
-                                            
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div id="location" style="display: none;">
                                 
