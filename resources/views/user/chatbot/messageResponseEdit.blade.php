@@ -41,17 +41,24 @@
                                  </div>
                             </div>
                             @if (Request::get("combination") === 'text')
-                                <div class="row" id="sel_text" style="display: none;">
+                                <div class="row sel_text" class="" style="display: none;">
+                                    <div class="col-md-6 form-group">
+                                        <label for="lastName">Message</label>
+                                         <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="messageText">{{ rawurldecode($message) }}</textarea>
+                                     </div>
+                                </div>
+                                <div class="row sel_text" style="display: none;">
                                     <div class="col-sm-6 form-group">
                                         <label for="text_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
+                                            <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -65,63 +72,72 @@
                             @if (Request::get("combination") === 'image')
                                 <div id="sel_image" style="display: none;">
                                     <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="lastName">Message</label>
+                                             <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageImage" name="messageImage">{{ rawurldecode($message) }}</textarea>
+                                        </div>
+                                        <div class="col-sm-6 form-group">
+                                            <label for="image_photo" class="col-form-label m_sel_image">Select Image:</label>
+                                            <input type="file" class="form-control m_sel_image" id="image_photo" name="image_photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="image_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="image_app_name" name="image_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
+                                            <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="image_app_name1" class="col-form-label">Next App Value </label>
                                         <select class="form-control custom-select select2" id="image_app_name1" name="image_app_name1" onchange="__checkAppValueCondition(this.value, 'image_app_name')">
                                             <option value="null">null</option>
-                                            
                                         </select>
                                     </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 form-group">
-                                            <label for="image_photo" class="col-form-label m_sel_image">Select Image:</label>
-                                            <input type="file" class="form-control m_sel_image" id="image_photo" name="image_photo" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
-                                        </div>
                                     </div>
                                 </div>
                             @endif
                             @if (Request::get("combination") === 'video')
                                 <div id="sel_video" style="display: none;">
                                     <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="video_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select select2" id="video_app_name" name="video_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label for="video_app_name1" class="col-form-label">Next App Value </label>
-                                        <select class="form-control custom-select select2" id="video_app_name1" name="video_app_name1" onchange="__checkAppValueCondition(this.value, 'video_app_name')">
-                                            <option value="null">null</option>
-                                            
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="lastName">Message</label>
+                                             <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageVideo" name="messageVideo">{{ rawurldecode($message) }}</textarea>
+                                        </div>
                                         <div class="col-sm-6 form-group">
                                             <label for="video" class="col-form-label m_sel_image">Select Image:</label>
                                             <input type="file" class="form-control m_sel_image" id="video" name="video" accept=".png, .jpg, .jpeg"><span class="m_sel_image text-sm" style="display: none;font-size:  9px;"><b>* Please upload - jpeg, jpg or PNG images with less than 4 MB size.</b></span>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="video_app_name" class="col-form-label" >Next App Name</label>
+                                        <select class="form-control custom-select select2" id="video_app_name" name="video_app_name" onchange="__getAppName(this.value)">
+                                            <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="video_app_name1" class="col-form-label">Next App Value </label>
+                                        <select class="form-control custom-select select2" id="video_app_name1" name="video_app_name1" onchange="__checkAppValueCondition(this.value, 'video_app_name')">
+                                            <option value="null"></option>
+                                        </select>
+                                    </div>
+                                    </div>
+
                                 </div>
                             @endif
                             @if (Request::get("combination") === 'capture')
@@ -130,9 +146,9 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="capture_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
+                                            <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
                                                 <option value="video">Video</option>
                                         </select>
                                     </div>
@@ -140,7 +156,6 @@
                                         <label for="capture_app_name1" class="col-form-label">Next App Value </label>
                                         <select class="form-control custom-select select2" id="capture_app_name1" name="capture_app_name1" onchange="__checkAppValueCondition(this.value, 'capture_app_name')">
                                             <option value="null">null</option>
-                                            
                                         </select>
                                     </div>
                                     </div>
@@ -148,13 +163,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
-                                                <option  value="text">Text</option>
-                                                <option  value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -168,13 +184,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="capture_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">    
-                                                <option value="null">null</option>
-                                                <option  value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -202,13 +219,10 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_app_name" class="col-form-label" >Next App Name</label>
                                             <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
-                                                <option value="null">null</option>
-                                                    <option value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option value="api">Api</option>
-                                                    <option value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                    <option value="text">TEXT</option>
+                                                    <option value="image">IMAGE</option>
+                                                    <option value="video">VIDEO</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -223,13 +237,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
-                                                    <option  value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option  value="api">Api</option>
-                                                    <option value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                    <option value="text">TEXT</option>
+                                                    <option value="image">IMAGE</option>
+                                                    <option value="video">VIDEO</option>
+                                                    <option value="capture">CAPTURE</option>
+                                                    <option value="api">API</option>
+                                                    <option value="timeCondition">TIME CONDITION</option>
+                                                    <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -244,13 +259,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option  value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option  value="api">Api</option>
-                                                <option  value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -285,13 +301,14 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="location_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
+                                            <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -336,13 +353,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_success_app_name" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="timeCondition_success_app_name" name="timeCondition_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">null</option>
-                                                    <option value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
-                                                    <option value="capture">Capture</option>
-                                                    <option value="api">Api</option>
-                                                    <option value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                    <option value="text">TEXT</option>
+                                                    <option value="image">IMAGE</option>
+                                                    <option value="video">VIDEO</option>
+                                                    <option value="capture">CAPTURE</option>
+                                                    <option value="api">API</option>
+                                                    <option value="timeCondition">TIME CONDITION</option>
+                                                    <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -357,13 +375,14 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="timeCondition_failure_app_name" name="timeCondition_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">null</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
-                                                <option value="video">Video</option>
-                                                <option value="capture">Capture</option>
-                                                <option value="api">Api</option>
-                                                <option value="menu">Menu</option>
+                                                <option value="null">NULL</option>
+                                                <option value="text">TEXT</option>
+                                                <option value="image">IMAGE</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="capture">CAPTURE</option>
+                                                <option value="api">API</option>
+                                                <option value="timeCondition">TIME CONDITION</option>
+                                                <option value="menu">MENU</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -405,12 +424,9 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="row">
-                            <div class="col-md-6 form-group" id="message">
-                                    <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="messageText" name="message">{{ rawurldecode($message) }}</textarea>
-                                 </div>
-                             </div>
+                            {{-- <div class="row">
+                            
+                             </div> --}}
                             
                             
                             @if ($errors->any())
@@ -431,7 +447,7 @@
 <script type="text/javascript">
     function selectedMessage(slug){
         $("select").removeClass("errorClass");
-        $("#sel_text").hide();
+        $(".sel_text").hide();
         $("#sel_image").hide();
         $("#sel_video").hide();
         $("#capture").hide();
@@ -441,7 +457,7 @@
         $("#timeCondition").hide();
 
         if(slug=='text'){
-            $("#sel_text").show();
+            $(".sel_text").show();
         }else if(slug=='image'){
             $("#sel_image").show();
         }else if(slug =='video'){
