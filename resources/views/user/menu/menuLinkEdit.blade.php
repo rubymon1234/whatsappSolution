@@ -37,7 +37,7 @@
                                         <label for="appName" class="col-form-label">App Name</label>
                                         <select class="form-control custom-select select2" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
@@ -47,7 +47,7 @@
                                         <label for="appValue" class="col-form-label">App Value </label>
                                         <select class="form-control custom-select select2" id="appValue" name="appValue"
                                             onchange="__checkAppValueCondition(this.value, 'appName')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
 
                                         </select>
                                     </div>
@@ -57,7 +57,7 @@
                                         <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
                                         <select class="form-control custom-select select2" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
@@ -73,7 +73,7 @@
                                         <select class="form-control custom-select select2" id="invalidAppValue"
                                             name="invalidAppValue"
                                             onchange="__checkAppValueCondition(this.value, 'invalidAppName')">
-                                            <option value="null"></option>
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,7 +215,7 @@
         function __checkAppValueCondition(value, targetId) {
             let appNameElementVal = $("#" + targetId).val();
             if ((value == 'null' || value == null) && (appNameElementVal != 'null' && appNameElementVal != null)) {
-                alert("Next App name should be null if Next App value is null");
+                alert("App name should be null if App value is null");
                 $("#" + targetId).val("null");
             }
         }

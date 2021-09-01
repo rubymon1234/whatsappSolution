@@ -141,7 +141,6 @@
                                                 <select class="form-control custom-select select2" id="keyAppValue" name="keyAppValue"
                                                     onchange="__checkAppValueCondition(this.value, 'keyAppName')">
                                                     <option value=""></option>
-
                                                 </select>
                                             </div>
                                         </div>
@@ -208,7 +207,7 @@
         function __checkAppValueCondition(value, targetId) {
             let appNameElementVal = $("#" + targetId).val();
             if ((value == 'null' || value == null) && (appNameElementVal != 'null' && appNameElementVal != null)) {
-                alert("Next App name should be null if Next App value is null");
+                alert("App name should be null if App value is null");
                 $("#" + targetId).val("null");
             }
         }
