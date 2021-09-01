@@ -38,9 +38,9 @@
                                         <select class="form-control custom-select select2" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
                                             <option value="null"></option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
+                                            <option value="text">TEXT</option>
+                                            <option value="image">IMAGE</option>
+                                            <option value="video">VIDEO</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -58,12 +58,13 @@
                                         <select class="form-control custom-select select2" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
                                             <option value="null"></option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
-                                            <option value="capture">Capture</option>
-                                            <option value="api">Api</option>
-                                            <option value="menu">Menu</option>
+                                            <option value="text">TEXT</option>
+                                            <option value="image">IMAGE</option>
+                                            <option value="video">VIDEO</option>
+                                            <option value="capture">CAPTURE</option>
+                                            <option value="api">API</option>
+                                            <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="menu">MENU</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -125,9 +126,13 @@
                                                 <select class="form-control custom-select select2" id="keyAppName" name="keyAppName"
                                                     onchange="__getAppName(this.value, 'keyAppValue')">
                                                     <option value="null"></option>
-                                                    <option value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
+                                                    <option value="text">TEXT</option>
+                                                    <option value="image">IMAGE</option>
+                                                    <option value="video">VIDEO</option>
+                                                    <option value="capture">CAPTURE</option>
+                                                    <option value="api">API</option>
+                                                    <option value="timeCondition">TIME CONDITION</option>
+                                                    <option value="menu">MENU</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6 form-group">

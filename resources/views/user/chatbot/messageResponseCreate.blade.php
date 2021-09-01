@@ -31,7 +31,7 @@
                                  <div class="col-md-6 form-group">
                                     <label for="combination"> Select Response </label>
                                     <select class="form-control custom-select select2 select2" id="combination" name="combination" onchange="selectedMessage(this.value)" >
-                                        <option value="">Select Response</option>
+                                        <option value="">SELECT RESPONSE</option>
                                         @foreach($combinationList as $key => $combination)
                                             <option value="{{ $key }}">{{ $combination }}</option>
                                         @endforeach

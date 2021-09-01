@@ -36,17 +36,17 @@
                                         <label for="appName" class="col-form-label">App Name</label>
                                         <select class="form-control custom-select select2" id="appName" name="appName"
                                             onchange="__getAppName(this.value, 'appValue')">
-                                            <option value="null">null</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
+                                            <option value="null"></option>
+                                            <option value="text">TEXT</option>
+                                            <option value="image">IMAGE</option>
+                                            <option value="video">VIDEO</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="appValue" class="col-form-label">App Value </label>
                                         <select class="form-control custom-select select2" id="appValue" name="appValue"
                                             onchange="__checkAppValueCondition(this.value, 'appName')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
 
                                         </select>
                                     </div>
@@ -56,13 +56,14 @@
                                         <label for="" class="col-form-label m_sel_image">Invalid App Name </label>
                                         <select class="form-control custom-select select2" id="invalidAppName" name="invalidAppName"
                                             onchange="__getAppName(this.value, 'invalidAppValue')">
-                                            <option value="null">null</option>
-                                            <option value="text">Text</option>
-                                            <option value="image">Image</option>
-                                            <option value="video">Video</option>
-                                            <option value="capture">Capture</option>
-                                            <option value="api">Api</option>
-                                            <option value="menu">Menu</option>
+                                            <option value="null"></option>
+                                            <option value="text">TEXT</option>
+                                            <option value="image">IMAGE</option>
+                                            <option value="video">VIDEO</option>
+                                            <option value="capture">CAPTURE</option>
+                                            <option value="api">API</option>
+                                            <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="menu">MENU</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -70,7 +71,7 @@
                                         <select class="form-control custom-select select2" id="invalidAppValue"
                                             name="invalidAppValue"
                                             onchange="__checkAppValueCondition(this.value, 'invalidAppName')">
-                                            <option value="null">null</option>
+                                            <option value="null"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -123,17 +124,21 @@
                                                 <label for="keyAppName" class="col-form-label">App Name</label>
                                                 <select class="form-control custom-select select2" id="keyAppName" name="keyAppName"
                                                     onchange="__getAppName(this.value, 'keyAppValue')">
-                                                    <option value="null">null</option>
-                                                    <option value="text">Text</option>
-                                                    <option value="image">Image</option>
-                                                    <option value="video">Video</option>
+                                                    <option value="null"></option>
+                                                    <option value="text">TEXT</option>
+                                                    <option value="image">IMAGE</option>
+                                                    <option value="video">VIDEO</option>
+                                                    <option value="capture">CAPTURE</option>
+                                                    <option value="api">API</option>
+                                                    <option value="timeCondition">TIME CONDITION</option>
+                                                    <option value="menu">MENU</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6 form-group">
                                                 <label for="keyAppValue" class="col-form-label">App Value </label>
                                                 <select class="form-control custom-select select2" id="keyAppValue" name="keyAppValue"
                                                     onchange="__checkAppValueCondition(this.value, 'keyAppName')">
-                                                    <option value="null">null</option>
+                                                    <option value="null"></option>
 
                                                 </select>
                                             </div>
