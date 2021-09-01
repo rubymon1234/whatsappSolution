@@ -49,17 +49,18 @@
                                             @endforeach
                                     </select>
                                  </div>
-                                
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" >App Name</label>
                                     <select class="form-control custom-select" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
                                         <option value=""></option>
-                                            <option value="text" {{ ('text' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Text</option>
-                                            <option value="image" {{ ('image' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Image</option>
-                                            <option value="video" {{ ('video' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Video</option>
-                                            <option value="capture" {{ ('capture' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Capture</option>
-                                            <option value="api" {{ ('api' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Api</option>
-                                            <option value="menu" {{ ('menu' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>Menu</option>
+                                            <option value="text" {{ ('text' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>TEXT</option>
+                                            <option value="image" {{ ('image' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>IMAGE</option>
+                                            <option value="video" {{ ('video' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>VIDEO</option>
+                                            <option value="capture" {{ ('capture' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>CAPTURE</option>
+                                            <option value="api" {{ ('api' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>API</option>
+                                            <option value="menu" {{ ('menu' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>MENU</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">

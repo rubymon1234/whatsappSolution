@@ -32,11 +32,10 @@ class MessageResponseController extends Controller
 
     public function addMessageResponse(Request $request)
     {
-
         $rule = [
             'combination' => 'required',
             'scrub_name' => 'required',
-            'message' => ($this->isMessageRequired($request->get("combination")) ? 'required' : ''),
+            //'message' => ($this->isMessageRequired($request->get("combination")) ? 'required' : '') ,
             'location' => ($request->get("combination") == 'location' ? 'required' : ''),
             'validator' => ($request->get("combination") == 'capture' ? 'required' : '')
         ];
@@ -56,7 +55,7 @@ class MessageResponseController extends Controller
                     $textEntry->user_id = Auth::user()->id;
                     $textEntry->reseller_id = Auth::user()->reseller_id;
                     $textEntry->name = $request->get("scrub_name");
-                    $textEntry->message = rawurlencode($request->get("message"));
+                    $textEntry->message = rawurlencode($request->get("messageText"));
                     $textEntry->next_app_value = $this->getAppName($request->get("text_app_name1"), $request->get("text_app_name1"));
                     $textEntry->next_app_name = $this->getAppName($request->get("text_app_name1"), $request->get("text_app_name"));
                     $textEntry->save();
@@ -67,7 +66,7 @@ class MessageResponseController extends Controller
                     $textEntry->user_id = Auth::user()->id;
                     $textEntry->reseller_id = Auth::user()->reseller_id;
                     $textEntry->name = $request->get("scrub_name");
-                    $textEntry->message = rawurlencode($request->get("message"));
+                    $textEntry->message = rawurlencode($request->get("messageImage"));
                     $textEntry->app_value = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name1"));
                     $textEntry->app_name = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name"));
                     if ($request->file()) {
@@ -94,7 +93,7 @@ class MessageResponseController extends Controller
                     $textEntry->user_id = Auth::user()->id;
                     $textEntry->reseller_id = Auth::user()->reseller_id;
                     $textEntry->name = $request->get("scrub_name");
-                    $textEntry->message = rawurlencode($request->get("message"));
+                    $textEntry->message = rawurlencode($request->get("messageVideo"));
                     $textEntry->next_app_value = $this->getAppName($request->get("video_app_name1"), $request->get("video_app_name1"));
                     $textEntry->next_app_name = $this->getAppName($request->get("video_app_name1"), $request->get("video_app_name"));
                     if ($request->file()) {

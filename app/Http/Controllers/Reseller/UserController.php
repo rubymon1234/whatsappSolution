@@ -213,7 +213,7 @@ class UserController extends Controller
     */
     public function getUserRechargeRequestView(Request $request,$id){
         $user = User::find(Crypt::decrypt($id));
-        $plans = Plan::all();
+        $plans = Plan::orderBy('updated_at', 'DESC')->get();
         return view('reseller.user.rechargeRequest', compact('user','plans'));
     }
     /**
