@@ -624,7 +624,7 @@ function __defaultValidation() {
 
 
   .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
   }
 </style>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
