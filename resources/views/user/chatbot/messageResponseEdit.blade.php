@@ -51,7 +51,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="text_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">NULL</option>
+                                            <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -85,7 +85,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="image_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="image_app_name" name="image_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">NULL</option>
+                                            <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -120,7 +120,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="video_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="video_app_name" name="video_app_name" onchange="__getAppName(this.value)">
-                                            <option value="null">NULL</option>
+                                            <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -146,7 +146,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="capture_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null">NULL</option>
+                                            <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">Video</option>
@@ -163,7 +163,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -184,7 +184,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="capture_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">    
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -219,7 +219,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_app_name" class="col-form-label" >Next App Name</label>
                                             <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
                                                     <option value="video">VIDEO</option>
@@ -237,7 +237,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
                                                     <option value="video">VIDEO</option>
@@ -259,7 +259,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="api_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -301,7 +301,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label for="location_app_name" class="col-form-label" >Next App Name</label>
                                         <select class="form-control custom-select select2" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">   
-                                            <option value="null">NULL</option>
+                                            <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
@@ -353,7 +353,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_success_app_name" class="col-form-label m_sel_image">Success Application </label>
                                             <select class="form-control custom-select select2" id="timeCondition_success_app_name" name="timeCondition_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
                                                     <option value="video">VIDEO</option>
@@ -375,7 +375,7 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
                                             <select class="form-control custom-select select2" id="timeCondition_failure_app_name" name="timeCondition_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
-                                                <option value="null">NULL</option>
+                                                <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
