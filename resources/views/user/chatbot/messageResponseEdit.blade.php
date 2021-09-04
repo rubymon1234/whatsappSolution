@@ -612,6 +612,7 @@ function setEditValues() {
     let successAppName = "{{ (empty($success_app_name) ? 'null' : $success_app_name) }}".toLowerCase();
     let failureAppName = "{{ (empty($failed_app_name) ? 'null' : $failed_app_name) }}".toLowerCase();
     let appName = "{{ (empty($app_name) ? 'null' : $app_name) }}".toLowerCase();
+    appName = appName == 'timecondition' ? 'timeCondition' : appName;
     $("[id*='success_app_name']").each((e, value) => {
         $(value).val(successAppName);
     });
