@@ -346,10 +346,10 @@
         }
 
         function __loadDefaultValues() {
-            let appName = "{{ $app_name }}";
-            let appValue = "{{ $app_value }}";
-            let invalidAppName = "{{ $invalid_app_name }}".toUpperCase();
-            let invalidAppValue = "{{ $invalid_app_value }}".toUpperCase();
+            let appName = "{{ $app_name }}".toLowerCase();
+            let appValue = "{{ $app_value }}".toLowerCase();
+            let invalidAppName = "{{ $invalid_app_name }}".toLowerCase();
+            let invalidAppValue = "{{ $invalid_app_value }}".toLowerCase();
             __getAppName(appName, 'appValue', true, appValue);
             $("#appName").val(appName);
             __getAppName(invalidAppName, 'invalidAppValue', true, invalidAppValue);

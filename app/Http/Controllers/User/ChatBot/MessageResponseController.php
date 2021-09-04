@@ -76,7 +76,8 @@ class MessageResponseController extends Controller
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){ 
                                 $fileName = time() . '_' . $request->image_photo->getClientOriginalName();
-                                $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                // $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                $request->image_photo->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
                             } else {
                                 return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
@@ -103,7 +104,8 @@ class MessageResponseController extends Controller
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){ 
                                 $fileName = time() . '_' . $request->video->getClientOriginalName();
-                                $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                // $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
+                                $request->video->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
                             } else {
                                 return redirect()->route('user.chat.bot.message.create')->withInput(Input::all())->withErrors($validator);
@@ -273,15 +275,17 @@ class MessageResponseController extends Controller
         }
         $data = $data->orderBy("created_at", "DESC");
         $data = $data->paginate(10);
-
-        $text = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
-        $image = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);
-        $capture = DB::table('capture_applications')->select("name", DB::raw("'CAPTURE' as type"), "id")->where("user_id", Auth::user()->id);
-        $location = DB::table('location_applications')->select("name", DB::raw("'LOCATION' as type"), "id")->where("user_id", Auth::user()->id);
-        $timeCondition = DB::table('time_condition_applications')->select("name", DB::raw("'TIME CONDITION' as type"), "id")->where("user_id", Auth::user()->id);
-        $video = DB::table('video_applications')->select("name", DB::raw("'VIDEO' as type"), "id")->where("user_id", Auth::user()->id);
-        $video = $video->union($image)->union($text)->union($capture)->union($location)->union($timeCondition)->get();
-        return view('user.chatbot.messageResponseList', ["messageList" => $data, "combinationList" => $this->getDefaultCombinationList(), "allData" => $video]);
+        // DB::enableQueryLog();
+        $text1 = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
+        $image1 = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);
+        $capture1 = DB::table('capture_applications')->select("name", DB::raw("'CAPTURE' as type"), "id")->where("user_id", Auth::user()->id);
+        $location1 = DB::table('location_applications')->select("name", DB::raw("'LOCATION' as type"), "id")->where("user_id", Auth::user()->id);
+        $timeCondition1 = DB::table('time_condition_applications')->select("name", DB::raw("'TIMECONDITION' as type"), "id")->where("user_id", Auth::user()->id);
+        $api1 = DB::table('api_applications')->select("name", DB::raw("'API' as type"), "id")->where("user_id", Auth::user()->id);
+        $video1 = DB::table('video_applications')->select("name", DB::raw("'VIDEO' as type"), "id")->where("user_id", Auth::user()->id);
+        $video1 = $video1->union($image1)->union($text1)->union($capture1)->union($location1)->union($timeCondition1)->union($api1)->get();
+        // dd(DB::getQueryLog());
+        return view('user.chatbot.messageResponseList', ["messageList" => $data, "combinationList" => $this->getDefaultCombinationList(), "allData" => $video1]);
     }
 
     protected function getDefaultCombinationList(): array

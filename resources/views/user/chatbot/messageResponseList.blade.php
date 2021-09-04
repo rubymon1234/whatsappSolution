@@ -87,10 +87,11 @@
                                             $endPoint = strrpos($stringCut, ' ');
                                             //if the string doesn't contain any space then it will cut without word basis.
                                             $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                                            $string .= '... <i class="fa fa-eye" data-toggle="tooltip" data-original-title="'.rawurldecode($data->message).'" ></i>';
+                                            $string .= '... <i class="fa fa-eye description" data-toggle="modal" data-target="#myModal"></i>';
                                         }
                                         ?>
                                         <?php  echo $string ?>
+                                        <input type="hidden" value="{{ rawurldecode($data->message) }}">
                                     </td>
                                     <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
@@ -126,6 +127,32 @@
     </div>
     <!-- /Row -->
 </div>
+<div class="container">
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Description</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            Modal body..
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
 <style type="text/css">
     .select2-container .select2-selection--single {
         height: 40px ! important;
@@ -137,6 +164,12 @@
   }
 </style>
 <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
+<script>
+$(".description").click(function(e) {
+    let value = $(this).parent().find("input").val();
+    $(".modal-body").html(value);
+});
+</script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2-data.js') }}"></script>
 <script src="{{ asset('dist/js/custom-script.js') }}"></script>

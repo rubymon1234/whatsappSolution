@@ -39,18 +39,18 @@ class MenuController extends Controller
             $interactiveMenu->user_id = Auth::user()->id;
             $interactiveMenu->reseller_id = Auth::user()->reseller_id;
             $interactiveMenu->name = $request->get("name");
-            $interactiveMenu->app_name = strtoupper($request->get("appName"));
-            $interactiveMenu->app_value = $request->get("appValue");
-            $interactiveMenu->invalid_app_name = strtoupper($request->get("invalidAppName"));
-            $interactiveMenu->invalid_app_value = $request->get("invalidAppValue");
+            $interactiveMenu->app_name = $this->getAppValue ($request->get("appName"));
+            $interactiveMenu->app_value = $this->getAppValue($request->get("appValue"));
+            $interactiveMenu->invalid_app_name = $this->getAppValue($request->get("invalidAppName"));
+            $interactiveMenu->invalid_app_value = $this->getAppValue($request->get("invalidAppValue"));
             $interactiveMenu->save();
             if($interactiveMenu->id > 0) {
                 foreach(json_decode($request->get("keySet"), true) as $key) {
                     $menuInput = isset($key['id']) ? MenuInput::findOrFail($key['id']) : new MenuInput();
                     $menuInput->interactive_menu_id = $interactiveMenu->id;
                     $menuInput->input_key = strtolower($key['inputKey']);
-                    $menuInput->app_name = strtoupper($key['keyAppName']);
-                    $menuInput->app_value = $key['keyAppValueInInt'];
+                    $menuInput->app_name = $this->getAppValue($key['keyAppName']);
+                    $menuInput->app_value = $this->getAppValue($key['keyAppValueInInt']);
                     $menuInput->save();
                 }
             }
@@ -60,6 +60,10 @@ class MenuController extends Controller
                 return redirect()->route('user.chat.bot.menu.create')->with('success_message', 'Menu Added Successfully!!');
             }
         }
+    }
+
+    private function getAppValue($appValue) {
+        return ($appValue == 'null' || $appValue == null) ? null : strtoupper($appValue);
     }
 
     public function getMenuList(Request $request) {
