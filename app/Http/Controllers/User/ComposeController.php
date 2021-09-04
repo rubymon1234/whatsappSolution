@@ -90,7 +90,7 @@ class ComposeController extends Controller
 					                'success' => false,
 					                'message' =>'success',
 					                'validator' => false,
-					                'response' => 'Schedule Date and Time is in-valid',
+					                'response' => 'Schedule date and time is in-valid',
 					            ]);
 	            	}
 	            }
@@ -102,7 +102,7 @@ class ComposeController extends Controller
 	    			if($currentPlan){
 	    				$daily_count 	= $currentPlan->daily_count;
 	    				$plan_validity 	= $currentPlan->plan_validity;
-	    				
+
 	    				$campaignFetch = Campaign::where('user_id',$user_id)
 	    										->where('current_plan_id',$currentPlan->plan_id)
 	    										->select( DB::raw('sum(count) as total'))
@@ -116,7 +116,7 @@ class ComposeController extends Controller
     					$num_count = $csvDetail['num_count'];
     					$csv_name = $csvDetail['csv_name'];
 		            }
-		            
+
 		            if(strlen($request->message) >=1000){
 		            		return response()->json([
 						                'success' => false,
@@ -124,7 +124,7 @@ class ComposeController extends Controller
 						                'validator' => false,
 						                'response' => 'Message count is more than 1000.',
 						            ]);
-		            }	
+		            }
     				//upload file
 					if($request->message_type =='image'){
 						$uploadfilename = $this->uploadFile($request,'photo');
@@ -145,7 +145,7 @@ class ComposeController extends Controller
 	    					}else{
 	    						$today_date = date('Y-m-d');
 	    					}
-	    					
+
     					if($plan_validity >= $today_date){
 
     						//current instance
@@ -208,7 +208,7 @@ class ComposeController extends Controller
 						                'response' => 'Campaign is running, choose another instance',
 						            ]);
     						}
-    						
+
     					}else{
 
     						return response()->json([

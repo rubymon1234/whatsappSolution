@@ -22,7 +22,7 @@ use App\Models\TimeConditionApplication;
 class MessageResponseController extends Controller
 {
     /**
-     * Message Response 
+     * Message Response
      * @author Ruban
      */
     public function getMessageResponse()
@@ -74,7 +74,7 @@ class MessageResponseController extends Controller
                         $ext = strtolower($request->file('image_photo')->getClientOriginalExtension());
                         $fileSize = $request->file('image_photo')->getSize();
                         if($fileSize <=4000000){
-                            if(in_array($ext, $extension)){ 
+                            if(in_array($ext, $extension)){
                                 $fileName = time() . '_' . $request->image_photo->getClientOriginalName();
                                 // $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->image_photo->move(public_path('/uploads/chat-bot'), $fileName);
@@ -102,7 +102,7 @@ class MessageResponseController extends Controller
                         $ext = strtolower($request->file('video')->getClientOriginalExtension());
                         $fileSize = $request->file('video')->getSize();
                         if($fileSize <=4000000){
-                            if(in_array($ext, $extension)){ 
+                            if(in_array($ext, $extension)){
                                 $fileName = time() . '_' . $request->video->getClientOriginalName();
                                 // $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->video->move(public_path('/uploads/chat-bot'), $fileName);
@@ -292,12 +292,12 @@ class MessageResponseController extends Controller
     {
         return array(
             'text' => "TEXT",
-            'image' => "Image",
-            'video' => "Video",
-            'capture' => "Capture",
-            'api' => "Api",
-            "location" => "Location",
-            "timeCondition" => "Time Condition"
+            'image' => "IMAGE",
+            'video' => "VIDEO",
+            'capture' => "CAPTURE",
+            'api' => "API",
+            "location" => "LOCATION",
+            "timeCondition" => "TIME CONDITION"
         );
     }
 
@@ -325,15 +325,15 @@ class MessageResponseController extends Controller
                 case 'api':
                     $nameList = ApiApplication::where("user_id", Auth::user()->id)->select("*", DB::raw("'' as message"))->where("id", $id)->first();
                     break;
-                            
+
                 case 'location':
                     $nameList = LocationApplication::where("user_id", Auth::user()->id)->where("id", $id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->first();
                     break;
-                    
+
                 case 'timeCondition':
                     $nameList = TimeConditionApplication::where("user_id", Auth::user()->id)->select("*", DB::raw("'' as message"))->where("id", $id)->first();
                     break;
-                 
+
                 default:
                 # code...
                 break;
