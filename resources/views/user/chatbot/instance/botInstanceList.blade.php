@@ -41,7 +41,10 @@
                                 <tr>
                                     <td class="serial">{{ $key + $chatInstanceList->firstItem()}} </td>
                                     <td> <span class="name">{{ $instance->name }}</span> </td>
-                                    <td> <span class="product">{{ $instance->instance_name }}</span> </td>
+                                    @php
+                                    $instanceDetail = \App\Helpers\Helper::getChatInstanceDetail(Crypt::encrypt($instance->instance_id));
+                                    @endphp
+                                    <td> <span class="product">{{ $instanceDetail->instance_name }}</span> </td>
                                     @php
                                     $planDetail = \App\Helpers\Helper::getPlanDetailView(Crypt::encrypt($instance->current_plan_id));
                                     @endphp

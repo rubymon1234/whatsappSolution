@@ -14,7 +14,7 @@ class AddInstanceNameToChatInstancesTable extends Migration
     public function up()
     {
         Schema::table('chat_instances', function (Blueprint $table) {
-            $table->string('instance_name')->after('instance_token');
+            $table->string('instance_id')->after('instance_token');
         });
     }
 

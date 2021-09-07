@@ -34,7 +34,7 @@
                                      <select class="form-control custom-select select2" id="instance" name="instance">
                                         <option value="">Select Instance</option>
                                             @foreach($instanceDetail as $instance)
-                                                <option value="{{$instance->id}}" {{ ((string)$instance->token ===(string)$botInstanceDetail->instance_token) ? 'selected' : '' }}>{{$instance->instance_name }}</option>
+                                                <option value="{{$instance->id}}" {{ ($instance->id === (int)$botInstanceDetail->instance_id) ? 'selected' : '' }}>{{$instance->instance_name }}</option>
                                             @endforeach
                                     </select>
                                  </div>

@@ -122,11 +122,11 @@ class BotInstanceController extends Controller
 
             $chatInstance = ChatInstance::find($chat_id); 
             $chatInstance->user_id = $user->id;  
-            $chatInstance->current_plan_id = $request->current_plan_id;  //current plan id 
+            $chatInstance->current_plan_id = $request->current_plan_id;  // current plan id 
             $chatInstance->reseller_id = $user->reseller_id;  
             $chatInstance->name = $request->bot_instance_name;
             $chatInstance->instance_token = $intanceDetail->token;  
-            $chatInstance->instance_name = $intanceDetail->instance_name;  
+            $chatInstance->instance_id = $intanceDetail->id;  
             $chatInstance->app_name = strtoupper($request->text_app_name);  
             $chatInstance->app_value = $request->text_app_name1;  
 
@@ -190,7 +190,7 @@ class BotInstanceController extends Controller
                 $chatInstance->name = $request->bot_instance_name;
          		//$chatInstance->combination = $request->combination;
                 $chatInstance->instance_token = $intanceDetail->token;  
-         		$chatInstance->instance_name = $intanceDetail->instance_name;  
+         		$chatInstance->instance_id = $intanceDetail->id;  
          		$chatInstance->app_name = strtoupper($request->text_app_name);  
          		$chatInstance->app_value = $request->text_app_name1;  
 

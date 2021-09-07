@@ -9,6 +9,7 @@ use App\Models\RoleUser;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Plan;
+use App\Models\Instance;
 use App\Models\CurrentPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -168,5 +169,11 @@ class Helper {
        } catch (\Exception $e) {
             return $response;
        }
+   }
+
+   public static function getChatInstanceDetail($instance_id) {
+
+        $instance_id = Crypt::decrypt($instance_id);
+        return Instance::find($instance_id);
    }
 }
