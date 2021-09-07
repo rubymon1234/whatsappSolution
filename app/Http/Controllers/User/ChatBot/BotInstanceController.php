@@ -118,7 +118,7 @@ class BotInstanceController extends Controller
             if($valid_result['status'] ==true){
             
             //get instance
-            $intanceDetail = Instance::find($request->instance)->first();
+            $intanceDetail = Instance::find($request->instance);
 
             $chatInstance = ChatInstance::find($chat_id); 
             $chatInstance->user_id = $user->id;  
@@ -181,7 +181,7 @@ class BotInstanceController extends Controller
     			if($valid_result['status'] ==true){
          		
          		//get instance
-         		$intanceDetail = Instance::find($request->instance)->first();
+         		$intanceDetail = Instance::find($request->instance);
 
          		$chatInstance = new ChatInstance(); 
                 $chatInstance->user_id = $user->id;  
