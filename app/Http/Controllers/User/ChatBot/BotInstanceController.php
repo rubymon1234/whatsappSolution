@@ -49,9 +49,7 @@ class BotInstanceController extends Controller
                             ->where('current_plans.plan_validity', '>=', Carbon::today()->toDateString())
                             ->select('plans.id as pId','current_plans.id as currentPid','current_plans.bot_instance_count','current_plans.user_id','current_plans.plan_validity','plans.plan_name')
                             ->get();
-                            /*echo "<pre>";
-        print_r($planDetail);
-        exit();*/
+                            
     	return view('user.chatbot.instance.botInstanceCreate',["instanceDetail" => $instanceDetail,'planDetail' => $planDetail]);
     }
     public function getInstanceUpdate($id){
@@ -127,7 +125,8 @@ class BotInstanceController extends Controller
             $chatInstance->current_plan_id = $request->current_plan_id;  //current plan id 
             $chatInstance->reseller_id = $user->reseller_id;  
             $chatInstance->name = $request->bot_instance_name;
-            $chatInstance->instance_token = $intanceDetail->instance_name;  
+            $chatInstance->instance_token = $intanceDetail->token;  
+            $chatInstance->instance_name = $intanceDetail->instance_name;  
             $chatInstance->app_name = strtoupper($request->text_app_name);  
             $chatInstance->app_value = $request->text_app_name1;  
 
@@ -190,7 +189,8 @@ class BotInstanceController extends Controller
          		$chatInstance->reseller_id = $user->reseller_id;  
                 $chatInstance->name = $request->bot_instance_name;
          		//$chatInstance->combination = $request->combination;
-         		$chatInstance->instance_token = $intanceDetail->instance_name;  
+                $chatInstance->instance_token = $intanceDetail->token;  
+         		$chatInstance->instance_name = $intanceDetail->instance_name;  
          		$chatInstance->app_name = strtoupper($request->text_app_name);  
          		$chatInstance->app_value = $request->text_app_name1;  
 

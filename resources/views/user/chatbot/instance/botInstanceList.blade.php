@@ -27,7 +27,7 @@
                             <tr>
                                 <th >#</th>
                                 <th>name</th>
-                                <th>Instance token</th>
+                                <th>Instance name </th>
                                 <th>Plan name</th>
                                 <th>App name</th>
                                 <th>App value</th>
@@ -41,7 +41,7 @@
                                 <tr>
                                     <td class="serial">{{ $key + $chatInstanceList->firstItem()}} </td>
                                     <td> <span class="name">{{ $instance->name }}</span> </td>
-                                    <td> <span class="product">{{ $instance->instance_token }}</span> </td>
+                                    <td> <span class="product">{{ $instance->instance_name }}</span> </td>
                                     @php
                                     $planDetail = \App\Helpers\Helper::getPlanDetailView(Crypt::encrypt($instance->current_plan_id));
                                     @endphp
