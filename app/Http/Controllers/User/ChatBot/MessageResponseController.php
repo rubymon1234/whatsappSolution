@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\ChatBot;
 
 use DB;
+use App\Helpers\Helper;
 use Carbon\Carbon;
 use App\Models\CurrentPlan;
 use Illuminate\Support\Facades\Auth;
@@ -75,7 +76,8 @@ class MessageResponseController extends Controller
                         $fileSize = $request->file('image_photo')->getSize();
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){
-                                $fileName = time() . '_' . $request->image_photo->getClientOriginalName();
+                                 $token = Helper::generateUniqueId();
+                                $fileName = time() . '_'.$token.'_'. $request->image_photo->getClientOriginalName();
                                 // $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->image_photo->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
@@ -103,7 +105,8 @@ class MessageResponseController extends Controller
                         $fileSize = $request->file('video')->getSize();
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){
-                                $fileName = time() . '_' . $request->video->getClientOriginalName();
+                                $token = Helper::generateUniqueId();
+                                $fileName = time() . '_'.$token.'_'. $request->video->getClientOriginalName();
                                 // $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->video->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
