@@ -64,7 +64,7 @@
                                     <td>
                                         {{ $instance->created_at }}
                                     </td>
-                                    <td><a href="{{ route('user.chat.bot.instance.update' ,Crypt::encrypt($instance->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Plan" ></i></a>&nbsp;&nbsp; </td>
+                                    <td><a href="{{ route('user.chat.bot.instance.update' ,Crypt::encrypt($instance->id)) }}"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Chat Instance" ></i></a>&nbsp;&nbsp;<a href="#" onclick="__appActions('{{ Crypt::encryptString($instance->id) }}',1)"><i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete Chat Instance" ></i></a>&nbsp;&nbsp; </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -94,4 +94,38 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+    function __appActions(instance_id){
+        alert("HI");
+        if (confirm('Are you sure you want to permanently delete this instance?')){
+
+            $.ajax(
+                {
+                    url: '{{ route('user.chat.bot.instance.delete') }}',
+                    dataType: 'json', // what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", instance_id : instance_id } ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
+                            $('.preloader-it').hide();
+                            //alert(result.response);
+                            location.reload();
+                        }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
+                    }
+                }
+            );
+        }
+    }
+</script>
 @endsection

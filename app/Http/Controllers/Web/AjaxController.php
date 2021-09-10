@@ -9,6 +9,7 @@ use App\Models\PlanRequest;
 use App\Models\PurchaseHistory;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\ChatInstance;
 use App\Models\CurrentPlan;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
@@ -188,6 +189,27 @@ class AjaxController extends Controller
 		                'success' => true,
 		                'message' =>'success',
 		                'response' => 'User Details Updated Successfully '
+		            ]);
+    		}
+		}catch(\Exception $e){
+
+			return response()->json([
+	            'success' => false,
+	            'message' => 'Oops, Something Went Wrong',
+	        ]);
+    	}
+   }
+   public function getInstanceDelete(Request $request){
+
+   		try{
+
+   			$updateUpdate = ChatInstance::find(Crypt::decryptString($request->instance_id));
+    		if($updateUpdate->delete()){ //delete
+
+    			return response()->json([
+		                'success' => true,
+		                'message' =>'success',
+		                'response' => 'Instance deleted Successfully'
 		            ]);
     		}
 		}catch(\Exception $e){

@@ -89,6 +89,8 @@ Route::post('/ajax/request-reject', 'Auth\AjaxController@postRequestReject')->na
 //user campaign cancel
 Route::post('/ajax/cancel-campaign', 'Web\AjaxController@getCancelCampaign')->name('ajax.cancel.campaign');
 Route::post('/ajax/block-user', 'Web\AjaxController@getBlockUser')->name('ajax.block.user');
+//DELETE CHAT INSTANCE
+Route::post('/ajax-chat/instance-delete', 'Web\AjaxController@getInstanceDelete')->name('user.chat.bot.instance.delete');
 
 // Message Request - AJax section starts
 
