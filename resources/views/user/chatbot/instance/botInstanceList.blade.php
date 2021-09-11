@@ -96,7 +96,6 @@
     </div>
 <script type="text/javascript">
     function __appActions(instance_id){
-        alert("HI");
         if (confirm('Are you sure you want to permanently delete this instance?')){
 
             $.ajax(
