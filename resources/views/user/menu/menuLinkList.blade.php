@@ -66,7 +66,7 @@
                                     ?>
                                     <td >{{ $appName }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="{{ route('user.menu.edit', Crypt::encrypt($data->id)) }}" class=""><i class="fa fa-edit"></i></a></td>
+                                    <td ><a href="{{ route('user.menu.edit', Crypt::encrypt($data->id)) }}" class=""><i class="fa fa-edit"></i></a>&nbsp;&nbsp; <a href="#" onclick="__appActionsMenu('{{ Crypt::encrypt($data->id) }}')"><i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete Chat Instance" ></i></a> &nbsp;&nbsp;</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -107,6 +107,40 @@
     text-transform: uppercase;
   }
 </style>
+<script type="text/javascript">
+        function __appActionsMenu(id){
+        
+        if (confirm('Are you sure you want to permanently delete this response message?')){
+
+            $.ajax(
+                {
+                    url: '{{ route('user.chat.bot.menu.response.delete') }}',
+                    dataType: 'json', // what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", id : id } ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
+                            $('.preloader-it').hide();
+                            //alert(result.response);
+                            location.reload();
+                        }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
+                    }
+                }
+            );
+        }
+    }
+</script>
 <script src="{{ asset('dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2-data.js') }}"></script>

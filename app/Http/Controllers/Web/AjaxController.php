@@ -23,6 +23,7 @@ use App\Models\LocationApplication;
 use App\Models\VideoApplication;
 use App\Models\TimeConditionApplication;
 use App\Models\InteractiveMenu;
+use App\Models\MenuInput;
 use Exception;
 
 class AjaxController extends Controller
@@ -220,7 +221,64 @@ class AjaxController extends Controller
 	        ]);
     	}
    }
+   public function getMessageResponseDelete(Request $request){
 
+   		$nameList = [];
+   		$id = Crypt::decrypt($request->id);
+	    switch ($request->type) {
+		   	case 'text':
+				$nameList = TextApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+			   break;
+
+			case 'image':
+				$nameList = ImageApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;
+
+			case 'video':
+				$nameList = VideoApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;
+
+			case 'capture':
+				$nameList = CaptureApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;
+
+			case 'api':
+				$nameList = ApiApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+				break;
+						
+			case 'location':
+				$nameList = LocationApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;
+				
+			case 'time condition':
+				$nameList = TimeConditionApplication::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;
+			case 'menu':
+				$nameList = InteractiveMenu::where("user_id", Auth::user()->id)->where("id", $id)->delete();
+				break;	
+		   	default:
+			   # code...
+			   break;
+	   }
+		   
+			return response()->json([
+				'success' => true,
+				'message' => 'Success',
+				'response' => "Deleted Successfully"
+			]);
+   }
+   public function getMenuResponseDelete(Request $request){
+
+   		$id = Crypt::decrypt($request->id);
+   		MenuInput::where('interactive_menu_id',$id)->delete();
+   		$deleteMenu = InteractiveMenu::find($id);
+   		$deleteMenu->delete();
+   		return response()->json([
+				'success' => true,
+				'message' => 'Success',
+				'response' => "Deleted Successfully"
+			]);
+   }
    public function getNextAppName(Request $request) {
 	   $response = "";
 	   try {

@@ -95,7 +95,7 @@
                                     </td>
                                     <td >{{ $data->type }}</td>
                                     <td >{{ $data->created_at }}</td>
-                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id), 'combination' => $data->typeValue]) }}" class=""><i class="fa fa-edit"></i></a></td>
+                                    <td ><a href="{{ route('user.chat.bot.message.edit',['id' => Crypt::encrypt($data->id) , 'combination' => $data->typeValue]) }}" class=""><i class="fa fa-edit"></i></a>&nbsp;&nbsp; <a href="#" onclick="__appActionsResponse('{{ Crypt::encrypt($data->id) }}','{{ strtolower($data->type) }}')"><i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete Chat Instance" ></i></a>&nbsp;&nbsp;</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -157,8 +157,6 @@
     .select2-container .select2-selection--single {
         height: 40px ! important;
     }
-
-
   .select2-container--default .select2-selection--single .select2-selection__rendered, .select2-results__option {
     text-transform: uppercase;
   }
@@ -169,6 +167,38 @@ $(".description").click(function(e) {
     let value = $(this).parent().find("input").val();
     $(".modal-body").html(value);
 });
+    function __appActionsResponse(id,type){
+
+        if (confirm('Are you sure you want to permanently delete this response message?')){
+
+            $.ajax(
+                {
+                    url: '{{ route('user.chat.bot.message.response.delete') }}',
+                    dataType: 'json', // what to expect back from the PHP script
+                    cache: false,
+                    data: { _token: "{{ csrf_token() }}", id : id ,type : type } ,
+                    type: 'POST' ,
+                    beforeSend: function () {
+                        $('.preloader-it').show();
+                    },
+                    complete: function () {
+                        $('.preloader-it').hide();
+                    },
+                    success: function (result) {
+                        $('#loading').hide();
+                        if(result.success){
+                            $('.preloader-it').hide();
+                            //alert(result.response);
+                            location.reload();
+                        }
+                    },
+                    error: function (response) {
+                        console.log('Server error');
+                    }
+                }
+            );
+        }
+    }
 </script>
 <script src="{{ asset('dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('dist/js/select2-data.js') }}"></script>
