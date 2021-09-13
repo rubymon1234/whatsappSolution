@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Plan;
 use App\Models\Instance;
 use App\Models\CurrentPlan;
+use App\Models\InteractiveMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -154,7 +155,9 @@ class Helper {
                 case 'timeCondition':
                     $nameList = TimeConditionApplication::where("id", $id)->select("name")->get();
                     break;
-                    
+                case 'menu':
+                    $nameList = InteractiveMenu::where("id", $id)->select("name")->get();
+                    break;
                 default:
                    # code...
                    break;
