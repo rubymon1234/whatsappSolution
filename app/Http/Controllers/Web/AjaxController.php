@@ -273,6 +273,7 @@ class AjaxController extends Controller
    		MenuInput::where('interactive_menu_id',$id)->delete();
    		$deleteMenu = InteractiveMenu::find($id);
    		$deleteMenu->delete();
+   		
    		return response()->json([
 				'success' => true,
 				'message' => 'Success',

@@ -77,7 +77,7 @@ class MessageResponseController extends Controller
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){
                                  $token = Helper::generateUniqueId();
-                                $fileName = time() . '_'.$token.'_'. $request->image_photo->getClientOriginalName();
+                                $fileName = time(). '_'.$token.'.'.$ext;
                                 // $filePath = $request->file('image_photo')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->image_photo->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
@@ -106,7 +106,7 @@ class MessageResponseController extends Controller
                         if($fileSize <=4000000){
                             if(in_array($ext, $extension)){
                                 $token = Helper::generateUniqueId();
-                                $fileName = time() . '_'.$token.'_'. $request->video->getClientOriginalName();
+                                $fileName = time() . '_'.$token.'.'. $ext;
                                 // $filePath = $request->file('video')->storeAs('uploads/chat-bot', $fileName, 'public');
                                 $request->video->move(public_path('/uploads/chat-bot'), $fileName);
                                 $textEntry->file_name = $fileName;
