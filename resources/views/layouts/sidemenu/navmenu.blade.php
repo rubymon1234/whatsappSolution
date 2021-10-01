@@ -80,8 +80,6 @@
                     </ul>
                 </li>
             @endpermission
-
-
             @permission(('user.compose.scrub.*'))
                 <li class="nav-item {{ (Route::is('user.compose.scrub.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp11" aria-expanded="true">
@@ -297,24 +295,49 @@
                 </li>
             @endpermission
             @permission(('user.report.*'))
-                <li class="nav-item {{ (Route::is('user.report.*') ? 'menu-open' : '') }}">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp10" aria-expanded="true">
-                        <span class="feather-icon"><i data-feather="list"></i></span>
-                        <span class="nav-link-text">Reports</span>
-                    </a>
-                    <ul id="auth_drp10" class="nav flex-column collapse-level-1 {{ (Route::is('user.report.*') ? 'show' : '') }} collapse ">
-                        <li class="nav-item">
-                            <ul class="nav flex-column">
-                                @permission('user.report.consolidated')
-                                <li class="nav-item {{ (Route::is('user.report.consolidated') ? 'active' : '' ) }}">
-                                    <a class="nav-link" href="{{ route('user.report.consolidated') }}">Campaign </a>
+            <li class="nav-item {{ (Route::is('user.report.*') ? 'menu-open' : '') }}">
+            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_report">
+                <span class="feather-icon"><i data-feather="list"></i></span>
+                <span class="nav-link-text">Reports</span>
+            </a>
+            <ul id="auth_report" class="nav flex-column collapse collapse-level-1 {{ (Route::is('user.report.*') ? 'show' : '') }}">
+                <li class="nav-item">
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item {{ (Route::is('user.report.log.*') ? 'menu-open' : '') }}">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#chat_rep">
+                                    Bot Log
+                                </a>
+                            <ul id="chat_rep" class="nav flex-column collapse collapse-level-2 {{ (Route::is('user.report.log.*') ? 'show' : '') }}">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        @permission('user.report.log.sessions')
+                                        <li class="nav-item {{ (Route::is('user.report.log.sessions') ? 'active' : '' ) }}">
+                                            <a class="nav-link" href="{{ route('user.report.log.sessions') }}">Log Sessions</a>
+                                        </li>
+                                        @endpermission
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="login-simple.html">Menu Log</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                @endpermission
                             </ul>
                         </li>
+
+                        @permission('user.report.consolidated')
+                            <li class="nav-item {{ (Route::is('user.report.consolidated') ? 'active' : '' ) }}">
+                                <a class="nav-link" href="{{ route('user.report.consolidated') }}">Campaign </a>
+                            </li>
+                        @endpermission
+                        
                     </ul>
                 </li>
-            @endpermission
+            </ul>
+        </li>
+        @endpermission
+
+{{-- End --}}
             </ul>
         </div>
     </div>

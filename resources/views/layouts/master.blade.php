@@ -19,7 +19,8 @@
 
 	<!-- Toastr CSS -->
     {{-- <link href="{{ asset('dist/css/jquery.toast.min.css') }}" rel="stylesheet" type="text/css"> --}}
-
+    <!-- Daterangepicker CSS -->
+    <link href="{{ asset('dist/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
 </head>
@@ -186,6 +187,11 @@
     <!-- Init JavaScript -->
     <script src="{{ asset('dist/js/init.js') }}"></script>
 	<script src="{{ asset('dist/js/dashboard2-data.js') }}"></script>
+
+    {{-- DatePicker --}}
+    <script src="{{ asset('dist/js/moment.min.js') }}"></script>
+    <script src="{{ asset('dist/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('dist/js/daterangepicker-data.js') }}"></script>
     <script type="text/javascript">
         var timerVar = setInterval(countTimer, 1000);
         var totalSeconds = document.getElementById('hr_mn_se_seconnds').value;
