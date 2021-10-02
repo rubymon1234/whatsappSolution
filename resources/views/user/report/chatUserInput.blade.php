@@ -53,6 +53,7 @@
                                 <th>#</th>
                                 <th>Instance name</th>
                                 <th>Number</th>
+                                <th>Menu</th>
                                 <th>User Input</th>
                                 <th>App name</th>
                                 <th>App value</th>
@@ -65,6 +66,7 @@
                                     <td class="serial">{{ $key + $logSessionList->firstItem()}} </td>
                                     <td> <span class="name">{{ $log->instance_name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ explode("@",$log->number)[0] }}</span></td>
+                                    <td >{{ $log->name }}</td>
                                     <td >{{ rawurldecode($log->user_input) }}</td>
                                     <td >{{ $log->app_name }}</td>
                                     @php

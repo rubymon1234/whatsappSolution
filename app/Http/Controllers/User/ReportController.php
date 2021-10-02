@@ -218,6 +218,7 @@ class ReportController extends Controller
         //get log sesstions
         $logSessionList = DB::table('menu_input_datas')
             ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
+             ->join('interactive_menus', 'interactive_menus.id', '=', 'menu_input_datas.interactive_menu_id')
             ->whereIn('instance_token',$chatTokens);
             if($request->daterange !=''){
                 $logSessionList->whereBetween('menu_input_datas.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
@@ -229,6 +230,7 @@ class ReportController extends Controller
 
             $logSessionListDownload = DB::table('menu_input_datas')
             ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
+            ->join('interactive_menus', 'interactive_menus.id', '=', 'menu_input_datas.interactive_menu_id')
             ->whereIn('instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionListDownload->where('app_name',$request->combination);
@@ -251,7 +253,7 @@ class ReportController extends Controller
             $callback = function() use ($logSessionListDownload,$user_id) 
             {
                 $fp1 = fopen('php://output', 'w');
-                $data1 = Array('Sl_No','Instance Name','Number','User Input','Sent time');
+                $data1 = Array('Sl_No','Instance Name','Number','Menu','User Input','App name','App value','Sent time');
                 fputcsv($fp1, $data1);
                 $i = 1;
                 foreach ($logSessionListDownload as $log) { 
@@ -261,6 +263,7 @@ class ReportController extends Controller
                         $i++,
                         $log->instance_name,
                         explode("@",$log->number)[0],
+                        $log->name,
                         rawurldecode($log->user_input),
                         $log->app_name,
                         $appValue,
