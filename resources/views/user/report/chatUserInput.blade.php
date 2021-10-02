@@ -54,6 +54,8 @@
                                 <th>Instance name</th>
                                 <th>Number</th>
                                 <th>User Input</th>
+                                <th>App name</th>
+                                <th>App value</th>
                                 <th>Sent time</th>
                             </tr>
                         </thead>
@@ -64,7 +66,11 @@
                                     <td> <span class="name">{{ $log->instance_name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ explode("@",$log->number)[0] }}</span></td>
                                     <td >{{ rawurldecode($log->user_input) }}</td>
-                                    
+                                    <td >{{ $log->app_name }}</td>
+                                    @php
+                                    $appValue = \App\Helpers\Helper::getNextAppNameView(strtolower($log->app_name),Crypt::encryptString($log->app_value));
+                                    @endphp
+                                    <td >{{ $appValue }}</td>
                                     <td >{{ $log->created_at }}</td>
                                 </tr>
                             @empty

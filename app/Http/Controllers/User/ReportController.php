@@ -131,7 +131,7 @@ class ReportController extends Controller
             if($request->daterange !=''){
                 $logSessionList->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
             }
-            $logSessionList = $logSessionList->paginate(10);
+            $logSessionList = $logSessionList->orderBy('log_sessions.created_at', 'DESC')->paginate(10);
 
         // download csv
         if($request->download  =='download'){
@@ -143,9 +143,9 @@ class ReportController extends Controller
                 $logSessionListDownload->where('app_name',$request->combination);
             }
             if($request->daterange !=''){
-                $logSessionListDownload->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionListDownload->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
-            $logSessionListDownload = $logSessionListDownload->get();
+            $logSessionListDownload = $logSessionListDownload->orderBy('log_sessions.created_at', 'DESC')->get();
 
             $uniqueId  = hexdec(uniqid());
 
@@ -205,33 +205,38 @@ class ReportController extends Controller
         }else{
             $chatTokens = array($request->instance_id);
         }
+
         if($request->daterange !=''){
             $date_range = explode(" - ",$request->daterange);
             $startDate = new Carbon($date_range[0]);
             $endDate = new Carbon($date_range[1]);
         }
+        /*echo Carbon::parse($startDate)->toDateString();
+        echo Carbon::parse($endDate)->toDateString();
+        print_r($chatTokens);
+        exit();*/
         //get log sesstions
-        $logSessionList = DB::table('data_capture_logs')
-            ->join('instances', 'instances.token', '=', 'data_capture_logs.instance_token')
+        $logSessionList = DB::table('menu_input_datas')
+            ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
             ->whereIn('instance_token',$chatTokens);
             if($request->daterange !=''){
-                $logSessionList->whereBetween('data_capture_logs.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionList->whereBetween('menu_input_datas.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
-            $logSessionList = $logSessionList->paginate(10);
+            $logSessionList = $logSessionList->orderBy('menu_input_datas.created_at', 'DESC')->paginate(10);
 
         // download csv
         if($request->download  =='download'){
 
-            $logSessionListDownload = DB::table('data_capture_logs')
-            ->join('instances', 'instances.token', '=', 'data_capture_logs.instance_token')
+            $logSessionListDownload = DB::table('menu_input_datas')
+            ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
             ->whereIn('instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionListDownload->where('app_name',$request->combination);
             }
             if($request->daterange !=''){
-                $logSessionListDownload->whereBetween('data_capture_logs.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionListDownload->whereBetween('menu_input_datas.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
-            $logSessionListDownload = $logSessionListDownload->get();
+            $logSessionListDownload = $logSessionListDownload->orderBy('menu_input_datas.created_at', 'DESC')->get();
 
             $uniqueId  = hexdec(uniqid());
 
@@ -251,11 +256,14 @@ class ReportController extends Controller
                 $i = 1;
                 foreach ($logSessionListDownload as $log) { 
                     $sent_time = date('Y-m-d h:m:s', strtotime($log->created_at));
+                    $appValue = Helper::getNextAppNameView(strtolower($log->app_name),Crypt::encryptString($log->app_value));
                     $data1 = Array(
                         $i++,
                         $log->instance_name,
                         explode("@",$log->number)[0],
                         rawurldecode($log->user_input),
+                        $log->app_name,
+                        $appValue,
                         $sent_time,
                     );
                     fputcsv($fp1, $data1);
