@@ -7,7 +7,7 @@
     @include('errors.status')
     <div class="hk-pg-header mb-10">
         <div>
-            <h6 class="hk-pg-title">@yield('title') :: ChatBot Log</h6>
+            <h6 class="hk-pg-title">@yield('title') :: Interactive Bot</h6>
         </div>
     </div>
     <div class="">
