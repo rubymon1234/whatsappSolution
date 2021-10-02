@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use DB;
 use Response;
 use DateTime;
+use Crypt;
 use Carbon\Carbon;
+use App\Helpers\Helper;
 use App\Models\LogSession;
 use App\Models\ChatInstance;
 use App\Models\Campaign;
@@ -121,12 +123,13 @@ class ReportController extends Controller
         }
         //get log sesstions
         $logSessionList = DB::table('log_sessions')
+            ->join('instances', 'instances.token', '=', 'log_sessions.instance_token')
             ->whereIn('instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionList->where('app_name',$request->combination);
             }
             if($request->daterange !=''){
-                $logSessionList->whereBetween('created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionList->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
             }
             $logSessionList = $logSessionList->paginate(10);
 
@@ -134,12 +137,13 @@ class ReportController extends Controller
         if($request->download  =='download'){
 
             $logSessionListDownload = DB::table('log_sessions')
+            ->join('instances', 'instances.token', '=', 'log_sessions.instance_token')
             ->whereIn('instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionListDownload->where('app_name',$request->combination);
             }
             if($request->daterange !=''){
-                $logSessionListDownload->whereBetween('created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionListDownload->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
             }
             $logSessionListDownload = $logSessionListDownload->get();
 
@@ -162,14 +166,14 @@ class ReportController extends Controller
               $i = 1;
               foreach ($logSessionListDownload as $log) { 
                 $sent_time = date('Y-m-d h:m:s', strtotime($log->created_at));
-                //$chatInstance =  ChatInstance::where('user_id',$user_id)->where('')->pluck('instance_token')->unique();
+                $appValue = Helper::getNextAppNameView(strtolower($log->app_name),Crypt::encryptString($log->app_value));
                 $data1 = Array(
                     $i++,
-                    $log->instance_token,
+                    $log->instance_name,
                     explode("@",$log->number)[0],
-                    $log->user_input,
+                    rawurldecode($log->user_input),
                     $log->app_name,
-                    $log->app_value,
+                    $appValue,
                     $sent_time,
                 );
                 fputcsv($fp1, $data1);

@@ -72,11 +72,14 @@
                             @forelse($logSessionList as $key=>$log)
                                 <tr>
                                     <td class="serial">{{ $key + $logSessionList->firstItem()}} </td>
-                                    <td> <span class="name">{{ $log->instance_token }}</span> </td>
+                                    <td> <span class="name">{{ $log->instance_name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ explode("@",$log->number)[0] }}</span></td>
-                                    <td >{{ $log->user_input }}</td>
+                                    <td >{{ rawurldecode($log->user_input) }}</td>
                                     <td >{{ $log->app_name }}</td>
-                                    <td >{{ $log->app_value }}</td>
+                                    @php
+                                    $appValue = \App\Helpers\Helper::getNextAppNameView(strtolower($log->app_name),Crypt::encryptString($log->app_value));
+                                    @endphp
+                                    <td >{{ $appValue }}</td>
                                     <td >{{ $log->created_at }}</td>
                                 </tr>
                             @empty
