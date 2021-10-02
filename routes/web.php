@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	//REPORT MANAGEMENT
 	Route::get('/report/consolidated', 'User\ReportController@getConsolidatedReport')->name('user.report.consolidated')->middleware(['permission:user.report.consolidated']);
 	Route::get('/report/log-sessions', 'User\ReportController@getChatBotReport')->name('user.report.log.sessions')->middleware(['permission:user.report.log.sessions']);
+	Route::get('/report/user-input', 'User\ReportController@getMenuInputReport')->name('user.report.log.menu.input')->middleware(['permission:user.report.log.menu.input']);
 
 	//CHAT BOT - MESSAGE RESPONSES
 	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);

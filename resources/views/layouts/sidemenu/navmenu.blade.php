@@ -317,9 +317,11 @@
                                         </li>
                                         @endpermission
 
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="login-simple.html">Menu Log</a>
+                                        @permission('user.report.log.menu.input')
+                                        <li class="nav-item {{ (Route::is('user.report.log.menu.input') ? 'active' : '' ) }}">
+                                            <a class="nav-link" href="{{ route('user.report.log.menu.input') }}">User Input</a>
                                         </li>
+                                        @endpermission
                                     </ul>
                                 </li>
                             </ul>
