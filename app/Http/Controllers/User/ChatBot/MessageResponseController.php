@@ -68,8 +68,8 @@ class MessageResponseController extends Controller
                     $textEntry->reseller_id = Auth::user()->reseller_id;
                     $textEntry->name = $request->get("scrub_name");
                     $textEntry->message = rawurlencode($request->get("messageImage"));
-                    $textEntry->app_value = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name1"));
-                    $textEntry->app_name = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name"));
+                    $textEntry->next_app_value = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name1"));
+                    $textEntry->next_app_name = $this->getAppName($request->get("image_app_name1"), $request->get("image_app_name"));
                     if ($request->file()) {
                         $extension = ['jpeg','png','jpg'];
                         $ext = strtolower($request->file('image_photo')->getClientOriginalExtension());
@@ -226,11 +226,11 @@ class MessageResponseController extends Controller
                 break;
 
             case 'image':
-                $data = ImageApplication::select("id", "name", "message", "app_name as app_name", "app_value as app_value", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"));
+                $data = ImageApplication::select("id", "name", "message", "next_app_name as app_name", "next_app_value as app_value", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"));
                 break;
 
             case 'video':
-                $data = VideoApplication::select("id", "name", "message", "next_app_name as app_name", "next_app_value as app_value", "created_at", DB::raw("'VIDEO' as type"), DB::raw("'video' as typeValue"));
+                $data = VideoApplication::select("id", "name", "message", "next_app_name as next_app_name", "next_app_value as next_app_value", "created_at", DB::raw("'VIDEO' as type"), DB::raw("'video' as typeValue"));
                 break;
 
             case 'capture':
@@ -251,7 +251,7 @@ class MessageResponseController extends Controller
 
             default:
                 $text = DB::table('text_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'TEXT' as type"), DB::raw("'text' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
-                $image = DB::table('image_applications')->select("id", "name", "message", "app_name as app_name", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"), "app_value as app_value")->where("user_id", Auth::user()->id);
+                $image = DB::table('image_applications')->select("id", "name", "message", "next_app_name as next_app_name", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"), "next_app_value as next_app_value")->where("user_id", Auth::user()->id);
                 $capture = DB::table('capture_applications')->select("id", "name", DB::raw("'' as message"), "app_name as app_name", "created_at", DB::raw("'CAPTURE' as type"), DB::raw("'capture' as typeValue"), "app_value as app_value")->where("user_id", Auth::user()->id);
                 $video = DB::table('video_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'VIDEO' as type"), DB::raw("'video' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 $api = DB::table('api_applications')->select("id", "name", DB::raw("'' as message"), "app_name as app_name", "created_at", DB::raw("'API' as type"), DB::raw("'api' as typeValue"), "app_value as app_value")->where("user_id", Auth::user()->id);
@@ -276,10 +276,12 @@ class MessageResponseController extends Controller
                 $data = $data->where("name", "LIKE", $nameSearchKey);
             }
         }
+
         $data = $data->orderBy("created_at", "DESC");
         $data = $data->paginate(10);
         // DB::enableQueryLog();
         $text1 = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
+
         $image1 = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);
         $capture1 = DB::table('capture_applications')->select("name", DB::raw("'CAPTURE' as type"), "id")->where("user_id", Auth::user()->id);
         $location1 = DB::table('location_applications')->select("name", DB::raw("'LOCATION' as type"), "id")->where("user_id", Auth::user()->id);
@@ -287,6 +289,7 @@ class MessageResponseController extends Controller
         $api1 = DB::table('api_applications')->select("name", DB::raw("'API' as type"), "id")->where("user_id", Auth::user()->id);
         $video1 = DB::table('video_applications')->select("name", DB::raw("'VIDEO' as type"), "id")->where("user_id", Auth::user()->id);
         $video1 = $video1->union($image1)->union($text1)->union($capture1)->union($location1)->union($timeCondition1)->union($api1)->get();
+
         // dd(DB::getQueryLog());
         return view('user.chatbot.messageResponseList', ["messageList" => $data, "combinationList" => $this->getDefaultCombinationList(), "allData" => $video1]);
     }
