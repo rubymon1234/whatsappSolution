@@ -317,7 +317,7 @@ class MessageResponseController extends Controller
                     break;
 
                 case 'image':
-                    $nameList = ImageApplication::where("user_id", Auth::user()->id)->where("id", $id)->first();
+                    $nameList = ImageApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
                     break;
 
                 case 'video':
