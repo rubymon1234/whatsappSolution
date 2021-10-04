@@ -339,7 +339,6 @@ class MessageResponseController extends Controller
                 case 'timeCondition':
                     $nameList = TimeConditionApplication::where("user_id", Auth::user()->id)->select("*", DB::raw("'' as message"))->where("id", $id)->first();
                     break;
-
                 default:
                 # code...
                 break;

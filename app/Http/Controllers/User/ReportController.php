@@ -124,20 +124,21 @@ class ReportController extends Controller
         //get log sesstions
         $logSessionList = DB::table('log_sessions')
             ->join('instances', 'instances.token', '=', 'log_sessions.instance_token')
-            ->whereIn('instance_token',$chatTokens);
+            ->select('instances.instance_name','log_sessions.id as id','log_sessions.number','log_sessions.user_input','log_sessions.app_name','log_sessions.app_value','log_sessions.created_at')
+            ->whereIn('log_sessions.instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionList->where('app_name',$request->combination);
             }
             if($request->daterange !=''){
-                $logSessionList->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString(), Carbon::parse($endDate)->toDateString()]);
+                $logSessionList->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
             $logSessionList = $logSessionList->orderBy('log_sessions.created_at', 'DESC')->paginate(10);
-
         // download csv
         if($request->download  =='download'){
 
             $logSessionListDownload = DB::table('log_sessions')
             ->join('instances', 'instances.token', '=', 'log_sessions.instance_token')
+            ->select('instances.instance_name','log_sessions.id as id','log_sessions.number','log_sessions.user_input','log_sessions.app_name','log_sessions.app_value','log_sessions.created_at')
             ->whereIn('instance_token',$chatTokens);
             if($request->combination !=''){
                 $logSessionListDownload->where('app_name',$request->combination);
@@ -211,15 +212,12 @@ class ReportController extends Controller
             $startDate = new Carbon($date_range[0]);
             $endDate = new Carbon($date_range[1]);
         }
-        /*echo Carbon::parse($startDate)->toDateString();
-        echo Carbon::parse($endDate)->toDateString();
-        print_r($chatTokens);
-        exit();*/
         //get log sesstions
         $logSessionList = DB::table('menu_input_datas')
             ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
              ->join('interactive_menus', 'interactive_menus.id', '=', 'menu_input_datas.interactive_menu_id')
-            ->whereIn('instance_token',$chatTokens);
+            ->select('instances.instance_name','menu_input_datas.id as id','menu_input_datas.number','interactive_menus.name','menu_input_datas.user_input','menu_input_datas.app_name','menu_input_datas.app_value','menu_input_datas.created_at')
+            ->whereIn('menu_input_datas.instance_token',$chatTokens);
             if($request->daterange !=''){
                 $logSessionList->whereBetween('menu_input_datas.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
@@ -231,10 +229,8 @@ class ReportController extends Controller
             $logSessionListDownload = DB::table('menu_input_datas')
             ->join('instances', 'instances.token', '=', 'menu_input_datas.instance_token')
             ->join('interactive_menus', 'interactive_menus.id', '=', 'menu_input_datas.interactive_menu_id')
+            ->select('instances.instance_name','menu_input_datas.id as id','menu_input_datas.number','interactive_menus.name','menu_input_datas.user_input','menu_input_datas.app_name','menu_input_datas.app_value','menu_input_datas.created_at')
             ->whereIn('instance_token',$chatTokens);
-            if($request->combination !=''){
-                $logSessionListDownload->where('app_name',$request->combination);
-            }
             if($request->daterange !=''){
                 $logSessionListDownload->whereBetween('menu_input_datas.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
