@@ -48,7 +48,7 @@ class MenuController extends Controller
                 foreach(json_decode($request->get("keySet"), true) as $key) {
                     $menuInput = isset($key['id']) ? MenuInput::findOrFail($key['id']) : new MenuInput();
                     $menuInput->interactive_menu_id = $interactiveMenu->id;
-                    $menuInput->input_key = strtolower($key['inputKey']);
+                    $menuInput->input_key = rawurlencode(strtolower($key['inputKey']));
                     $menuInput->app_name = $this->getAppValue($key['keyAppName']);
                     $menuInput->app_value = $this->getAppValue($key['keyAppValueInInt']);
                     $menuInput->save();
