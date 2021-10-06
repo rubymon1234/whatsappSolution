@@ -9,6 +9,7 @@ use App\Models\RoleUser;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Plan;
+use App\Models\Accounts;
 use App\Models\Instance;
 use App\Models\CurrentPlan;
 use App\Models\InteractiveMenu;
@@ -178,5 +179,16 @@ class Helper {
 
         $instance_id = Crypt::decrypt($instance_id);
         return Instance::find($instance_id);
+   }
+
+   public static function getCredits($user_id){
+        $user_id = Crypt::decrypt($user_id);
+        $creditsDetail = Accounts::where('user_id',$user_id)->first();
+
+        if($creditsDetail){
+            return $creditsDetail;
+        }
+        
+        return false;
    }
 }

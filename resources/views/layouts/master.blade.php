@@ -56,7 +56,16 @@
                     ?>
                     <input type="hidden" value="{{ $result }}" id="hr_mn_se_seconnds" />
                     <span style="font-size: 15px;">{{date('d-m-Y')}} <span id="hr_mn_se_timer">{{ date('H:i:s') }}</span></span>
-                </li>
+                </li> &nbsp;&nbsp; |
+                <li class="nav-item">
+                    <?php
+                    $accounts = \App\Helpers\Helper::getCredits(Crypt::encrypt(Auth::user()->id));
+                    ?>
+
+                    <a id="settings_toggle_btn" class="nav-link nav-link" href="javascript:void(0);"><i class="zmdi zmdi-balance-wallet"> &nbsp;: @php 
+                    if($accounts){echo $accounts->credits;}else{ echo 0;}
+                    @endphp</i> </a>
+                </li> &nbsp; |
                 <li class="nav-item dropdown dropdown-authentication">
                     <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @php $user = Auth::user() @endphp
