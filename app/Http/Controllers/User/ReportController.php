@@ -133,6 +133,10 @@ class ReportController extends Controller
                 $logSessionList->whereBetween('log_sessions.created_at', [Carbon::parse($startDate)->toDateString().' 00:00:00', Carbon::parse($endDate)->toDateString().' 23:59:59']);
             }
             $logSessionList = $logSessionList->orderBy('log_sessions.created_at', 'DESC')->paginate(10);
+            $logSessionList->appends(['instance_id' => $instance_id]);
+            $logSessionList->appends(['daterange' => $daterange]);
+            $logSessionList->appends(['combination' => $combination]);
+
         // download csv
         if($request->download  =='download'){
 
@@ -223,6 +227,8 @@ class ReportController extends Controller
             }
             $logSessionList = $logSessionList->orderBy('menu_input_datas.created_at', 'DESC')->paginate(10);
 
+            $logSessionList->appends(['instance_id' => $instance_id]);
+            $logSessionList->appends(['daterange' => $daterange]);
         // download csv
         if($request->download  =='download'){
 
