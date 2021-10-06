@@ -263,7 +263,7 @@
         function __listKeyValues() {
             let response = "";
             keyList.forEach((value, key) => {
-                response += "<tr><th style='text-transform: lowercase;'>"+ value.inputKey +"</th><td>"+ value.keyAppName +"</td><td>"+ value.keyAppValue +"</td><td><button type='button'onclick='removeKey("+ key +")' class='btn btn-link'>Remove</button></td></tr>";
+                response += "<tr><th style='text-transform: lowercase;'>"+ decodeURIComponent(value.inputKey) +"</th><td>"+ value.keyAppName +"</td><td>"+ value.keyAppValue +"</td><td><button type='button'onclick='removeKey("+ key +")' class='btn btn-link'>Remove</button></td></tr>";
             });
             $("#keyData").html(response);
         }
