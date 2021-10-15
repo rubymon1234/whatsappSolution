@@ -37,7 +37,8 @@ if (isset($argv[1]))
                                 "user_id"=> "$userId",
     										        "number" => $data['0'],
     			      		);
-    		      $smsDb->insert('wc_priority', $leadData);
+    		      //$smsDb->insert('wc_priority', $leadData);
+              $smsDb->setQueryOption ('LOW_PRIORITY')->replace('wc_priority', $leadData);
           }
 
           $smsDb->where ('is_status', 1);
