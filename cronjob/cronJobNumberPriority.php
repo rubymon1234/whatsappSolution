@@ -34,7 +34,8 @@ if (isset($argv[1]))
 					$ctimestamp = strtotime($cdateTime);
           if ($leadCount <= 10){
               $leadData = Array ("instance_token" => "$instance",
-    										"number" => $data['0'],
+                                "user_id"=> "$userId",
+    										        "number" => $data['0'],
     			      		);
     		      $smsDb->insert('wc_priority', $leadData);
           }
