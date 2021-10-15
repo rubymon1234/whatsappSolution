@@ -28,7 +28,7 @@ if (isset($argv[1]))
     // }
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
-      $leadCount = shell_exec('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead.' | wc -l');
+      $leadCount = count(file('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead));
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 					$cdateTime =date("Y-m-d H:i:s");
 					$ctimestamp = strtotime($cdateTime);
@@ -37,7 +37,7 @@ if (isset($argv[1]))
     										"number" => $data['0'],
     			      		);
     		      $smsDb->insert('wc_priority', $leadData);
-          }          
+          }
 
           $smsDb->where ('is_status', 1);
           $smsDb->where ('number', $data['0']);
