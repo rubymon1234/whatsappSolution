@@ -17,7 +17,7 @@ class CreateLogSessionsTable extends Migration
             $table->increments('id');
             $table->string('instance_token');
             $table->string('number')->nullable();
-            $table->string('user_input')->nullable();
+            $table->text('user_input')->nullable();
             $table->string('app_name')->nullable();
             $table->string('app_value')->nullable();
             $table->smallInteger('is_status')->nullable();

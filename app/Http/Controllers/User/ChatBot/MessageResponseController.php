@@ -6,6 +6,8 @@ use DB;
 use App\Helpers\Helper;
 use Carbon\Carbon;
 use App\Models\CurrentPlan;
+use App\Models\ButtonApplication;
+use App\Models\ButtonBodies;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -151,7 +153,24 @@ class MessageResponseController extends Controller
                     $textEntry->failed_app_value = $this->getAppName($request->get("api_failure_app_value"), $request->get("api_failure_app_value"));
                     $textEntry->save();
                     break;
-
+                case 'button':
+                $buttonHead = $request->get("buttonHead") ? $request->get("buttonHead") : ' ';
+                $buttonTitle = $request->get("buttonTitle") ? $request->get("buttonTitle") : ' ';
+                $buttonFooter = $request->get("buttonFooter") ? $request->get("buttonFooter") : ' ';
+                    $buttonEntry = $request->get("id") ? ButtonApplication::findOrFail($request->get("id")) : new ButtonApplication();
+                    $buttonEntry->user_id = Auth::user()->id;
+                    $buttonEntry->reseller_id = Auth::user()->reseller_id;
+                    $buttonEntry->name = $request->get("scrub_name");
+                    $buttonEntry->head = rawurlencode($buttonHead);
+                    $buttonEntry->title = rawurlencode($buttonTitle);
+                    $buttonEntry->footer = rawurlencode($buttonFooter);
+                    $buttonEntry->next_app_name = $this->getAppName($request->get("button_app_name"), $request->get("button_app_name"));
+                    $buttonEntry->next_app_value = $this->getAppName($request->get("button_app_name1"), $request->get("button_app_name1"));
+                    $buttonEntry->save();
+                    if(isset($request->bodyA)){
+                        $this->buttonBodyUpdate($request,$buttonEntry->id);
+                    }
+                    break;
                 case 'location':
                     $textEntry = $request->get("id") ? LocationApplication::findOrFail($request->get("id")) : new LocationApplication();
                     $textEntry->user_id = Auth::user()->id;
@@ -248,7 +267,9 @@ class MessageResponseController extends Controller
             case 'timeCondition':
                 $data = TimeConditionApplication::select("id", "name", "created_at", DB::raw("'TIME CONDITION' as type"), DB::raw("'timeCondition' as typeValue"));
                 break;
-
+            case 'button':
+                $data = ButtonApplication::select("id", "name", "created_at", DB::raw("'button' as type"), DB::raw("'button' as typeValue"));
+                break;
             default:
                 $text = DB::table('text_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'TEXT' as type"), DB::raw("'text' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 $image = DB::table('image_applications')->select("id", "name", "message", "next_app_name as next_app_name", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"), "next_app_value as next_app_value")->where("user_id", Auth::user()->id);
@@ -257,16 +278,18 @@ class MessageResponseController extends Controller
                 $api = DB::table('api_applications')->select("id", "name", DB::raw("'' as message"), "app_name as app_name", "created_at", DB::raw("'API' as type"), DB::raw("'api' as typeValue"), "app_value as app_value")->where("user_id", Auth::user()->id);
                 $location = DB::table('location_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'LOCATION' as type"), DB::raw("'location' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 $timeCondition = DB::table('time_condition_applications')->select("id", "name", DB::raw("'' as message"), DB::raw("'' as app_name"), "created_at", DB::raw("'TIME CONDITION' as type"), DB::raw("'timeCondition' as typeValue"), DB::raw("'' as app_value"))->where("user_id", Auth::user()->id);
+                $button = DB::table('button_applications')->select("id", "name", DB::raw("'' as message"), "next_app_name as app_name", "created_at", DB::raw("'BUTTON' as type"), DB::raw("'button' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 if ($request->get("name")) {
                     $text = $text->where("name", "LIKE", $nameSearchKey);
                     $image = $image->where("name", "LIKE", $nameSearchKey);
+                    $button = $image->where("name", "LIKE", $nameSearchKey);
                     $capture = $capture->where("name", "LIKE", $nameSearchKey);
                     $video = $video->where("name", "LIKE", $nameSearchKey);
                     $api = $api->where("name", "LIKE", $nameSearchKey);
                     $location = $location->where("name", "LIKE", $nameSearchKey);
                     $timeCondition = $timeCondition->where("name", "LIKE", $nameSearchKey);
                 }
-                $timeCondition = $timeCondition->union($location)->union($api)->union($video)->union($capture)->union($image)->union($text);
+                $timeCondition = $timeCondition->union($location)->union($api)->union($video)->union($capture)->union($button)->union($image)->union($text);
                 $data = DB::query()->fromSub($timeCondition, "");
                 break;
         }
@@ -281,14 +304,14 @@ class MessageResponseController extends Controller
         $data = $data->paginate(10);
         // DB::enableQueryLog();
         $text1 = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
-
+        $button1 = DB::table('button_applications')->select("name", DB::raw("'BUTTON' as type"), "id")->where("user_id", Auth::user()->id);
         $image1 = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);
         $capture1 = DB::table('capture_applications')->select("name", DB::raw("'CAPTURE' as type"), "id")->where("user_id", Auth::user()->id);
         $location1 = DB::table('location_applications')->select("name", DB::raw("'LOCATION' as type"), "id")->where("user_id", Auth::user()->id);
         $timeCondition1 = DB::table('time_condition_applications')->select("name", DB::raw("'TIMECONDITION' as type"), "id")->where("user_id", Auth::user()->id);
         $api1 = DB::table('api_applications')->select("name", DB::raw("'API' as type"), "id")->where("user_id", Auth::user()->id);
         $video1 = DB::table('video_applications')->select("name", DB::raw("'VIDEO' as type"), "id")->where("user_id", Auth::user()->id);
-        $video1 = $video1->union($image1)->union($text1)->union($capture1)->union($location1)->union($timeCondition1)->union($api1)->get();
+        $video1 = $video1->union($image1)->union($text1)->union($capture1)->union($location1)->union($timeCondition1)->union($button1)->union($api1)->get();
 
         // dd(DB::getQueryLog());
         return view('user.chatbot.messageResponseList', ["messageList" => $data, "combinationList" => $this->getDefaultCombinationList(), "allData" => $video1]);
@@ -303,10 +326,22 @@ class MessageResponseController extends Controller
             'capture' => "CAPTURE",
             'api' => "API",
             "location" => "LOCATION",
-            "timeCondition" => "TIME CONDITION"
+            "timeCondition" => "TIME CONDITION",
+            "button" => "BUTTON"
         );
     }
-
+    public function buttonBodyUpdate($request,$id){
+        if(isset($request->bodyA)){
+            ButtonBodies::where('button_application_id',$id)->delete();
+            foreach ($request->bodyA as $bodies) {
+                $body = new ButtonBodies();
+                $body->body = rawurlencode($bodies);
+                $body->button_application_id = $id;
+                $body->save();
+            }
+        }
+        return true;
+    }
     public function getMessageResponseDetail(Request $request, $id) {
         $id = \Crypt::decrypt($id);
 
@@ -318,6 +353,10 @@ class MessageResponseController extends Controller
 
                 case 'image':
                     $nameList = ImageApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
+                    break;
+
+                case 'button':
+                    $nameList = ButtonApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
                     break;
 
                 case 'video':

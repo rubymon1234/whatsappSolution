@@ -40,6 +40,71 @@
                                     </select>
                                  </div>
                             </div>
+                            @if (Request::get("combination") === 'button')
+                            <div class="row" id="sel_button" style="display: none;">
+                                <div class="col-sm-6 form-group">
+                                    <label for="button_head" class="col-form-label" >Head</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Head"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="buttonHead" name="buttonHead">{{rawurldecode($head) }}</textarea>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="button_footer" class="col-form-label" >Footer</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Footer"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="buttonFooter" name="buttonFooter">{{rawurldecode($footer) }}</textarea>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="button_title" class="col-form-label" >Title</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Title"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="buttonTitle" name="buttonTitle">{{rawurldecode($title) }}</textarea>
+                                </div>
+                                 <div class="col-sm-6 form-group">
+                                    <label for="button_title" class="col-form-label" >Body</label>
+                                   @php
+                                    $buttonDetail = \App\Helpers\Helper::getButtonDetail(Crypt::encrypt($id));
+                                    @endphp
+                                    @php
+                                    foreach ($buttonDetail as $bodies) { @endphp
+                                        <div class="input-group mb-3 item" id="inputFormRow" >
+                                        <input type="text" class="form-control" placeholder="Enter body" aria-label="Recipient's username" aria-describedby="basic-addon2" name="bodyA[]" value="{{ rawurldecode($bodies->body) }}">
+                                        <div class="input-group-append">
+                                            <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
+                                        </div>
+                                    </div>
+                                    @php }@endphp
+                                   
+                                    @if(count($buttonDetail) ===0)
+                                        <div class="input-group mb-3 item" id="inputFormRow" >
+                                        <input type="text" class="form-control" placeholder="Enter body" aria-label="Recipient's username" aria-describedby="basic-addon2" name="bodyA[]">
+                                        <div class="input-group-append">
+                                            <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
+                                        </div>
+                                        </div>
+                                    @endif
+                                    <div id="newRow"></div>
+                                    <br/>
+                                    <button id="addRow" type="button" class="btn btn-info">Add Body</button>
+                                </div>
+            
+                                <div class="col-sm-6 form-group">
+                                     <label for="text_app_name" class="col-form-label" >Next App Name</label>
+                                    <select class="form-control custom-select select2" id="button_app_name" name="button_app_name" onchange="__getAppName(this.value)">
+                                        <option value=""></option>
+                                        <option value="text">TEXT</option>
+                                        <option value="image">IMAGE</option>
+                                        <option value="video">VIDEO</option>
+                                        <option value="capture">CAPTURE</option>
+                                        <option value="api">API</option>
+                                        <option value="timeCondition">TIME CONDITION</option>
+                                        <option value="location">LOCATION</option>
+                                        <option value="menu">MENU</option>
+                                        <option value="button">BUTTON</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                     <label for="button_app_name1" class="col-form-label"> Next App Value </label>
+                                    <select class="form-control custom-select select2" id="button_app_name1" name="button_app_name1" onchange="__checkAppValueCondition(this.value, 'button_app_name1')">
+                                        <option value="null"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            @endif
                             @if (Request::get("combination") === 'text')
                                 <div class="row sel_text" class="" style="display: none;">
                                     <div class="col-md-6 form-group">
@@ -465,6 +530,7 @@
         $("#location").hide();
         $("#message").show();
         $("#timeCondition").hide();
+        $("#sel_button").hide();
 
         if(slug=='text'){
             $(".sel_text").show();
@@ -484,6 +550,8 @@
         }else if(slug =='timeCondition'){
             $("#timeCondition").show();
             $("#message").hide();
+        }else if(slug =='button'){
+            $("#sel_button").show();
         }
     }
 
@@ -627,6 +695,27 @@ function setEditValues() {
 }
 
 setEditValues();
+
+$("#addRow").click(function () {
+    var html = '';
+    if($('.item').length <=2){
+        html += '<div id="inputFormRow" class="item">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="bodyA[]" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+        html += '</div>';
+        html += '</div>';
+        $('#newRow').append(html);
+    }else{
+        alert('Button Limit Reached');
+    }
+    
+});
+// remove row
+$(document).on('click', '#removeRow', function () {
+    $(this).closest('#inputFormRow').remove();
+});
 </script>
 <style type="text/css">
     .select2-container .select2-selection--single {

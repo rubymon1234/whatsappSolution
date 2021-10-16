@@ -61,7 +61,6 @@
                     <?php
                     $accounts = \App\Helpers\Helper::getCredits(Crypt::encrypt(Auth::user()->id));
                     ?>
-
                     <a id="settings_toggle_btn" class="nav-link nav-link" href="javascript:void(0);"><i class="zmdi zmdi-balance-wallet"> &nbsp;: @php 
                     if($accounts){echo $accounts->credits;}else{ echo 0;}
                     @endphp</i> </a>

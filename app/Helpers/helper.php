@@ -23,6 +23,7 @@ use App\Models\CaptureApplication;
 use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
+use App\Models\ButtonBodies;
 use App\Models\TimeConditionApplication;
 use Exception;
 
@@ -190,5 +191,10 @@ class Helper {
         }
         
         return false;
+   }
+   public static function getButtonDetail($id){
+        $button_id = Crypt::decrypt($id);
+        $buttonDetail = ButtonBodies::where('button_application_id',$button_id)->get();
+        return $buttonDetail;
    }
 }
