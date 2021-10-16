@@ -28,9 +28,18 @@ if (isset($argv[1]))
     // }
 
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
+      $leadCount = count(file('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead));
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 					$cdateTime =date("Y-m-d H:i:s");
 					$ctimestamp = strtotime($cdateTime);
+          if ($leadCount <= 10){
+              $leadData = Array ("instance_token" => "$instance",
+                                "user_id"=> "$userId",
+    										        "number" => $data['0'],
+    			      		);
+    		      //$smsDb->insert('wc_priority', $leadData);
+              $smsDb->setQueryOption ('LOW_PRIORITY')->replace('wc_priority', $leadData);
+          }
 
           $smsDb->where ('is_status', 1);
           $smsDb->where ('number', $data['0']);

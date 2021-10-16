@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Message')
+@section('title', 'Interactive Bot')
 @section('content')
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
@@ -45,7 +45,7 @@
                                 <th>Name</th>
                                 <th>App Name</th>
                                 <th>App Value</th>
-                                <th>Created At</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,14 +55,14 @@
                                     <td class="serial">{{ $key + $menuList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ strtoupper($data->app_name) }}</span></td>
-                                    <?php 
+                                    <?php
                                         $appName = "";
                                         foreach($allData as $menu) {
                                             if(($menu->type === $data->app_name) && $menu->id == $data->app_value) {
-                                                  $appName =  strtoupper($menu->name);                  
+                                                  $appName =  strtoupper($menu->name);
                                             }
                                         }
-                                    
+
                                     ?>
                                     <td >{{ $appName }}</td>
                                     <td >{{ $data->created_at }}</td>
@@ -109,7 +109,7 @@
 </style>
 <script type="text/javascript">
         function __appActionsMenu(id){
-        
+
         if (confirm('Are you sure you want to permanently delete this response message?')){
 
             $.ajax(

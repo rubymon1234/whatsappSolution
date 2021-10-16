@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Message')
+@section('title', 'Interactive Bot')
 @section('content')
 <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-4 form-group">
                 <button class="btn btn-tool btn-danger" name="search" value="search" style="margin-top: 19px;">Search </button>
-                <a class="btn btn-tool btn-info" href ="{{ route('user.chat.bot.message.create') }}" style="margin-top: 19px;">Create Response Message </a>
+                <a class="btn btn-tool btn-info" href ="{{ route('user.chat.bot.message.create') }}" style="margin-top: 19px;">Create Response</a>
                 </div>
             </div>
         </form>
@@ -55,8 +55,8 @@
                                 <th>App Name</th>
                                 <th>App Value</th>
                                 <th>Message</th>
-                                <th>Combination Type</th>
-                                <th>Created At</th>
+                                <th>Response</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -66,18 +66,18 @@
                                     <td class="serial">{{ $key + $messageList->firstItem()}} </td>
                                     <td> <span class="name">{{ $data->name }}</span> </td>
                                     <td><span style="font-weight: bold;">{{ strtoupper($data->app_name) }}</span></td>
-                                    <?php 
+                                    <?php
                                         $appName = "";
                                         foreach($allData as $menu) {
                                             if(($menu->type === $data->app_name) && $menu->id == $data->app_value) {
-                                                  $appName =  strtoupper($menu->name);                  
+                                                  $appName =  strtoupper($menu->name);
                                             }
                                         }
-                                    
+
                                     ?>
                                     <td >{{ $appName }}</td>
                                     <td>
-                                        
+
                                         <?php
                                         $string = strip_tags(rawurldecode($data->message));
                                         if (strlen($string) > 10) {
@@ -131,27 +131,27 @@
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
-        
+
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">Description</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
-          
+
           <!-- Modal body -->
           <div class="modal-body">
             Modal body..
           </div>
-          
+
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
-          
+
         </div>
       </div>
     </div>
-    
+
   </div>
 <style type="text/css">
     .select2-container .select2-selection--single {
