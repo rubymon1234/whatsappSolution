@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     @php }@endphp
-                                   
+
                                     @if(count($buttonDetail) ===0)
                                         <div class="input-group mb-3 item" id="inputFormRow" >
                                         <input type="text" class="form-control" placeholder="Enter body" aria-label="Recipient's username" aria-describedby="basic-addon2" name="bodyA[]">
@@ -81,7 +81,7 @@
                                     <br/>
                                     <button id="addRow" type="button" class="btn btn-info">Add Body</button>
                                 </div>
-            
+
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" >Next App Name</label>
                                     <select class="form-control custom-select select2" id="button_app_name" name="button_app_name" onchange="__getAppName(this.value)">
@@ -213,7 +213,7 @@
                                     <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="capture_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">   
+                                        <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">
                                             <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -230,7 +230,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select select2" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
+                                            <select class="form-control custom-select select2" id="capture_success_app_name" name="capture_success_app_name" onchange="__getSuccessFailureName(this.value, true)">
                                                 <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -251,8 +251,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
-                                            <label for="capture_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select select2" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">    
+                                            <label for="capture_failure_app_name" class="col-form-label m_sel_image">Failed Application Name</label>
+                                            <select class="form-control custom-select select2" id="capture_failure_app_name" name="capture_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">
                                                 <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -265,19 +265,19 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
-                                            <label for="capture_failure_app_value" class="col-form-label m_sel_image">failed Application value</label>
-                                            <select class="form-control custom-select select2" id="capture_failure_app_value" name="capture_failure_app_value" onchange="__checkAppValueCondition(this.value, 'capture_failure_app_name')">   
+                                            <label for="capture_failure_app_value" class="col-form-label m_sel_image">Failed Application Value</label>
+                                            <select class="form-control custom-select select2" id="capture_failure_app_value" name="capture_failure_app_value" onchange="__checkAppValueCondition(this.value, 'capture_failure_app_name')">
                                                 <option value="null">null</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
-                                            <label for="validator" class="col-form-label m_sel_image">Input validator</label>
-                                            <select class="form-control custom-select select2" id="validator" name="validator"> 
-                                                <option <?php echo $validator == 'Alpha-numeric' ? "selected" : "" ?> value="Alpha-numeric">Alpha-numeric</option>
-                                                <option <?php echo $validator == 'Numeric' ? "selected" : "" ?> value="Numeric">Numeric</option>
-                                                <option <?php echo $validator == 'Email' ? "selected" : "" ?> value="Email">Email</option>
+                                            <label for="validator" class="col-form-label m_sel_image">Input Validator</label>
+                                            <select class="form-control custom-select select2" id="validator" name="validator">
+                                                <option <?php echo $validator == 'Alpha-Numeric' ? "selected" : "" ?> value="alpha-numeric">Alpha-Numeric</option>
+                                                <option <?php echo $validator == 'Numeric' ? "selected" : "" ?> value="numeric">Numeric</option>
+                                                <option <?php echo $validator == 'Email' ? "selected" : "" ?> value="email">Email</option>
                                             </select>
                                         </div>
                                     </div>
@@ -288,7 +288,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="api_app_name" class="col-form-label" >Next App Name</label>
-                                            <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">   
+                                            <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">
                                                 <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
@@ -299,14 +299,14 @@
                                             <label for="api_app_name1" class="col-form-label">Next App Value </label>
                                             <select class="form-control custom-select select2" id="api_app_name1" name="api_app_name1" onchange="__checkAppValueCondition(this.value, 'api_app_name')">
                                                 <option value="null">null</option>
-                                                
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="api_success_app_name" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select select2" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
+                                            <select class="form-control custom-select select2" id="api_success_app_name" name="api_success_app_name" onchange="__getSuccessFailureName(this.value, true)">
                                                 <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
@@ -320,16 +320,16 @@
                                         </div>
                                         <div class="col-sm-6 form-group">
                                             <label for="api_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                            <select class="form-control custom-select select2" id="api_success_app_value" name="api_success_app_value" onchange="__checkAppValueCondition(this.value, 'api_success_app_name')">   
+                                            <select class="form-control custom-select select2" id="api_success_app_value" name="api_success_app_value" onchange="__checkAppValueCondition(this.value, 'api_success_app_name')">
                                                 <option value="null">null</option>
                                             </select>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="api_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select select2" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
+                                            <select class="form-control custom-select select2" id="api_failure_app_name" name="api_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">
                                                 <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -343,7 +343,7 @@
                                         </div>
                                         <div class="col-sm-6 form-group">
                                             <label for="api_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                            <select class="form-control custom-select select2" id="api_failure_app_value" name="api_failure_app_value" onchange="__checkAppValueCondition(this.value, 'api_failure_app_name')">   
+                                            <select class="form-control custom-select select2" id="api_failure_app_value" name="api_failure_app_value" onchange="__checkAppValueCondition(this.value, 'api_failure_app_name')">
                                                 <option value="null">null</option>
                                             </select>
                                         </div>
@@ -372,7 +372,7 @@
                                     <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label for="location_app_name" class="col-form-label" >Next App Name</label>
-                                        <select class="form-control custom-select select2" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">   
+                                        <select class="form-control custom-select select2" id="location_app_name" name="location_app_name" onchange="__getAppName(this.value)">
                                             <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -388,7 +388,7 @@
                                         <label for="location_app_name1" class="col-form-label">Next App Value </label>
                                         <select class="form-control custom-select select2" id="location_app_name1" name="location_app_name1" onchange="__checkAppValueCondition(this.value, 'location_app_name')">
                                             <option value="null">null</option>
-                                            
+
                                         </select>
                                     </div>
                                     </div>
@@ -425,7 +425,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_success_app_name" class="col-form-label m_sel_image">Success Application </label>
-                                            <select class="form-control custom-select select2" id="timeCondition_success_app_name" name="timeCondition_success_app_name" onchange="__getSuccessFailureName(this.value, true)">   
+                                            <select class="form-control custom-select select2" id="timeCondition_success_app_name" name="timeCondition_success_app_name" onchange="__getSuccessFailureName(this.value, true)">
                                                 <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
@@ -439,16 +439,16 @@
                                         </div>
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_success_app_value" class="col-form-label m_sel_image">Success Application value</label>
-                                            <select class="form-control custom-select select2" id="timeCondition_success_app_value" name="timeCondition_success_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_success_app_name')">   
+                                            <select class="form-control custom-select select2" id="timeCondition_success_app_value" name="timeCondition_success_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_success_app_name')">
                                                 <option value="null">null</option>
                                             </select>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_failure_app_name" class="col-form-label m_sel_image">failed Application name</label>
-                                            <select class="form-control custom-select select2" id="timeCondition_failure_app_name" name="timeCondition_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">   
+                                            <select class="form-control custom-select select2" id="timeCondition_failure_app_name" name="timeCondition_failure_app_name" onchange="__getSuccessFailureName(this.value, false)">
                                                 <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
@@ -462,7 +462,7 @@
                                         </div>
                                         <div class="col-sm-6 form-group">
                                             <label for="timeCondition_failure_app_value" class="col-form-label m_sel_image" >failed Application value</label>
-                                            <select class="form-control custom-select select2" id="timeCondition_failure_app_value" name="timeCondition_failure_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_failure_app_name')">   
+                                            <select class="form-control custom-select select2" id="timeCondition_failure_app_value" name="timeCondition_failure_app_value" onchange="__checkAppValueCondition(this.value, 'timeCondition_failure_app_name')">
                                                 <option value="null">null</option>
                                             </select>
                                         </div>
@@ -500,10 +500,10 @@
                                 </div>
                             @endif
                             {{-- <div class="row">
-                            
+
                              </div> --}}
-                            
-                            
+
+
                             @if ($errors->any())
                                 <label class="control-label" for="inputError" style="color: #dd4b39"><i class="fa fa-times-circle-o" ></i> {{ implode(' | ', $errors->all(':message')) }} .</label>
                                 <br>
@@ -710,7 +710,7 @@ $("#addRow").click(function () {
     }else{
         alert('Button Limit Reached');
     }
-    
+
 });
 // remove row
 $(document).on('click', '#removeRow', function () {
