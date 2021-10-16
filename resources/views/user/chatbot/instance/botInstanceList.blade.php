@@ -32,8 +32,8 @@
                                 <th>App name</th>
                                 <th>App value</th>
                                 <th>Status</th>
-                                <th>created at</th>
-                                <th>Manage</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
