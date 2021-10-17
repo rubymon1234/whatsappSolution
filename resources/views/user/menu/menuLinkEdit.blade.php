@@ -41,6 +41,8 @@
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
