@@ -24,6 +24,7 @@ use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
 use App\Models\ButtonBodies;
+use App\Models\ListBody;
 use App\Models\TimeConditionApplication;
 use Exception;
 
@@ -196,5 +197,10 @@ class Helper {
         $button_id = Crypt::decrypt($id);
         $buttonDetail = ButtonBodies::where('button_application_id',$button_id)->get();
         return $buttonDetail;
+   }
+   public static function getListDetail($id){
+        $list_id = Crypt::decrypt($id);
+        $listDetail = ListBody::where('list_application_id',$list_id)->get();
+        return $listDetail;
    }
 }

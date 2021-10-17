@@ -20,6 +20,8 @@ use App\Models\CaptureApplication;
 use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
+use App\Models\ListApplication;
+use App\Models\ListBody;
 use App\Models\TimeConditionApplication;
 
 class MessageResponseController extends Controller
@@ -171,6 +173,26 @@ class MessageResponseController extends Controller
                         $this->buttonBodyUpdate($request,$buttonEntry->id);
                     }
                     break;
+                case 'list':
+                $listHead = $request->get("listHead") ? $request->get("listHead") : ' ';
+                $listTitle = $request->get("listTitle") ? $request->get("listTitle") : ' ';
+                $listFooter = $request->get("listFooter") ? $request->get("listFooter") : ' ';
+                $listMenuTitle = $request->get("listMenuTitle") ? $request->get("listMenuTitle") : ' ';
+                    $listEntry = $request->get("id") ? ListApplication::findOrFail($request->get("id")) : new ListApplication();
+                    $listEntry->user_id = Auth::user()->id;
+                    $listEntry->reseller_id = Auth::user()->reseller_id;
+                    $listEntry->name = $request->get("scrub_name");
+                    $listEntry->head = rawurlencode($listHead);
+                    $listEntry->title = rawurlencode($listTitle);
+                    $listEntry->footer = rawurlencode($listFooter);
+                    $listEntry->menu_title = rawurlencode($listMenuTitle);
+                    $listEntry->next_app_name = $this->getAppName($request->get("list_app_name"), $request->get("list_app_name"));
+                    $listEntry->next_app_value = $this->getAppName($request->get("list_app_name1"), $request->get("list_app_name1"));
+                    $listEntry->save();
+                    if(isset($request->bodyL)){
+                        $this->buttonListUpdate($request,$listEntry->id);
+                    }
+                    break;
                 case 'location':
                     $textEntry = $request->get("id") ? LocationApplication::findOrFail($request->get("id")) : new LocationApplication();
                     $textEntry->user_id = Auth::user()->id;
@@ -270,6 +292,9 @@ class MessageResponseController extends Controller
             case 'button':
                 $data = ButtonApplication::select("id", "name", "created_at", DB::raw("'button' as type"), DB::raw("'button' as typeValue"));
                 break;
+            case 'list':
+                $data = ListApplication::select("id", "name", "created_at", DB::raw("'list' as type"), DB::raw("'list' as typeValue"));
+                break;
             default:
                 $text = DB::table('text_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'TEXT' as type"), DB::raw("'text' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 $image = DB::table('image_applications')->select("id", "name", "message", "next_app_name as next_app_name", "created_at", DB::raw("'IMAGE' as type"), DB::raw("'image' as typeValue"), "next_app_value as next_app_value")->where("user_id", Auth::user()->id);
@@ -279,17 +304,19 @@ class MessageResponseController extends Controller
                 $location = DB::table('location_applications')->select("id", "name", "message", "next_app_name as app_name", "created_at", DB::raw("'LOCATION' as type"), DB::raw("'location' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 $timeCondition = DB::table('time_condition_applications')->select("id", "name", DB::raw("'' as message"), DB::raw("'' as app_name"), "created_at", DB::raw("'TIME CONDITION' as type"), DB::raw("'timeCondition' as typeValue"), DB::raw("'' as app_value"))->where("user_id", Auth::user()->id);
                 $button = DB::table('button_applications')->select("id", "name", DB::raw("'' as message"), "next_app_name as app_name", "created_at", DB::raw("'BUTTON' as type"), DB::raw("'button' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
+                $list = DB::table('list_applications')->select("id", "name", DB::raw("'' as message"), "next_app_name as app_name", "created_at", DB::raw("'LIST' as type"), DB::raw("'list' as typeValue"), "next_app_value as app_value")->where("user_id", Auth::user()->id);
                 if ($request->get("name")) {
                     $text = $text->where("name", "LIKE", $nameSearchKey);
                     $image = $image->where("name", "LIKE", $nameSearchKey);
                     $button = $image->where("name", "LIKE", $nameSearchKey);
+                    $list = $image->where("name", "LIKE", $nameSearchKey);
                     $capture = $capture->where("name", "LIKE", $nameSearchKey);
                     $video = $video->where("name", "LIKE", $nameSearchKey);
                     $api = $api->where("name", "LIKE", $nameSearchKey);
                     $location = $location->where("name", "LIKE", $nameSearchKey);
                     $timeCondition = $timeCondition->where("name", "LIKE", $nameSearchKey);
                 }
-                $timeCondition = $timeCondition->union($location)->union($api)->union($video)->union($capture)->union($button)->union($image)->union($text);
+                $timeCondition = $timeCondition->union($location)->union($api)->union($video)->union($capture)->union($button)->union($list)->union($image)->union($text);
                 $data = DB::query()->fromSub($timeCondition, "");
                 break;
         }
@@ -327,7 +354,8 @@ class MessageResponseController extends Controller
             'api' => "API",
             "location" => "LOCATION",
             "timeCondition" => "TIME CONDITION",
-            "button" => "BUTTON"
+            "button" => "BUTTON",
+            "list" => "LIST"
         );
     }
     public function buttonBodyUpdate($request,$id){
@@ -337,6 +365,19 @@ class MessageResponseController extends Controller
                 $body = new ButtonBodies();
                 $body->body = rawurlencode($bodies);
                 $body->button_application_id = $id;
+                $body->save();
+            }
+        }
+        return true;
+    }
+    public function buttonListUpdate($request,$id){
+        if(isset($request->bodyL)){
+            ListBody::where('list_application_id',$id)->delete();
+            foreach ($request->bodyL as $key => $bodies) {
+                $body = new ListBody();
+                $body->body = rawurlencode($bodies);
+                $body->description = rawurlencode($request->bodyDescription[$key]);
+                $body->list_application_id = $id;
                 $body->save();
             }
         }
@@ -358,7 +399,9 @@ class MessageResponseController extends Controller
                 case 'button':
                     $nameList = ButtonApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
                     break;
-
+                case 'list':
+                    $nameList = ListApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
+                    break;
                 case 'video':
                     $nameList = VideoApplication::where("user_id", Auth::user()->id)->select("*", "next_app_value as app_value", "next_app_name as app_name")->where("id", $id)->first();
                     break;

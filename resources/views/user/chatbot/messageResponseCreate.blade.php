@@ -83,11 +83,67 @@
                                         <option value="location">LOCATION</option>
                                         <option value="menu">MENU</option>
                                         <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                      <label for="button_app_name1" class="col-form-label"> Next App Value </label>
                                     <select class="form-control custom-select select2" id="button_app_name1" name="button_app_name1" onchange="__checkAppValueCondition(this.value, 'button_app_name1')">
+                                        <option value="null"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" id="sel_list" style="display: none;">
+                                <div class="col-sm-6 form-group">
+                                    <label for="list_head" class="col-form-label" >Head</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Head"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="listHead" name="listHead"></textarea>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="list_footer" class="col-form-label" >Footer</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Footer"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="listFooter" name="listFooter"></textarea>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="button_title" class="col-form-label" >Title</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Title"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="buttonTitle" name="buttonTitle"></textarea>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="button_title" class="col-form-label" >Menu Title</label>
+                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Title"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;"  maxlength="1000" id="listMenuTitle" name="listMenuTitle"></textarea>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <label for="button_title" class="col-form-label" >Body</label>
+                                    <div class="input-group mb-3 item" id="inputFormRow1" >
+                                        <input type="text" class="form-control" placeholder="Enter body" aria-label="" aria-describedby="basic-addon2" name="bodyL[]">
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]">
+                                        <div class="input-group-append">
+                                            <button id="removeRow1" type="button" class="btn btn-danger">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div id="newRow1"></div>
+                                    <br/>
+                                    <button id="addRow1" type="button" class="btn btn-info">Add Body</button>
+                                </div>  
+
+                                <div class="col-sm-6 form-group">
+                                     <label for="text_app_name" class="col-form-label" >Next App Name</label>
+                                    <select class="form-control custom-select select2" id="list_app_name" name="list_app_name" onchange="__getAppName(this.value)">
+                                        <option value=""></option>
+                                        <option value="text">TEXT</option>
+                                        <option value="image">IMAGE</option>
+                                        <option value="video">VIDEO</option>
+                                        <option value="capture">CAPTURE</option>
+                                        <option value="api">API</option>
+                                        <option value="timeCondition">TIME CONDITION</option>
+                                        <option value="location">LOCATION</option>
+                                        <option value="menu">MENU</option>
+                                        <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                     <label for="list_app_name1" class="col-form-label"> Next App Value </label>
+                                    <select class="form-control custom-select select2" id="list_app_name1" name="list_app_name1" onchange="__checkAppValueCondition(this.value, 'list_app_name1')">
                                         <option value="null"></option>
                                     </select>
                                 </div>
@@ -98,13 +154,15 @@
                                     <select class="form-control custom-select select2" id="text_app_name" name="text_app_name" onchange="__getAppName(this.value)">
                                         <option value=""></option>
                                             <option value="text">TEXT</option>
-                                                <option value="image">IMAGE</option>
-                                                <option value="video">VIDEO</option>
-                                                <option value="capture">CAPTURE</option>
-                                                <option value="api">API</option>
-                                                <option value="timeCondition">TIME CONDITION</option>
-                                                <option value="location">LOCATION</option>
-                                                <option value="menu">MENU</option>
+                                            <option value="image">IMAGE</option>
+                                            <option value="video">VIDEO</option>
+                                            <option value="capture">CAPTURE</option>
+                                            <option value="api">API</option>
+                                            <option value="timeCondition">TIME CONDITION</option>
+                                            <option value="location">LOCATION</option>
+                                            <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -139,6 +197,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -175,6 +235,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -195,6 +257,8 @@
                                             <option value="text">TEXT</option>
                                             <option value="image">IMAGE</option>
                                             <option value="video">VIDEO</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -218,6 +282,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -240,6 +306,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -257,6 +325,8 @@
                                             <option value="alpha-numeric">Alpha-Numeric</option>
                                             <option value="numeric">Numeric</option>
                                             <option value="email">Email</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                 </div>
@@ -271,6 +341,8 @@
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
                                                 <option value="video">VIDEO</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                                 {{-- <option value="capture">Capture</option>
                                                 <option value="api">Api</option>
                                                 <option value="menu">Menu</option> --}}
@@ -296,6 +368,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -319,6 +393,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -378,6 +454,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -412,6 +490,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -435,6 +515,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -506,6 +588,7 @@
         $("#location").hide();
         $("#locationText").hide();
         $("#sel_button").hide();
+        $("#sel_list").hide();
         //$("#message").show();
         $("#timeCondition").hide();
 
@@ -526,6 +609,8 @@
             $("#timeCondition").show();
         }else if(slug =='button'){
             $("#sel_button").show();
+        }else if(slug =='list'){
+            $("#sel_list").show();
         }
     }
     // let oldCobminationValue = "{{ old('combination') }}";
@@ -688,9 +773,25 @@ $("#addRow").click(function () {
     }
     
 });
+$("#addRow1").click(function () {
+    var html = '';
+    html += '<div id="inputFormRow1" class="item">';
+    html += '<div class="input-group mb-3">';
+    html += '<input type="text" name="bodyL[]" class="form-control m-input" placeholder="Enter body" autocomplete="off">&nbsp;&nbsp;';
+    html += '<input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]">';
+    html += '<div class="input-group-append">';
+    html += '<button id="removeRow1" type="button" class="btn btn-danger">Remove</button>';
+    html += '</div>';
+    html += '</div>';
+    $('#newRow1').append(html);
+});
 // remove row
 $(document).on('click', '#removeRow', function () {
     $(this).closest('#inputFormRow').remove();
+});
+// remove row
+$(document).on('click', '#removeRow1', function () {
+    $(this).closest('#inputFormRow1').remove();
 });
 </script>
 

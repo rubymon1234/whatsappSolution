@@ -24,6 +24,10 @@ use App\Models\VideoApplication;
 use App\Models\TimeConditionApplication;
 use App\Models\InteractiveMenu;
 use App\Models\MenuInput;
+use App\Models\ListApplication;
+use App\Models\ListBody;
+use App\Models\ButtonApplication;
+use App\Models\ButtonBodies;
 use Exception;
 
 class AjaxController extends Controller
@@ -315,7 +319,13 @@ class AjaxController extends Controller
 					break;
 				case 'menu':
 					$nameList = InteractiveMenu::where("user_id", Auth::user()->id)->select("name", "id")->get();
-					break;	
+					break;
+				case 'button':
+					$nameList = ButtonApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
+				case 'list':
+					$nameList = ListApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+					break;
 			   	default:
 				   # code...
 				   break;

@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\User;
 use App\Models\RoleUser;
 use App\Models\Plan;
+use App\Models\Accounts;
 use App\Models\PermissionRole;
 use App\Models\Domain;
 use App\Models\PlanRequest;
@@ -93,6 +94,11 @@ class UserController extends Controller
                         RoleUser::create([
                         	'user_id' => $user_id,
                         	'role_id' => $role->id,
+                        ]);
+                        Accounts::create([
+                            'user_id' => $user_id,
+                            'reseller_id' => Auth::user()->id,
+                            'credits' => 0,
                         ]);
 	                     if($insertUser){
 	                     	return redirect()->route('admin.user.view')->with('success_message', 'New User successfully Added');
