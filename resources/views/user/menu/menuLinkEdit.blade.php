@@ -29,7 +29,7 @@
                                         <label for="firstName"> Name </label>
                                         <input class="form-control" id="name" name="name" placeholder="Enter name"
                                             type="text" value="{{ $name }}">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -66,6 +66,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -117,7 +119,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="keyData">
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -135,6 +137,8 @@
                                                     <option value="timeCondition">TIME CONDITION</option>
                                                     <option value="location">LOCATION</option>
                                                     <option value="menu">MENU</option>
+                                                    <option value="button">BUTTON</option>
+                                                    <option value="list">LIST</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6 form-group">
@@ -338,7 +342,7 @@
                     __listKeyValues();
                 },
                 error: function(response) {
-                    $('.preloader-it').hide();    
+                    $('.preloader-it').hide();
                     keyList.splice(index, 1);
                     __listKeyValues();
                 }
@@ -355,23 +359,23 @@
             __getAppName(invalidAppName, 'invalidAppValue', true, invalidAppValue);
             $("#invalidAppName").val(invalidAppName);
 
-            <?php 
+            <?php
                 for($i=0; $i< count($menuInput) ; $i++) {
                     foreach($allMenu as $menu) {
                         if(($menu->type === $menuInput[$i]->keyAppName) && $menu->id == $menuInput[$i]->keyAppValueInInt) {
-                            $menuInput[$i]->keyAppValue = $menu->name;                        
+                            $menuInput[$i]->keyAppValue = $menu->name;
                         }
                     }
                    ?>
                    keyList.push(<?php echo $menuInput[$i] ?>)
-                   <?php 
+                   <?php
                 }
             ?>
             __listKeyValues();
         }
 
         __loadDefaultValues();
-        
+
     </script>
     <style type="text/css">
         .select2-container .select2-selection--single {
