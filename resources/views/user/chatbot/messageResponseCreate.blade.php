@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="col-sm-12 form-group">
                                     <label for="button_title" class="col-form-label" >Body</label>
-                                    <div class="input-group mb-3 item" id="inputFormRow1" >
+                                    <div class="input-group mb-3" id="inputFormRow1" >
                                         <input type="text" class="form-control" placeholder="Enter body" aria-label="" aria-describedby="basic-addon2" name="bodyL[]">
                                         &nbsp;&nbsp;
                                         <input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]">
@@ -773,7 +773,7 @@ $("#addRow").click(function () {
 });
 $("#addRow1").click(function () {
     var html = '';
-    html += '<div id="inputFormRow1" class="item">';
+    html += '<div id="inputFormRow1">';
     html += '<div class="input-group mb-3">';
     html += '<input type="text" name="bodyL[]" class="form-control m-input" placeholder="Enter body" autocomplete="off">&nbsp;&nbsp;';
     html += '<input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]">';
