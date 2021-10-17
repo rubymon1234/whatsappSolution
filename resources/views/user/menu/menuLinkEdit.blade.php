@@ -273,7 +273,7 @@
                 if(!__checkKeyExist()) {
                     $(".key-exist").hide();
                     keyList.push({
-                        "inputKey": $("#inputKey").val(),
+                        "inputKey": decodeURIComponent($("#inputKey").val()),
                         "keyAppName": $("#keyAppName").val().toUpperCase(),
                         "keyAppValue": $("#keyAppValue option:selected").text().toUpperCase(),
                         "keyAppValueInInt":  $("#keyAppValue").val()
@@ -363,7 +363,19 @@
                         }
                     }
                    ?>
-                   keyList.push(<?php echo $menuInput[$i] ?>)
+                    var inputKey = '<?php echo rawurldecode($menuInput[$i]->inputKey) ?>';
+                    var keyAppName = '<?php echo $menuInput[$i]->keyAppName?>';
+                    var keyAppValueInInt = <?php echo $menuInput[$i]->keyAppValueInInt ?>;
+                    var keyAppValue = '<?php echo $menuInput[$i]->keyAppValue?>';
+                    var id = <?php echo $menuInput[$i]->id?>;
+                   
+                    keyList.push({
+                        inputKey : inputKey,
+                        keyAppName : keyAppName,
+                        keyAppValueInInt : keyAppValueInInt,
+                        keyAppValue : keyAppValue,
+                        id : id
+                   })
                    <?php 
                 }
             ?>

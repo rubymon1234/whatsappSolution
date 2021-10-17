@@ -67,9 +67,9 @@
                                 @php
                                     foreach ($listDetail as $bodies) { @endphp
                                         <div class="input-group mb-3 item" id="inputFormRow1" >
-                                        <input type="text" class="form-control" placeholder="Enter body" aria-label="" aria-describedby="basic-addon2" name="bodyL[]" value="{{ $bodies->body }}">
+                                        <input type="text" class="form-control" placeholder="Enter body" aria-label="" aria-describedby="basic-addon2" name="bodyL[]" value="{{ rawurldecode($bodies->body) }}">
                                         &nbsp;&nbsp;
-                                        <input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]" value="{{ $bodies->description }}">
+                                        <input type="text" class="form-control" placeholder="Enter description" aria-label="" aria-describedby="basic-addon3" name="bodyDescription[]" value="{{ rawurldecode($bodies->description) }}">
                                         <div class="input-group-append">
                                             <button id="removeRow1" type="button" class="btn btn-danger">Remove</button>
                                         </div>
