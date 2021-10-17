@@ -69,7 +69,7 @@
                                     <br/>
                                     <button id="addRow" type="button" class="btn btn-info">Add Body</button>
                                 </div>
-            
+
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" >Next App Name</label>
                                     <select class="form-control custom-select select2" id="button_app_name" name="button_app_name" onchange="__getAppName(this.value)">
@@ -123,7 +123,7 @@
                                     <div id="newRow1"></div>
                                     <br/>
                                     <button id="addRow1" type="button" class="btn btn-info">Add Body</button>
-                                </div>  
+                                </div>
 
                                 <div class="col-sm-6 form-group">
                                      <label for="text_app_name" class="col-form-label" >Next App Name</label>
@@ -325,8 +325,6 @@
                                             <option value="alpha-numeric">Alpha-Numeric</option>
                                             <option value="numeric">Numeric</option>
                                             <option value="email">Email</option>
-                                            <option value="button">BUTTON</option>
-                                            <option value="list">LIST</option>
                                         </select>
                                     </div>
                                 </div>
@@ -771,7 +769,7 @@ $("#addRow").click(function () {
     }else{
         alert('Button Limit Reached');
     }
-    
+
 });
 $("#addRow1").click(function () {
     var html = '';

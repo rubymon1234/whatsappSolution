@@ -44,16 +44,22 @@ class MenuController extends Controller
             $interactiveMenu->invalid_app_name = $this->getAppValue($request->get("invalidAppName"));
             $interactiveMenu->invalid_app_value = $this->getAppValue($request->get("invalidAppValue"));
             $interactiveMenu->save();
+            
+          
             if($interactiveMenu->id > 0) {
                 foreach(json_decode($request->get("keySet"), true) as $key) {
                     $menuInput = isset($key['id']) ? MenuInput::findOrFail($key['id']) : new MenuInput();
+
                     $menuInput->interactive_menu_id = $interactiveMenu->id;
+
                     $menuInput->input_key = rawurlencode(strtolower($key['inputKey']));
                     $menuInput->app_name = $this->getAppValue($key['keyAppName']);
                     $menuInput->app_value = $this->getAppValue($key['keyAppValueInInt']);
                     $menuInput->save();
+
                 }
             }
+
             if($request->get("id")) {
                 return redirect()->route('user.chat.bot.menu.list')->with('success_message', 'Menu Updated Successfully!!');
             } else {
