@@ -134,14 +134,15 @@
 
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Description</h4>
+            <h4 class="modal-title">Message</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
 
           <!-- Modal body -->
-          <div class="modal-body">
-            Modal body..
-          </div>
+
+            <textarea class="modal-body" disabled rows="15" cols="60">
+            </textarea>
+
 
           <!-- Modal footer -->
           <div class="modal-footer">
