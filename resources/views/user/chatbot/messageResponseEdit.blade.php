@@ -339,7 +339,8 @@
                                         <div class="col-sm-6 form-group">
                                             <label for="validator" class="col-form-label m_sel_image">Input validator</label>
                                             <select class="form-control custom-select select2" id="validator" name="validator">
-                                                <option <?php echo $validator == 'alpha-numeric' ? "selected" : "" ?> value="alpha-numeric">Alpha-numeric</option>
+                                                <option <?php echo $validator == 'no-validation' ? "selected" : "" ?> value="no-validation">No-Validation</option>
+                                                <option <?php echo $validator == 'alpha-numeric' ? "selected" : "" ?> value="alpha-numeric">Alpha-Numeric</option>
                                                 <option <?php echo $validator == 'numeric' ? "selected" : "" ?> value="numeric">Numeric</option>
                                                 <option <?php echo $validator == 'email' ? "selected" : "" ?> value="email">Email</option>
                                             </select>

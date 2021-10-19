@@ -322,6 +322,7 @@
                                         <label for="validator" class="col-form-label m_sel_image">Input Validator</label>
                                         <select class="form-control custom-select select2" id="validator" name="validator">
                                             <option value=""></option>
+                                            <option value="no-validation">No-Validation</option>
                                             <option value="alpha-numeric">Alpha-Numeric</option>
                                             <option value="numeric">Numeric</option>
                                             <option value="email">Email</option>
