@@ -24,12 +24,100 @@ use App\Models\ImageApplication;
 use App\Models\LocationApplication;
 use App\Models\VideoApplication;
 use App\Models\ButtonBodies;
+use App\Models\ButtonApplication;
+use App\Models\ListApplication;
 use App\Models\ListBody;
 use App\Models\TimeConditionApplication;
 use Exception;
 
 class Helper {
 	
+    public static function getNextAppNameHelpher($app_name,$app_value =null) {
+       $nameList = [];
+       try {
+           switch ($app_name) {
+                case 'text':
+                    $nameList = TextApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                   break;
+
+                case 'image':
+                    $nameList = ImageApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+
+                case 'video':
+                    $nameList = VideoApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+
+                case 'capture':
+                    $nameList = CaptureApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+
+                case 'api':
+                    $nameList = ApiApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                            
+                case 'location':
+                    $nameList = LocationApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                    
+                case 'timeCondition':
+                    $nameList = TimeConditionApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                case 'menu':
+                    $nameList = InteractiveMenu::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                case 'button':
+                    $nameList = ButtonApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                case 'list':
+                    $nameList = ListApplication::where("user_id", Auth::user()->id)->select("name", "id")->get();
+                    break;
+                default:
+                   # code...
+                   break;
+           }
+           /*$selected ='';
+           foreach($nameList as $row) {
+            if(isset($app_value)){
+                if($row->id == $app_value){
+                    $selected = 'selected';
+                }else{
+                    $selected = '';
+                }
+            }else{
+                $selected ='';
+            }
+               $response .= "<option value='" . $row->id . "' " . $selected . ">" . $row->name . "</option>";
+            
+           }
+           if(count($nameList) == 0) {
+                $response .= "<option value='null'></option>";
+           }*/
+           return $nameList;
+
+       } catch (\Exception $e) {
+            return $nameList;
+       }
+   }
+   public static function getBodiesHelpher($combination_type,$body_id) {
+       $nameList = [];
+       try {
+           switch ($combination_type) {
+                case 'button':
+                    $nameList = ButtonBodies::where("button_application_id", $body_id)->select("body", "id")->get();
+                    break;
+                case 'list':
+                    $nameList = ListBody::where("list_application_id", $body_id)->select("body", "description","id")->get();
+                    break;
+                default:
+                   # code...
+                   break;
+           }
+           return $nameList;
+       } catch (\Exception $e) {
+            return $nameList;
+       }
+   }
 	public static function getFqdn($fqdn =null)
     {
     	$fqdn = trim($fqdn);

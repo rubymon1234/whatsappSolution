@@ -24,6 +24,7 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="keySet" id="keySetId">
                                 <input type="hidden" name="id" id="id" value="{{ $id }}">
+                                <input type="hidden" id="menuRemoveRow" name="menuRemoveRow">
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label for="firstName"> Name </label>
@@ -80,6 +81,82 @@
                                             <option value=""></option>
                                         </select>
                                     </div>
+                                    
+                                    <div class="col-sm-12 form-group">
+                                    <label for="button_title" class="col-form-label" >KeySet</label>
+                                    @php
+                                    foreach ($menuInput as $key => $keySet) { 
+                                    $appValueList = [];
+                                    @endphp
+                                    <div class="input-group mb-3 item" id="inputFormRow" >
+                                        <select class="form-control" id="keyAppName_{{$key}}" name="appNameSet[]" onchange="__getAppName(this.value, 'keyAppValue_{{$key}}')">
+                                            <option value="">SELECT APPNAME</option>
+                                            <option @php 
+                                            if($keySet->keyAppName=='text'){ echo 'selected';}  @endphp value="text">TEXT</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='image'){ echo 'selected';} @endphp value="image">IMAGE</option>
+                                            <option @php if(strtolower($keySet->keyAppName=='video')){ echo 'selected';} @endphp value="video">VIDEO</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='capture'){ echo 'selected';} @endphp  value="capture">CAPTURE</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='api'){ echo 'selected';} @endphp  value="api">API</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='timeCondition'){ echo 'selected';} @endphp  value="timeCondition">TIME CONDITION</option>
+                                            <option  @php if(strtolower($keySet->keyAppName)=='location'){ echo 'selected';} @endphp value="location">LOCATION</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='menu'){ echo 'selected';} @endphp  value="menu">MENU</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='button'){ echo 'selected';} @endphp  value="button">BUTTON</option>
+                                            <option @php if(strtolower($keySet->keyAppName)=='list'){ echo 'selected';} @endphp  value="list">LIST</option>
+                                        </select> &nbsp;
+                                        @php
+                                        $appValueList = \App\Helpers\Helper::getNextAppNameHelpher(strtolower($keySet->keyAppName),$keySet->keyAppValueInInt);
+                                        @endphp
+                                        <select class="form-control" id="keyAppValue_{{$key}}" name="appValueSet[]"
+                                           onchange="handleChange(this.value,'keyAppValue_{{$key}}'');">
+                                           <option value="">SELECT APPVALUE</option>
+                                           @php
+                                           foreach ($appValueList as $v) { @endphp
+                                                <option @php if($keySet->keyAppValueInInt==$v->id){ echo 'selected';} @endphp value="{{ $v->id }}">{{ $v->name }}</option>
+                                           @php }
+                                           @endphp
+                                        </select>&nbsp;
+                                        <select class="form-control" id="key_type_{{$key}}" onchange="handleChange(this.value,'keyAppValue',{{$key}});" name="type[]" >
+                                            <option value="key" @php if($keySet->type=='key'){ echo 'selected';} @endphp > KEY </option>
+                                            <option value="button" @php if($keySet->type=='button'){ echo 'selected';} @endphp > BUTTON </option>
+                                            <option value="list" @php if($keySet->type=='list'){ echo 'selected';} @endphp> LIST </option></select>
+                                        @php
+                                    $appBodiesList = \App\Helpers\Helper::getNextAppNameHelpher($keySet->type);
+                                        @endphp
+                                        <select class="form-control" id="key_type_app_name_{{$key}}" onchange="addDropdown(this.value,{{$key}});" name="key1[]" @php 
+                                         if($keySet->type=='button' || $keySet->type=='list'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp>
+                                            @php
+                                            foreach ($appBodiesList as $b) { @endphp
+                                                <option @php if($keySet->set_key_primary==$b->id){ echo 'selected';} @endphp value="{{ $b->id }}">{{ $b->name }}</option>
+                                            @php }
+                                            @endphp
+                                            
+                                        </select>
+                                        @php
+                                        $appBodiessList = \App\Helpers\Helper::getBodiesHelpher($keySet->type,$keySet->set_key_primary);
+                                        @endphp
+                                        &nbsp;<select class="form-control" id="key_type_app_bodies_{{$key}}" onchange="handleChange(this.value,'0');" name="key2[]" @php 
+                                         if($keySet->type=='button' || $keySet->type=='list'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp>
+                                             @php
+                                            foreach ($appBodiessList as $c) { @endphp
+                                                <option @php if($keySet->set_key_secondary==$c->id){ echo 'selected';} @endphp value="{{ $c->id }}">{{ $c->body }}</option>
+                                            @php } @endphp
+                                            </select>
+                                        &nbsp;
+                                       
+                                        <input class="form-control" id="inputKey_keyAppValue_{{$key}}" name="inputKey[]" placeholder="Enter Key" value="{{ rawurldecode($keySet->inputKey)}}" type="text" 
+                                         @php 
+                                         if($keySet->type=='key'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp >
+                                        
+                                        <div class="input-group-append">
+                                            <button id="removeRow" type="button" class="btn btn-danger" attr-interactiveKey="{{$keySet->id}}">Remove</button>
+                                        </div>
+                                    </div>
+                                    @php }
+                                    @endphp
+                                    <div id="newRow"></div>
+                                    <br/>
+                                    <button id="addRow" type="button" class="btn btn-info">Add Key</button>
+                                </div>
                                 </div>
                                 @if ($errors->any())
                                     <label class="control-label" for="inputError" style="color: #dd4b39"><i
@@ -87,8 +164,8 @@
                                         {{ implode(' | ', $errors->all(':message')) }} .</label>
                                     <br>
                                 @endif
-                                <button class="btn btn-primary pull-center" id="nextButton" style="margin-left: 45%;"
-                                    type="button">Next</button>
+                                <button class="btn btn-primary pull-center" id="sendBtn" style="margin-left: 45%;"
+                                    type="button">Update</button>
                             </div>
                         </div>
                     </section>
@@ -109,63 +186,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card bg-light mb-3 col-sm-6">
-                                        <div class="row">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Key</th>
-                                                        <th scope="col">App Name</th>
-                                                        <th scope="col">App Value</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="keyData">
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6 form-group">
-                                                <label for="keyAppName" class="col-form-label">App Name</label>
-                                                <select class="form-control custom-select select2" id="keyAppName" name="keyAppName"
-                                                    onchange="__getAppName(this.value, 'keyAppValue')">
-                                                    <option value="null"></option>
-                                                    <option value="text">TEXT</option>
-                                                    <option value="image">IMAGE</option>
-                                                    <option value="video">VIDEO</option>
-                                                    <option value="capture">CAPTURE</option>
-                                                    <option value="api">API</option>
-                                                    <option value="timeCondition">TIME CONDITION</option>
-                                                    <option value="location">LOCATION</option>
-                                                    <option value="menu">MENU</option>
-                                                    <option value="button">BUTTON</option>
-                                            <option value="list">LIST</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-6 form-group">
-                                                <label for="keyAppValue" class="col-form-label">App Value </label>
-                                                <select class="form-control custom-select select2" id="keyAppValue" name="keyAppValue"
-                                                    onchange="__checkAppValueCondition(this.value, 'keyAppName')">
-                                                    <option value="null"></option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label for="inputKey"> Key </label>
-                                                <input class="form-control" id="inputKey" name="inputKey" placeholder="Enter Key" value=""
-                                                    type="text" value="{{ old('inputKey') }}">
-                                                <div class="key-exist" style="display: none; color: red;">
-                                                    Key already exist!!
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <button class="btn btn-primary pull-center" id="addKey" style="margin-top: 30px;" type="button" onclick="addToKeySet();">Create</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 @if ($errors->any())
                                     <label class="control-label" for="inputError" style="color: #dd4b39"><i
@@ -228,10 +249,11 @@
 
         $("#sendBtn").click(function(event) {
             event.preventDefault();
-            if (!__appValueValidationCheck()) {
+            $("#scrubForm").submit();
+           /* if (!__appValueValidationCheck()) {
                 $("#keySetId").val(JSON.stringify(keyList));
                 $("form").submit();
-            }
+            }*/
         });
 
         function __appValueValidationCheck() {
@@ -254,7 +276,7 @@
             return hasFormError;
         }
 
-        $("#nextButton").click(function() {
+        /*$("#nextButton").click(function() {
             $("#nextWrapper").show();
             $("#initialWrapper").hide();
             $(".card-text.name span").text($("#name").val());
@@ -265,7 +287,7 @@
         $("#backBtn").click(function() {
             $("#nextWrapper").hide();
             $("#initialWrapper").show();
-        });
+        });*/
         function __listKeyValues() {
             let response = "";
             keyList.forEach((value, key) => {
@@ -350,7 +372,86 @@
                 }
             });
         }
+        $("#addRow").click(function () {
+        var html = '';
+        id_value ="keyAppValue_"+$('.item').length;
+        id_app_name ="keyAppName_"+$('.item').length;
+        tuple = $('.item').length;
+        console.log(tuple);
+        html += '<div id="inputFormRow" class="item">';
+        html += '<div class="input-group mb-3">';
+        html += '<select class="form-control custom-select select2" id="'+id_app_name+'" name="appNameSet[]" onchange="__getAppName(this.value,\''+id_value+'\')"><option value="">SELECT APPNAME</option><option value="text">TEXT</option><option value="image">IMAGE</option><option value="video">VIDEO</option><option value="capture">CAPTURE</option><option value="api">API</option><option value="timeCondition">TIME CONDITION</option><option value="location">LOCATION</option><option value="menu">MENU</option><option value="button">BUTTON</option><option value="list">LIST</option></select>&nbsp;';
+        html += '<select class="form-control custom-select select2" id="'+id_value+'" name="appValueSet[]" onchange="__checkAppValueCondition(this.value, \''+id_app_name+'\');"><option value=""> SELECT APPVALUE </option></select>&nbsp;';
 
+        html += '<select class="form-control custom-select select2" id="key_type_'+tuple+'" onchange="handleChange(this.value,\''+id_value+'\',\''+tuple+'\');" name="type[]"><option value="key"> KEY </option><option value="button"> BUTTON </option><option value="list"> LIST </option></select>&nbsp;';
+
+        html += '<select class="form-control custom-select select2" id="key_type_app_name_'+tuple+'" onchange="addDropdown(this.value,\''+tuple+'\');" style="display:none;" name="key1[]"></select>&nbsp;';
+        html += '<select class="form-control custom-select select2" id="key_type_app_bodies_'+tuple+'" onchange="handleChange(this.value,\''+tuple+'\',\''+tuple+'\');" style="display:none;" name="key2[]"></select>&nbsp;';
+        html += '<input class="form-control" id="inputKey_'+id_value+'" name="inputKey[]" placeholder="Enter Key" type="text" value="">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+        html += '</div>';
+        html += '</div>';
+        $('#newRow').append(html);
+    });
+    function handleChange(app_name,key_remove_id,item){
+        var app_name = $("#key_type_"+item).val();
+        //$("#key_type_app_bodies_"+item).empty();
+        console.log(key_remove_id);
+        if(app_name =='button' || app_name =="list"){
+            $("#inputKey_keyAppValue_"+item).css('display','none');
+            $("#key_type_app_name_"+item).css('display','block');
+            $("#key_type_app_bodies_"+item).css('display','block');
+            app_value = $("#keyAppValue_"+item).val();
+            __getAppName(app_name,'key_type_app_name_'+item);
+
+        }else{
+            $("#key_type_app_name_"+item).css('display','none');
+            $("#key_type_app_bodies_"+item).css('display','none');
+            $("#inputKey_keyAppValue_"+item).css('display','block');
+        }
+    }
+    function addDropdown(app_value,item){
+        var app_name = $("#key_type_"+item).val();
+        console.log(item,app_name);
+        $.ajax({
+                url: '{{ route('ajax.message.request.bodies') }}',
+                dataType: 'json', // what to expect back from the PHP script
+                cache: false,
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    combination: app_name,
+                    body_id: app_value
+                },
+                type: 'POST',
+                beforeSend: function() {
+                    $('.preloader-it').show();
+                },
+                complete: function() {
+                    $('.preloader-it').hide();
+                },
+                success: function(result) {
+                    $('.preloader-it').hide();
+                    console.log(result);
+                    if(result){
+                        $("#key_type_app_bodies_"+item).empty();
+                        $("#key_type_app_bodies_"+item).append(result.response);
+                    }
+                },
+                error: function(response) {
+                    $('.preloader-it').hide();
+                    //$('#' + targetId).html(result.response);
+                }
+            });
+    }
+    // remove row
+    removeArr = [];
+    $(document).on('click', '#removeRow', function () {
+        removeArr.push($(this).attr('attr-interactiveKey'));
+        $("#menuRemoveRow").val(removeArr);
+        $(this).closest('#inputFormRow').remove();
+        console.log(removeArr);
+    });
         function __loadDefaultValues() {
             let appName = "{{ $app_name }}".toLowerCase();
             let appValue = "{{ $app_value }}".toLowerCase();
@@ -362,7 +463,7 @@
             $("#invalidAppName").val(invalidAppName);
 
             <?php 
-                for($i=0; $i< count($menuInput) ; $i++) {
+               /* for($i=0; $i< count($menuInput) ; $i++) {
                     foreach($allMenu as $menu) {
                         if(($menu->type === $menuInput[$i]->keyAppName) && $menu->id == $menuInput[$i]->keyAppValueInInt) {
                             $menuInput[$i]->keyAppValue = $menu->name;                        
@@ -383,7 +484,7 @@
                         id : id
                    })
                    <?php 
-                }
+                }*/
             ?>
             __listKeyValues();
         }

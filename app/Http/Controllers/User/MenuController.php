@@ -23,6 +23,8 @@ class MenuController extends Controller
     }
 
     public function saveUpdate(Request $request) {
+       /* dd($request);
+        exit();*/
         $rule = [
             'name' => 'required'
         ];
@@ -47,17 +49,7 @@ class MenuController extends Controller
             
           
             if($interactiveMenu->id > 0) {
-                foreach(json_decode($request->get("keySet"), true) as $key) {
-                    $menuInput = isset($key['id']) ? MenuInput::findOrFail($key['id']) : new MenuInput();
-
-                    $menuInput->interactive_menu_id = $interactiveMenu->id;
-
-                    $menuInput->input_key = rawurlencode(strtolower($key['inputKey']));
-                    $menuInput->app_name = $this->getAppValue($key['keyAppName']);
-                    $menuInput->app_value = $this->getAppValue($key['keyAppValueInInt']);
-                    $menuInput->save();
-
-                }
+                $this->menuBulkInsert($request,$interactiveMenu->id);
             }
 
             if($request->get("id")) {
@@ -65,6 +57,36 @@ class MenuController extends Controller
             } else {
                 return redirect()->route('user.chat.bot.menu.create')->with('success_message', 'Menu Added Successfully!!');
             }
+        }
+    }
+    private function menuBulkInsert($request,$interactive_menu_id = null){
+        if(isset($request->menuRemoveRow)){
+             $removeMenuRow = explode(",", $request->menuRemoveRow);
+            foreach ($removeMenuRow as $remove_id) {
+                MenuInput::where('id',$remove_id)->delete();
+            }
+        }
+        if(isset($request->appNameSet)){
+        //delete before
+            MenuInput::where('interactive_menu_id',$interactive_menu_id)->delete();
+            foreach ($request->appNameSet as $key => $keySet) {
+                
+                $insertMenuInput = new MenuInput();
+                $insertMenuInput->interactive_menu_id = $interactive_menu_id;
+                $insertMenuInput->app_name = strtoupper($keySet);
+
+                $insertMenuInput->app_value = $request->appValueSet[$key];
+
+                $insertMenuInput->type = $request->type[$key];
+                if($request->type[$key] =='key'){
+                    $insertMenuInput->input_key = rawurlencode(strtolower($request->inputKey[$key])); 
+                }elseif ($request->type[$key] =='button' || $request->type[$key] =='list') {
+                    $insertMenuInput->set_key_primary = $request->key1[$key];
+                    $insertMenuInput->set_key_secondary = $request->key2[$key];
+                }
+                $insertMenuInput->save();
+            }
+            return true;
         }
     }
 
@@ -95,7 +117,7 @@ class MenuController extends Controller
         $interaction;
         if($id) {
             $interaction = InteractiveMenu::findOrFail($id);
-            $menuInput = MenuInput::where("interactive_menu_id", $id)->select("input_key as inputKey", "app_name as keyAppName", "app_value as keyAppValueInInt", DB::raw("'null' as keyAppValue"), "id")->get();
+            $menuInput = MenuInput::where("interactive_menu_id", $id)->select("input_key as inputKey", "app_name as keyAppName", "app_value as keyAppValueInInt", DB::raw("'null' as keyAppValue"), "id","type","set_key_primary","set_key_secondary")->get();
 
             $text = DB::table('text_applications')->select("name", DB::raw("'TEXT' as type"), "id")->where("user_id", Auth::user()->id);
             $image = DB::table('image_applications')->select("name", DB::raw("'IMAGE' as type"), "id")->where("user_id", Auth::user()->id);

@@ -360,4 +360,47 @@ class AjaxController extends Controller
 			]);
 	   }
    }
+   
+    public function postBodies(Request $request) {
+	   $response1 = "";
+	   try {
+		   $nameList = [];
+		   switch ($request->combination) {
+				case 'button':
+					$nameList = ButtonBodies::where("button_application_id", $request->body_id)->select("body", "id")->get();
+					break;
+				case 'list':
+					$nameList = ListBody::where("list_application_id", $request->body_id)->select("body", "description","id")->get();
+					break;
+			   	default:
+				   # code...
+				   break;
+		   }
+		   $selected ='';
+		   //$response1 .='<select class="form-control custom-select select2" >';
+		   foreach($nameList as $row) {
+		   	if($request->combination =='button'){
+
+		   	 $response1 .= "<option value='" . $row->id . "'>" . rawurldecode($row->body) . "</option>";
+		   	}else if($request->combination =='list'){
+		   		$response1 .= "<option value='" . $row->id . "'>" . rawurldecode($row->body)."-".rawurldecode($row->description) . "</option>";
+		   	}
+		   }
+		   if(count($nameList) == 0) {
+				$response1 .= "<option value='null'></option>";
+		   }
+		   //$response1 .='</select>';
+		   return response()->json([
+			'success' => true,
+			'message' => 'Success',
+			'response' => $response1
+		]);
+	   } catch (\Exception $e) {
+			return response()->json([
+				'success' => false,
+				'message' => 'Oops, Something Went Wrong',
+				'response' => $response
+			]);
+	   }
+   }
 }

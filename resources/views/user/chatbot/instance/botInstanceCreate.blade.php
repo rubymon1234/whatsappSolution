@@ -63,6 +63,8 @@
                                             <option value="timeCondition">TIME CONDITION</option>
                                             <option value="location">LOCATION</option>
                                             <option value="menu">MENU</option>
+                                            <option value="button">BUTTON</option>
+                                            <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">

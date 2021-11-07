@@ -102,6 +102,7 @@ Route::post('/ajax-chat/menu-response-delete', 'Web\AjaxController@getMenuRespon
 // Message Request - AJax section starts
 
 Route::post('/ajax/message-request/next-app-name', 'Web\AjaxController@getNextAppName')->name('ajax.message.request.appname');
+Route::post('/ajax/message-request/bodies', 'Web\AjaxController@postBodies')->name('ajax.message.request.bodies');
 
 // ends
 
