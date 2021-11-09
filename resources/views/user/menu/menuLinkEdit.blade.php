@@ -126,7 +126,7 @@
                                          if($keySet->type=='button' || $keySet->type=='list'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp>
                                             @php
                                             foreach ($appBodiesList as $b) { @endphp
-                                                <option @php if($keySet->set_key_primary==$b->id){ echo 'selected';} @endphp value="{{ $b->id }}">{{ $b->name }}</option>
+                                                <option @php if($keySet->set_key_primary==$b->id){ echo 'selected';} @endphp value="{{ $b->id }}">{{ rawurldecode($b->name) }}</option>
                                             @php }
                                             @endphp
                                             
@@ -138,7 +138,7 @@
                                          if($keySet->type=='button' || $keySet->type=='list'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp>
                                              @php
                                             foreach ($appBodiessList as $c) { @endphp
-                                                <option @php if($keySet->set_key_secondary==$c->id){ echo 'selected';} @endphp value="{{ $c->id }}">{{ $c->body }}</option>
+                                                <option @php if($keySet->set_key_secondary==$c->id){ echo 'selected';} @endphp value="{{ $c->id }}">{{ rawurldecode($c->body) }}</option>
                                             @php } @endphp
                                             </select>
                                         &nbsp;
