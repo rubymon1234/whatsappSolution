@@ -331,6 +331,7 @@ class AjaxController extends Controller
 				   break;
 		   }
 		   $selected ='';
+		   $response .= "<option value='null'></option>";
 		   foreach($nameList as $row) {
 		   	if(isset($request->app_value)){
 		   		if($row->id == $request->app_value){
@@ -344,9 +345,9 @@ class AjaxController extends Controller
 			   $response .= "<option value='" . $row->id . "' " . $selected . ">" . $row->name . "</option>";
 		   	
 		   }
-		   if(count($nameList) == 0) {
-				$response .= "<option value='null'></option>";
-		   }
+		   /*if(count($nameList) == 0) {
+				
+		   }*/
 		   return response()->json([
 			'success' => true,
 			'message' => 'Success',
@@ -378,12 +379,13 @@ class AjaxController extends Controller
 		   }
 		   $selected ='';
 		   //$response1 .='<select class="form-control custom-select select2" >';
+		   $response1 .= "<option value=''></option>";
 		   foreach($nameList as $row) {
 		   	if($request->combination =='button'){
 
 		   	 $response1 .= "<option value='" . $row->id . "'>" . rawurldecode($row->body) . "</option>";
 		   	}else if($request->combination =='list'){
-		   		$response1 .= "<option value='" . $row->id . "'>" . rawurldecode($row->body)."-".rawurldecode($row->description) . "</option>";
+		   		$response1 .= "<option value='" . $row->id . "'>" . rawurldecode($row->body). "</option>";
 		   	}
 		   }
 		   if(count($nameList) == 0) {

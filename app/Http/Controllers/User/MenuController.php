@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\TextApplication;
 use App\Models\ImageApplication;
 use App\Models\VideoApplication;
+use App\Models\ButtonBodies;
+use App\Models\ListBody;
 use DB;
 
 class MenuController extends Controller
@@ -23,8 +25,6 @@ class MenuController extends Controller
     }
 
     public function saveUpdate(Request $request) {
-       /* dd($request);
-        exit();*/
         $rule = [
             'name' => 'required'
         ];
@@ -60,33 +60,42 @@ class MenuController extends Controller
         }
     }
     private function menuBulkInsert($request,$interactive_menu_id = null){
+        //exit();
         if(isset($request->menuRemoveRow)){
              $removeMenuRow = explode(",", $request->menuRemoveRow);
             foreach ($removeMenuRow as $remove_id) {
                 MenuInput::where('id',$remove_id)->delete();
             }
         }
-        if(isset($request->appNameSet)){
-        //delete before
-            MenuInput::where('interactive_menu_id',$interactive_menu_id)->delete();
-            foreach ($request->appNameSet as $key => $keySet) {
-                
-                $insertMenuInput = new MenuInput();
+        MenuInput::where('interactive_menu_id',$interactive_menu_id)->delete();
+        foreach(json_decode($request->get("keySet"), true) as $set) {
+            
+            $insertMenuInput = new MenuInput();
                 $insertMenuInput->interactive_menu_id = $interactive_menu_id;
-                $insertMenuInput->app_name = strtoupper($keySet);
+                $insertMenuInput->app_name = strtoupper($set['app_name']);
 
-                $insertMenuInput->app_value = $request->appValueSet[$key];
+                $insertMenuInput->app_value = $set['app_value'];
 
-                $insertMenuInput->type = $request->type[$key];
-                if($request->type[$key] =='key'){
-                    $insertMenuInput->input_key = rawurlencode(strtolower($request->inputKey[$key])); 
-                }elseif ($request->type[$key] =='button' || $request->type[$key] =='list') {
-                    $insertMenuInput->set_key_primary = $request->key1[$key];
-                    $insertMenuInput->set_key_secondary = $request->key2[$key];
+                $insertMenuInput->type = $set['type'];
+                if($set['type'] =='key'){
+                    $insertMenuInput->input_key = rawurlencode(strtolower($set['inputKey'])); 
+                }elseif ($set['type'] =='button' || $set['type'] =='list') {
+
+                    if($set['type'] =='button'){
+                        
+                        $buttonBody = ButtonBodies::where("id",(int)$set['bodies_id'])->first();
+                        $insertMenuInput->input_key = rawurlencode(strtolower($buttonBody->body));
+                    }
+                    if($set['type'] =='list'){
+                       
+                        $listBody = ListBody::where("id",(int)$set['bodies_id'])->first();
+                        $insertMenuInput->input_key = rawurlencode(strtolower($listBody->body));
+                    }
+                    $insertMenuInput->set_key_primary = $set['bodyapp_id'];
+                    $insertMenuInput->set_key_secondary = $set['bodies_id'];
+
                 }
                 $insertMenuInput->save();
-            }
-            return true;
         }
     }
 

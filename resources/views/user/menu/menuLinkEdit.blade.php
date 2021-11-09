@@ -88,8 +88,8 @@
                                     foreach ($menuInput as $key => $keySet) { 
                                     $appValueList = [];
                                     @endphp
-                                    <div class="input-group mb-3 item" id="inputFormRow" >
-                                        <select class="form-control" id="keyAppName_{{$key}}" name="appNameSet[]" onchange="__getAppName(this.value, 'keyAppValue_{{$key}}')">
+                                    <div class="input-group mb-3 item" id="inputFormRow" data-keyset="{{$key}}">
+                                        <select class="form-control" id="keyAppName_{{$key}}" name="appNameSet[]"  onchange="__getAppName(this.value, 'keyAppValue_{{$key}}')">
                                             <option value="">SELECT APPNAME</option>
                                             <option @php 
                                             if($keySet->keyAppName=='text'){ echo 'selected';}  @endphp value="text">TEXT</option>
@@ -114,7 +114,7 @@
                                                 <option @php if($keySet->keyAppValueInInt==$v->id){ echo 'selected';} @endphp value="{{ $v->id }}">{{ $v->name }}</option>
                                            @php }
                                            @endphp
-                                        </select>&nbsp;
+                                        </select> &nbsp;
                                         <select class="form-control" id="key_type_{{$key}}" onchange="handleChange(this.value,'keyAppValue',{{$key}});" name="type[]" >
                                             <option value="key" @php if($keySet->type=='key'){ echo 'selected';} @endphp > KEY </option>
                                             <option value="button" @php if($keySet->type=='button'){ echo 'selected';} @endphp > BUTTON </option>
@@ -134,7 +134,7 @@
                                         @php
                                         $appBodiessList = \App\Helpers\Helper::getBodiesHelpher($keySet->type,$keySet->set_key_primary);
                                         @endphp
-                                        &nbsp;<select class="form-control" id="key_type_app_bodies_{{$key}}" onchange="handleChange(this.value,'0');" name="key2[]" @php 
+                                        &nbsp;<select class="form-control" id="key_type_app_bodies_{{$key}}" name="key2[]" @php 
                                          if($keySet->type=='button' || $keySet->type=='list'){ echo 'style="display:block;"'; }else{ echo 'style="display:none"'; } @endphp>
                                              @php
                                             foreach ($appBodiessList as $c) { @endphp
@@ -249,11 +249,30 @@
 
         $("#sendBtn").click(function(event) {
             event.preventDefault();
-            $("#scrubForm").submit();
-           /* if (!__appValueValidationCheck()) {
-                $("#keySetId").val(JSON.stringify(keyList));
-                $("form").submit();
-            }*/
+            var jsonTupleCollection = [];
+            $('.item').each(function(index) {
+                tuple_id = $(this).attr('data-keyset');
+                type       = $(this).find('#key_type_'+tuple_id).val();
+                if(type =='key'){
+                    inputKey = $(this).find('#inputKey_keyAppValue_'+tuple_id).val();
+                    bodyapp_name = null;
+                    bodies = null;
+                }else if(type =='button' || type =='list') {
+                    inputKey = null;
+                    bodyapp_name = $(this).find('#key_type_app_name_'+tuple_id).val();
+                    bodies = $(this).find('#key_type_app_bodies_'+tuple_id).val();
+                }
+                jsonTupleCollection.push({
+                    'app_name': $(this).find('#keyAppName_'+tuple_id).val(),
+                    'app_value': $(this).find('#keyAppValue_'+tuple_id).val(),
+                    'type': $(this).find('#key_type_'+tuple_id).val(),
+                    'inputKey': inputKey,
+                    'bodyapp_id': bodyapp_name,
+                    'bodies_id': bodies,
+                });
+            });
+            $("#keySetId").val(JSON.stringify(jsonTupleCollection));
+            $("form").submit();
         });
 
         function __appValueValidationCheck() {
@@ -378,7 +397,7 @@
         id_app_name ="keyAppName_"+$('.item').length;
         tuple = $('.item').length;
         console.log(tuple);
-        html += '<div id="inputFormRow" class="item">';
+        html += '<div id="inputFormRow" class="item" data-keyset="'+tuple+'">';
         html += '<div class="input-group mb-3">';
         html += '<select class="form-control custom-select select2" id="'+id_app_name+'" name="appNameSet[]" onchange="__getAppName(this.value,\''+id_value+'\')"><option value="">SELECT APPNAME</option><option value="text">TEXT</option><option value="image">IMAGE</option><option value="video">VIDEO</option><option value="capture">CAPTURE</option><option value="api">API</option><option value="timeCondition">TIME CONDITION</option><option value="location">LOCATION</option><option value="menu">MENU</option><option value="button">BUTTON</option><option value="list">LIST</option></select>&nbsp;';
         html += '<select class="form-control custom-select select2" id="'+id_value+'" name="appValueSet[]" onchange="__checkAppValueCondition(this.value, \''+id_app_name+'\');"><option value=""> SELECT APPVALUE </option></select>&nbsp;';
@@ -386,7 +405,7 @@
         html += '<select class="form-control custom-select select2" id="key_type_'+tuple+'" onchange="handleChange(this.value,\''+id_value+'\',\''+tuple+'\');" name="type[]"><option value="key"> KEY </option><option value="button"> BUTTON </option><option value="list"> LIST </option></select>&nbsp;';
 
         html += '<select class="form-control custom-select select2" id="key_type_app_name_'+tuple+'" onchange="addDropdown(this.value,\''+tuple+'\');" style="display:none;" name="key1[]"></select>&nbsp;';
-        html += '<select class="form-control custom-select select2" id="key_type_app_bodies_'+tuple+'" onchange="handleChange(this.value,\''+tuple+'\',\''+tuple+'\');" style="display:none;" name="key2[]"></select>&nbsp;';
+        html += '<select class="form-control custom-select select2" id="key_type_app_bodies_'+tuple+'"  style="display:none;" name="key2[]"></select>&nbsp;';
         html += '<input class="form-control" id="inputKey_'+id_value+'" name="inputKey[]" placeholder="Enter Key" type="text" value="">';
         html += '<div class="input-group-append">';
         html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
@@ -396,8 +415,6 @@
     });
     function handleChange(app_name,key_remove_id,item){
         var app_name = $("#key_type_"+item).val();
-        //$("#key_type_app_bodies_"+item).empty();
-        console.log(key_remove_id);
         if(app_name =='button' || app_name =="list"){
             $("#inputKey_keyAppValue_"+item).css('display','none');
             $("#key_type_app_name_"+item).css('display','block');
@@ -432,7 +449,6 @@
                 },
                 success: function(result) {
                     $('.preloader-it').hide();
-                    console.log(result);
                     if(result){
                         $("#key_type_app_bodies_"+item).empty();
                         $("#key_type_app_bodies_"+item).append(result.response);
