@@ -84,12 +84,12 @@ class MenuController extends Controller
                     if($set['type'] =='button'){
                         
                         $buttonBody = ButtonBodies::where("id",(int)$set['bodies_id'])->first();
-                        $insertMenuInput->input_key = rawurlencode(strtolower($buttonBody->body));
+                        $insertMenuInput->input_key = $buttonBody->body;
                     }
                     if($set['type'] =='list'){
                        
                         $listBody = ListBody::where("id",(int)$set['bodies_id'])->first();
-                        $insertMenuInput->input_key = rawurlencode(strtolower($listBody->body));
+                        $insertMenuInput->input_key = $listBody->body;
                     }
                     $insertMenuInput->set_key_primary = $set['bodyapp_id'];
                     $insertMenuInput->set_key_secondary = $set['bodies_id'];
