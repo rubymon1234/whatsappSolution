@@ -24,7 +24,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="firstName"> Name </label>
                                     <input class="form-control" id="bot_instance_name" name="bot_instance_name" placeholder="Enter bot instance name"  type="text" value="{{ $botInstanceDetail->name }}">
-                                    
+
                                     <div class="invalid-feedback">
                                         Please provide a valid bot instance name.
                                     </div>
@@ -63,6 +63,8 @@
                                             <option value="timeCondition" {{ ('timeCondition' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>TIME CONDITION</option>
                                             <option value="location" {{ ('location' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>LOCATION</option>
                                             <option value="menu" {{ ('menu' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>MENU</option>
+                                            <option value="button" {{ ('button' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>BUTTON</option>
+                                            <option value="list" {{ ('list' ===(string)strtolower($botInstanceDetail->app_name)) ? 'selected' : '' }}>LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
