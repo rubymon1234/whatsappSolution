@@ -94,6 +94,7 @@
                                         <option value="location">LOCATION</option>
                                         <option value="menu">MENU</option>
                                         <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -159,6 +160,7 @@
                                         <option value="location">LOCATION</option>
                                         <option value="menu">MENU</option>
                                         <option value="button">BUTTON</option>
+                                        <option value="list">LIST</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -189,6 +191,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -224,6 +228,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -260,6 +266,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -276,16 +284,18 @@
                                 <div id="capture" style="display: none;">
                                     <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="capture_app_name" class="col-form-label" >Next App Name</label>
+                                        <label for="capture_app_name" class="col-form-label" >App Name</label>
                                         <select class="form-control custom-select select2" id="capture_app_name" name="capture_app_name" onchange="__getAppName(this.value)">
                                             <option value="null"></option>
                                                 <option value="text">TEXT</option>
                                                 <option value="image">IMAGE</option>
-                                                <option value="video">Video</option>
+                                                <option value="video">VIDEO</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label for="capture_app_name1" class="col-form-label">Next App Value </label>
+                                        <label for="capture_app_name1" class="col-form-label">App Value </label>
                                         <select class="form-control custom-select select2" id="capture_app_name1" name="capture_app_name1" onchange="__checkAppValueCondition(this.value, 'capture_app_name')">
                                             <option value="null">null</option>
                                         </select>
@@ -304,6 +314,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -326,6 +338,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -352,16 +366,18 @@
                                 <div id="api" style="display: none;">
                                     <div class="row">
                                         <div class="col-sm-6 form-group">
-                                            <label for="api_app_name" class="col-form-label" >Next App Name</label>
+                                            <label for="api_app_name" class="col-form-label" >App Name</label>
                                             <select class="form-control custom-select select2" id="api_app_name" name="api_app_name" onchange="__getAppName(this.value)">
                                                 <option value="null"></option>
                                                     <option value="text">TEXT</option>
                                                     <option value="image">IMAGE</option>
                                                     <option value="video">VIDEO</option>
+                                                    <option value="button">BUTTON</option>
+                                                    <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
-                                            <label for="api_app_name1" class="col-form-label">Next App Value </label>
+                                            <label for="api_app_name1" class="col-form-label">App Value </label>
                                             <select class="form-control custom-select select2" id="api_app_name1" name="api_app_name1" onchange="__checkAppValueCondition(this.value, 'api_app_name')">
                                                 <option value="null">null</option>
 
@@ -381,6 +397,8 @@
                                                     <option value="timeCondition">TIME CONDITION</option>
                                                     <option value="location">LOCATION</option>
                                                     <option value="menu">MENU</option>
+                                                    <option value="button">BUTTON</option>
+                                                    <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -404,6 +422,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -447,6 +467,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -500,6 +522,8 @@
                                                     <option value="timeCondition">TIME CONDITION</option>
                                                     <option value="location">LOCATION</option>
                                                     <option value="menu">MENU</option>
+                                                    <option value="button">BUTTON</option>
+                                                    <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
@@ -523,6 +547,8 @@
                                                 <option value="timeCondition">TIME CONDITION</option>
                                                 <option value="location">LOCATION</option>
                                                 <option value="menu">MENU</option>
+                                                <option value="button">BUTTON</option>
+                                                <option value="list">LIST</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 form-group">
