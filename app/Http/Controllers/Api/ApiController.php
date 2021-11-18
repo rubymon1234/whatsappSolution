@@ -60,11 +60,12 @@ class ApiController extends Controller
                 }
           }
           if(strlen($request->message) >1000){
-              return response()->json([
-                      'success' => false,
-                      'message' =>'success',
-                      'validator' => false,
-                      'response' => 'Message count is more than 1000.',
+            return response()->json([
+                      'status' => 'FAILED',
+                      'data' => [
+                        'status' => 'failed',
+                        'message' => 'Message is more than 1000 characters'
+                      ]
                   ]);
           }
 
@@ -102,37 +103,63 @@ class ApiController extends Controller
             if($campaignInsert){
 
               return response()->json([
-                        'success' => true,
-                        'message' =>'success',
-                        'validator' => false,
-                        'response' => 'Campaign created successfully',
+                        'status' => 'OK',
+                        'data' => [
+                          'status' => 'success',
+                          'campid' => $last_inserted_id,
+                          'message' => 'Campaign created successfully'
+                        ]
                     ]);
             }
           }else{
             //Invalid instance token
             return response()->json([
-                    'success' => true,
-                    'message' =>'success',
-                    'response' => 'Invalid token'
-                ]);
+                      'status' => 'FAILED',
+                      'data' => [
+                        'status' => 'failed',
+                        'message' => 'Invalid instance token'
+                      ]
+                  ]);
           }
 
         }else{
           // No credits
+          return response()->json([
+                    'status' => 'FAILED',
+                    'data' => [
+                      'status' => 'failed',
+                      'message' => 'Insufficient credits'
+                    ]
+                ]);
         }
       }else{
         //Message validation failed
+        if ($extensionValidation['message']){
+          $error = $extensionValidation['message'];
+        }else{
+          $error = $validResponse['message'];
+        }
+
         return response()->json([
-                'success' => true,
-                'message' =>'success',
-                'response' => 'Invalid extension or message type'
-            ]);
+                  'status' => 'FAILED',
+                  'data' => [
+                    'status' => 'failed',
+                    'message' => $error
+                  ]
+              ]);
       }
 
 
 
     }else{
       //Invalid API Key
+      return response()->json([
+                'status' => 'FAILED',
+                'data' => [
+                  'status' => 'failed',
+                  'message' => 'Invalid API key'
+                ]
+            ]);
     }
 
   }
@@ -190,40 +217,40 @@ public function messageTypeValidation($message_type,$request){
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Message field is mandatary';
+      $arrayMessage['message'] = 'Message is mandatary';
     }
   }elseif ($message_type =='image') { //text + photo
-    if(isset($request->photo) && isset($request->message)){
+    if(isset($request->file) && isset($request->message)){
       $arrayMessage['slug'] = 'media-text';
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Image and message fields are mandatary';
+      $arrayMessage['message'] = 'Image and message are mandatary';
     }
   }elseif($message_type =='video'){ //text + video_file
 
-    if(isset($request->video_file) && isset($request->message)){
+    if(isset($request->file) && isset($request->message)){
       $arrayMessage['slug'] = 'media-text';
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Video and message fields are mandatary';
+      $arrayMessage['message'] = 'Video and message are mandatary';
     }
   }elseif($message_type =='audio'){ //audio_file only
-    if(isset($request->audio_file)){
+    if(isset($request->file)){
       $arrayMessage['slug'] = 'media';
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Audio field is mandatary';
+      $arrayMessage['message'] = 'Audio is mandatary';
     }
   }elseif ($message_type =='document') { // doc_file only
-    if(isset($request->doc_file)){
+    if(isset($request->file)){
       $arrayMessage['slug'] = 'media';
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Document field is mandatary';
+      $arrayMessage['message'] = 'Document is mandatary';
     }
   }else{
     $arrayMessage['status'] = false;
@@ -240,10 +267,10 @@ public function typeValidation($message_type,$request){
       $arrayMessage['status'] = true;
     }else{
       $arrayMessage['status'] = false;
-      $arrayMessage['message'] = 'Message field is mandatary';
+      $arrayMessage['message'] = 'Message is mandatary';
     }
   }elseif ($message_type =='image') { //text +photo
-    if(isset($request->photo)){
+    if(isset($request->file)){
       $extension = ['jpeg','png','jpg'];
       $ext = strtolower($request->file('file')->getClientOriginalExtension());
       $fileSize = $request->file('file')->getSize();
@@ -260,7 +287,7 @@ public function typeValidation($message_type,$request){
       }
     }
   }elseif($message_type =='video') {
-    if(isset($request->video_file)){
+    if(isset($request->file)){
       $extension = ['mp4','3gp'];
       $ext = strtolower($request->file('file')->getClientOriginalExtension());
       $fileSize = $request->file('file')->getSize();
@@ -270,7 +297,7 @@ public function typeValidation($message_type,$request){
           $arrayMessage['status'] = true;
         }else{
           $arrayMessage['status'] = false;
-          $arrayMessage['message'] = 'Video accepted format are mp4, 3gpp';
+          $arrayMessage['message'] = 'Video accepted format are mp4, 3gp';
         }
       }else{
         $arrayMessage['status'] = false;
@@ -278,7 +305,7 @@ public function typeValidation($message_type,$request){
       }
     }
   }elseif($message_type =='audio') {
-    if(isset($request->audio_file)) {
+    if(isset($request->file)) {
       $extension = ['aac','mp3','amr'];
       $ext = strtolower($request->file('file')->getClientOriginalExtension());
       $fileSize = $request->file('file')->getSize();
