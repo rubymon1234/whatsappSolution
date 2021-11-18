@@ -20,6 +20,10 @@ Route::group(['middleware' => 'auth','prefix' =>'reseller'], function () {
 	Route::get('/user/create', 'Reseller\UserController@getUserCreate')->name('reseller.user.create')->middleware(['permission:reseller.user.create']);
 	Route::post('/user/create', 'Reseller\UserController@postUserCreate')->name('reseller.user.create')->middleware(['permission:reseller.user.create']);
 
+	//CREDIT MANAGEMENT
+	Route::get('/user/add/credit/{id}', 'Reseller\CreditController@getAddCredit')->name('reseller.user.add.credit')->middleware(['permission:reseller.user.add.credit']);
+	Route::post('/user/add/credit/{id}', 'Reseller\CreditController@postAddCredit')->name('reseller.user.add.credit')->middleware(['permission:reseller.user.add.credit']);
+
 	//USER REQUEST
 	Route::get('/user/recharge-request/{id}', 'Reseller\UserController@getUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);
 	Route::post('/user/recharge-request/{id}', 'Reseller\UserController@postUserRechargeRequestView')->name('reseller.user.recharge.request')->middleware(['permission:reseller.user.recharge.request']);

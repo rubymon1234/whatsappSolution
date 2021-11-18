@@ -12,7 +12,7 @@ class Accounts extends Model
      * @var array
      */
     protected $fillable = [
-        'id','user_id', 'reseller_id','credits',
+        'id','user_id', 'reseller_id','credits','api_credits',
     ];
 
     public $table = 'accounts';
