@@ -1,6 +1,9 @@
 @extends('layouts.master')
 @section('title', 'User Management')
 @section('content')
+@php
+use App\Models\Accounts;
+@endphp
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
@@ -48,6 +51,8 @@
                                 <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
+                                <th>Chatbot Credit</th>
+                                <th>API Credit</th>
                                 <th>Recharge</th>
                             </tr>
                         </thead>
@@ -74,6 +79,16 @@
                                         @elseif($user->is_status==2)
                                             <span class="badge badge-warning"> Pending</span>
                                         @endif
+                                    </td>
+                                    @php
+
+                                        $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
+                                    @endphp
+                                    <td>
+                                       {{$AccountDetails->credits}}
+                                    </td>
+                                    <td>
+                                       {{$AccountDetails->api_credits}}
                                     </td>
                                     <td>
                                         @if($user->hasRole('user'))

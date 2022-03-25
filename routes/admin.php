@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::get('/user/reseller-create', 'Admin\UserController@getResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
 	Route::post('/user/reseller-create', 'Admin\UserController@postResellerCreate')->name('admin.user.reseller.create')->middleware(['permission:admin.user.reseller.create']);
 
+	//CREDIT MANAGEMENT
+	Route::get('/user/add/credit/{id}', 'Admin\CreditController@getAddCredit')->name('admin.user.add.credit')->middleware(['permission:admin.user.add.credit']);
+	Route::post('/user/add/credit/{id}', 'Admin\CreditController@postAddCredit')->name('admin.user.add.credit')->middleware(['permission:admin.user.add.credit']);
+
 	//PLAN MANAGEMENT
 	Route::get('/plan/view', 'Web\PlanController@getPlanView')->name('global.plan.view')->middleware(['permission:global.plan.view']);
 	Route::get('/plan/create', 'Web\PlanController@getPlanCreate')->name('global.plan.create')->middleware(['permission:global.plan.create']);

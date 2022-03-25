@@ -1,6 +1,9 @@
 @extends('layouts.master')
 @section('title', 'User Management')
 @section('content')
+@php
+use App\Models\Accounts;
+@endphp
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row >>  -->
     @include('errors.status')
@@ -48,6 +51,8 @@
                                 <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
+                                <th>Chatbot Credit</th>
+                                <th>API Credit</th>
                                 <th>Recharge</th>
                                 <th style="text-align: left;">Manage</th>
                             </tr>
@@ -77,12 +82,27 @@
                                             <span class="badge badge-danger"> blocked</span>
                                         @endif
                                     </td>
+                                     @php
+
+                                        $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
+                                    @endphp
+                                    <td>
+                                       {{$AccountDetails->credits}}
+                                    </td>
+                                    <td>
+                                       {{$AccountDetails->api_credits}}
+                                    </td>
                                     <td>
                                     @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
                                         <span>
                                             <a class="btn btn-outline-primary" href="{{ route('admin.user.recharge.request',Crypt::encrypt($user->id)) }}" >Request</a></span>
                                     @else
                                         {{ '' }}
+                                    @endif
+                                    @if($user->reseller_id==Auth::user()->id && ($user->hasRole('user') || $user->hasRole('reseller')))
+                                        <span >
+                                            <a class="btn btn-outline-primary" href="{{ route('admin.user.add.credit',Crypt::encrypt($user->id)) }}" >Credit</a>
+                                        </span>
                                     @endif
                                     </td>
                                     <td style="text-align: left;">

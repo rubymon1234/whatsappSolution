@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Reseller;
+namespace App\Http\Controllers\Admin;
 
 use Crypt;
 use App\Models\Role;
@@ -28,34 +28,34 @@ class CreditController extends Controller
 {
     /**
      * Credit Management 
-     * @author Ruban
+     * @author Anish
     */
    	public function getAddCredit(Request $request,$id)
     {
         try {
-            //check if it user is reseller
+            //check if it user is admin
             $user = Auth::user();
-            if($user->hasRole('reseller')){
+            if($user->hasRole('admin')){
                 $user = User::find(Crypt::decrypt($id));
-                return view('reseller.credit.addCredit', compact('user'));
+                return view('admin.credit.addCredit', compact('user'));
             }
             
-            return redirect()->route('reseller.user.view')->with('error_message', "Oops, Something went wrong.");  
+            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");  
         } catch (\Exception $e) {
-            return redirect()->route('reseller.user.view')->with('warning_message', $e->getMessage());
+            return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
         }
     }
     /**
      * Credit Management 
-     * @author Ruban
+     * @author Anish
     */
     public function postAddCredit(Request $request,$id)
     {
         /*try {*/
             DB::beginTransaction();
-            //check if it user is reseller
+            //check if it user is admin
             $user = Auth::user();
-            if($user->hasRole('reseller')){
+            if($user->hasRole('admin')){
 
                 if($request->Update =='Save'){
                     //request
@@ -63,10 +63,10 @@ class CreditController extends Controller
                     $amount     = (int)trim($request->amount);
                     $type       = $request->payMethod;
                     $tranfer_to = $user->id;
-                    $reseller_id = Auth::user()->id;
+                    $admin_id = Auth::user()->id;
                     $account    = $request->account;
-                    //reseller check
-                    $this->resellerCheck($user);
+                    //admin check
+                    $this->adminCheck($user);
 
                     //credit checking
                     if($type =='debit'){
@@ -79,7 +79,7 @@ class CreditController extends Controller
                         //create log
                         $accountsLog = new AccountsLog;
                         $accountsLog->user_id = $tranfer_to;
-                        $accountsLog->reseller_id = $reseller_id;
+                        $accountsLog->reseller_id = $admin_id;
                         $accountsLog->amount = $amount;
                         $accountsLog->type = $type;
                         if($balanceCheck[$account]>=$amount){
@@ -90,7 +90,7 @@ class CreditController extends Controller
                         $accountsLog->save();
 
                         //Account
-                        $creditaccounts = Accounts::where('user_id',$reseller_id)->where('reseller_id', Auth::user()->reseller_id)->first();
+                        $creditaccounts = Accounts::where('user_id',$admin_id)->where('reseller_id', Auth::user()->reseller_id)->first();
                         //debit acc
                         $debitaccounts = Accounts::where('user_id',$user->id)->where('reseller_id', $user->reseller_id)->first();
 
@@ -113,14 +113,14 @@ class CreditController extends Controller
                         $debitaccounts->save();
                     }
                     if($type =='credit'){
-                    $balanceCheck = Accounts::where('user_id',$reseller_id)->first();
+                        $balanceCheck = Accounts::where('user_id',$admin_id)->first();
                         if($balanceCheck[$account] >=$amount){
                             //create log
                             $accountsLog = new AccountsLog;
                             $accountsLog->user_id = $tranfer_to;
 
 
-                            $accountsLog->reseller_id = $reseller_id;
+                            $accountsLog->reseller_id = $admin_id;
 
                             $accountsLog->amount = $amount;
                             $accountsLog->type = $type;
@@ -144,6 +144,7 @@ class CreditController extends Controller
                             //debit acc
                             $debitaccounts = Accounts::where('user_id',Auth::user()->id)->where('reseller_id', Auth::user()->reseller_id)->first();
                             
+                            
                             if($request->account =='credits'){
                                 $creditaccounts->credits = $creditaccounts->credits + $amount;
                             }
@@ -165,24 +166,24 @@ class CreditController extends Controller
                                     ->withInput();
                         }
                     }
-                    
                 }
                 DB::commit();
-                return redirect()->route('reseller.user.view')->with('success_message', "Amount updated successfully");
+                return redirect()->route('admin.user.view')->with('success_message', "Amount updated successfully");
+                
             }
             DB::rollback();
-            return redirect()->route('reseller.user.view')->with('error_message', "Oops, Something went wrong.");  
+            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");  
         /*} catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('reseller.user.view')->with('warning_message', $e->getMessage());
+            return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
         }*/
     }
-    public function resellerCheck($user){
+    public function adminCheck($user){
 
-        $reseller_id = Auth::user()->id;
-        $transfer_id = $user->reseller_id;
-        if($transfer_id != $reseller_id){
-            return redirect()->route('reseller.user.view')->with('error_message', "Oops, Something went wrong.");
+        $admin_id = Auth::user()->id;
+        $transfer_id = $user->admin_id;
+        if($transfer_id != $admin_id){
+            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");
         }
         return true;
     }
