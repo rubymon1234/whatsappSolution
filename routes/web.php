@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@getInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);
 	Route::post('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@postInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);
 
+	//API MANAGEMENT
+	Route::get('/api/view', 'User\Api\ApiController@getApiView')->name('api.key.view')->middleware(['permission:api.key.view']);
+	Route::get('/api/create', 'User\Api\ApiController@getApiCreate')->name('api.key.create')->middleware(['permission:api.key.create']);
+	Route::post('/api/create', 'User\Api\ApiController@postApiCreate')->name('api.key.create')->middleware(['permission:api.key.create']);
 
 
 });
