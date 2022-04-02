@@ -28,22 +28,37 @@
                         <thead>
                             <tr>
                                 <th >#</th>
-                                <th>apiKey</th>
+                                <th>API Name</th>
+                                <th>API Key</th>
                                 <th>Instance</th>
                                 <th>Status </th>
                                 <th>created</th>
-                                <th>Manage</th>
+                               {{--  <th>Manage</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($apiList as $key=> $campaign)
+                            @forelse($apiList as $key=> $api)
+                                @php
+                                   $instance= App\Models\Instance::find($api->instance_token,['instance_name']);
+                                @endphp
                                 <tr>
                                     <td class="serial">{{ $key + $apiList->firstItem()}} </td>
-                                    <td> <span class="name"></span> </td>
-                                    <td> <span class="name"></span> </td>
-                                    <td> <span class="name"></span> </td>
-                                    <td> <span class="name"></span> </td>
-                                    <td> <span class="name"></span> </td>
+                                    <td> <span class="name">{{ $api->api_name}}</span> </td>
+                                    <td> <span class="name">{{ $api->api_key}}</span> </td>
+                                    <td> <span class="name">{{ $instance->instance_name}}</span></td>
+                                    <td>
+                                        @if($api->is_status==0)
+                                            <span class="badge badge-danger">Not Active</span>
+                                        @elseif($api->is_status==1)
+                                           <span class="badge badge-success">Active</span>
+                                        @elseif($api->is_status==2)
+                                            <span class="badge badge-warning"> Pending</span>
+                                        @elseif($api->is_status==3)
+                                            <span class="badge badge-danger"> blocked</span>
+                                        @endif
+                                    </td>
+                                    <td> <span class="name">{{$api->created_at}}</span> </td>
+                                    {{-- <td> <span class="name"></span> </td> --}}
                                 </tr>
                             @empty
                                 <tr>

@@ -23,7 +23,8 @@
                                     <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Api key</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="api_key" class="form-control" placeholder="" value="{{ $api_key }}" disabled="disabled" style="color: red;">
+                                            <input type="hidden" name="api_key" class="form-control" placeholder="" value="{{ $api_key }}" style="color: red;">
+                                            {{ $api_key }}
                                         </div>
                                     </div>
                                     <div class="form-group row">

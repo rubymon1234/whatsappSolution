@@ -33,7 +33,7 @@ class ApiController extends Controller
 
         return view('user.api.apiCreate', compact('api_key','instanceDetail'));
     }
-    public function postApiCreate(Request $requset){
+    public function postApiCreate(Request $request){
         
         $rule = [
             'api_name' => 'required',
@@ -47,18 +47,18 @@ class ApiController extends Controller
         ];
         $validator = Validator::make(Input::all(), $rule, $messages);
         if ($validator->fails()) {
-
-            return redirect()->route('acl.role.manage')->withInput(Input::all())->withErrors($validator);
+             return redirect()->route('api.key.view')->with('error_message', "Oops, Something went wrong.");  
 
         }else{
 
-            /*$apiInsert = new Api();
-            $apiInsert->user_id = Auth::user()->id,
-            $apiInsert->api_name = 
-            $apiInsert->reseller_id = 
-            $apiInsert->instance_token =  
-            $apiInsert->is_status = 
-            $apiInsert->save();*/
+            $apiInsert = new Api();
+            $apiInsert->user_id = Auth::user()->id;
+            $apiInsert->api_name = $request->api_name;
+            $apiInsert->api_key = $request->api_key;
+            $apiInsert->reseller_id =  Auth::user()->reseller_id;
+            $apiInsert->instance_token = $request->instance;
+            $apiInsert->is_status = 1;
+            $apiInsert->save();
 
             return view('user.api.apiCreate', compact('api_key','instanceDetail'));
         }
