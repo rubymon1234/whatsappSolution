@@ -32,8 +32,8 @@
                                 <th>API Key</th>
                                 <th>Instance</th>
                                 <th>Status </th>
-                                <th>created</th>
-                               {{--  <th>Manage</th> --}}
+                                <th>created</th>{{-- 
+                                <th>Manage</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -54,10 +54,19 @@
                                         @elseif($api->is_status==2)
                                             <span class="badge badge-warning"> Pending</span>
                                         @elseif($api->is_status==3)
-                                            <span class="badge badge-danger"> blocked</span>
+                                            <span class="badge badge-danger"> Deleted</span>
                                         @endif
                                     </td>
                                     <td> <span class="name">{{$api->created_at}}</span> </td>
+
+                                    {{-- <td style="text-align: left;">
+                                        <a href="javascript:void(0)" >
+                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete API" onclick="doubleConfirm('{{ Crypt::encryptString($api->id) }}',3)">
+                                            </i>
+                                        </a>
+                                        
+                                        
+                                    </td> --}}
                                     {{-- <td> <span class="name"></span> </td> --}}
                                 </tr>
                             @empty
@@ -88,4 +97,38 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+function doubleConfirm(api, status){
+    alert(api);
+    if (confirm('Are you sure you want to continue ?')){
+        
+        $.ajax(
+            {
+                url: '{{ route('api.block.api') }}',
+                dataType: 'json', // what to expect back from the PHP script
+                cache: false,
+                data: { _token: "{{ csrf_token() }}", api : api , status: status } ,
+                type: 'POST',
+                beforeSend: function () {
+                    $('.preloader-it').show();
+                },
+                complete: function () {
+                    $('.preloader-it').hide();
+                },
+                success: function (result) {
+                    $('#loading').hide();
+                    if(result.success){
+                        $('.preloader-it').hide();
+                        //alert(result.response);
+                        location.reload();
+                    }
+                },
+                error: function (response) {
+                    console.log('Server error');
+                }
+            }
+        );
+    }
+}
+</script>
 @endsection

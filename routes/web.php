@@ -82,6 +82,8 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/api/create', 'User\Api\ApiController@getApiCreate')->name('api.key.create')->middleware(['permission:api.key.create']);
 	Route::post('/api/create', 'User\Api\ApiController@postApiCreate')->name('api.key.create')->middleware(['permission:api.key.create']);
 
+	Route::post('/api/block-api', 'User\Api\ApiController@postBlockApi')->name('api.block.api');
+
 
 });
 Route::group(['middleware' => 'auth'], function () {

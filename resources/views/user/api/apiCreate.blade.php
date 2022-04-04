@@ -20,13 +20,7 @@
                                             <input type="text" name="api_name" class="form-control" placeholder="Enter Api name." value="{{ old('api_name') }}">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Api key</label>
-                                        <div class="col-sm-10">
-                                            <input type="hidden" name="api_key" class="form-control" placeholder="" value="{{ $api_key }}" style="color: red;">
-                                            {{ $api_key }}
-                                        </div>
-                                    </div>
+                                    <input type="hidden" name="api_key" class="form-control" placeholder="" value="{{ $api_key }}" style="color: red;">
                                     <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Instance</label>
                                         <div class="col-sm-10">
