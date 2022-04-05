@@ -27,6 +27,7 @@ use App\Models\ButtonBodies;
 use App\Models\ButtonApplication;
 use App\Models\ListApplication;
 use App\Models\ListBody;
+use Illuminate\Support\Str;
 use App\Models\TimeConditionApplication;
 use Exception;
 
@@ -291,4 +292,11 @@ class Helper {
         $listDetail = ListBody::where('list_application_id',$list_id)->get();
         return $listDetail;
    }
+   public static function getBearerToken($request)
+    {
+       $header = $request->header('Authorization', '');
+       if (Str::startsWith($header, 'Bearer ')) {
+                return Str::substr($header, 7);
+       }
+    }
 }

@@ -22,7 +22,8 @@ class ApiController extends Controller
 {
   public function send(Request $request){
 
-    $api_key 		= $request->key; // campaign name
+    //$api_key 		= $request->key; // campaign name
+    $api_key = Helper::getBearerToken($request);
     $apiKey 	= Api::where('is_status',1)->where('api_key',$api_key)->first();
     if ($apiKey){
       $campaign 		= $request->campaign; // campaign name
