@@ -18,20 +18,22 @@ class ApiAuth
     {
         $apiTokenValidate = false;
         $apiToken = $this->bearerToken($request);
-        if (isset($apiToken)) {
+        if ($request->wantsJson()) {
             $apiTokenValidate = Api::where('is_status',1)->where('api_key',$apiToken)->first();
+            if($apiTokenValidate){
+                return $next($request);
+            }else{
+                return response()->json([
+                    'status' => 'FAILED',
+                    'data' => [
+                      'status' => 'failed',
+                      'message' => 'Invalid API key'
+                    ]
+                ]);
+            }
         }
-        if($apiTokenValidate){
-            return $next($request);
-        }else{
-            return response()->json([
-                'status' => 'FAILED',
-                'data' => [
-                  'status' => 'failed',
-                  'message' => 'Invalid API key'
-                ]
-            ]);
-        }
+        
+        return $next($request);
     }
     /**
      * Handle an incoming request Token Verify.
