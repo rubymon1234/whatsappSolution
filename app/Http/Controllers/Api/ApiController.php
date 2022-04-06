@@ -43,7 +43,7 @@ class ApiController extends Controller
           $uploadfilename = $this->uploadFile($request,'file');
         }
         $account 	= Accounts::where('user_id',$user_id)->first();
-        $credit = $account->credits;
+        $credit = $account->api_credits;
         $csvDetail = $this->createCsv($mobile);
 
         if ($this->checkCredit($csvDetail['num_count'], $credit, $account)){
@@ -99,7 +99,7 @@ class ApiController extends Controller
             }
             $campaignInsert->save();
             $last_inserted_id = $campaignInsert->id;
-            //shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
+            shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
 
             if($campaignInsert){
 
@@ -169,7 +169,7 @@ class ApiController extends Controller
     if ($credit >= $count){
       //update credit
       $updateAccount = Accounts::find($account->id);
-      $updateAccount->credits = $credit-$count;
+      $updateAccount->api_credits = $credit-$count;
       $updateAccount->save();
 
       return true;
