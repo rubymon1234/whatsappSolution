@@ -4,6 +4,12 @@
 require_once '/var/www/html/whatsappSolution/cronjob/Db/initDb.php';
 date_default_timezone_set("Asia/Kolkata");
 
+function updateCounter($smsDb){
+  $cdate =date("Y-m-d");
+  $update = "UPDATE `wc_instances` SET `counter` = '0', `updated_at`=NOW() WHERE DATE(updated_at) != '$cdate'";
+  $smsDb->rawQuery($update);
+}
+
 function getInstance($smsDb){
   $smsDb->where ('is_status', 1);
   $smsDb->where ('type', 2);
