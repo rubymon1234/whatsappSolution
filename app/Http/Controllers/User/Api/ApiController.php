@@ -20,7 +20,7 @@ class ApiController extends Controller
      * @author Ruban
     */
     public function getApiView(){
-        $apiList = Api::where('user_id',Auth::user()->id)->paginate(10);
+        $apiList = Api::where('user_id',Auth::user()->id)->orderBy('updated_at','DESC')->paginate(10);
     	return view('user.api.apiView', compact('apiList'));
     }
     public function getApiCreate(){
@@ -34,33 +34,44 @@ class ApiController extends Controller
         return view('user.api.apiCreate', compact('api_key','instanceDetail'));
     }
     public function postApiCreate(Request $request){
-        
-        $rule = [
-            'api_name' => 'required',
-            'api_key' => 'required',
-            'instance'        => 'required',
-        ];
-        $messages = [
-            'api_name.required' => 'Api name required',
-            'api_key.required' => 'Api Key is required',
-            'instance.required' => 'Instance is required',
-        ];
-        $validator = Validator::make(Input::all(), $rule, $messages);
-        if ($validator->fails()) {
-             return redirect()->route('api.key.view')->with('error_message', "Oops, Something went wrong.");  
 
-        }else{
+        try {
+            
+            if($request->Update =='Save'){
+                $rule = [
+                    'api_name' => 'required',
+                    'api_key' => 'required',
+                    'instance'        => 'required',
+                ];
+                $messages = [
+                    'api_name.required' => 'Api name required',
+                    'api_key.required' => 'Api Key is required',
+                    'instance.required' => 'Instance is required',
+                ];
+                $validator = Validator::make(Input::all(), $rule, $messages);
+                if ($validator->fails()) {
+                     return redirect()->route('api.key.view')->with('error_message', "Oops, Something went wrong.");  
 
-            $apiInsert = new Api();
-            $apiInsert->user_id = Auth::user()->id;
-            $apiInsert->api_name = $request->api_name;
-            $apiInsert->api_key = $request->api_key;
-            $apiInsert->reseller_id =  Auth::user()->reseller_id;
-            $apiInsert->instance_token = $request->instance;
-            $apiInsert->is_status = 1;
-            $apiInsert->save();
-            $apiList = Api::where('user_id',Auth::user()->id)->paginate(10);
-            return view('user.api.apiView', compact('apiList'));
+                }else{
+                    $instanceDetail = Instance::find($request->instance);
+
+                    $apiInsert = new Api();
+                    $apiInsert->user_id = Auth::user()->id;
+                    $apiInsert->api_name = $request->api_name;
+                    $apiInsert->api_key = $request->api_key;
+                    $apiInsert->reseller_id =  Auth::user()->reseller_id;
+                    $apiInsert->instance_token = $instanceDetail->token;
+                    $apiInsert->instance_id = $request->instance;
+                    $apiInsert->is_status = 1;
+                    $apiInsert->save();
+                    $apiList = Api::where('user_id',Auth::user()->id)->paginate(10);
+                    return view('user.api.apiView', compact('apiList'));
+                }
+            }elseif($request->Cancel =='cancel'){
+                return redirect()->route('api.key.view')->with('warning_message', 'Request is Rollback');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('api.key.view')->with('warning_message', $e->getMessage());
         }
     }
     public function apiUnique(){
