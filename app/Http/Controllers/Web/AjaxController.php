@@ -408,6 +408,8 @@ class AjaxController extends Controller
    	}
    	public function postBlockApi(Request $request){
         try{
+        	//dd($request->api);
+        	//dd(Crypt::decryptString($request->api));
             $userUpdate = Api::find(Crypt::decryptString($request->api));
             $userUpdate->is_status = $request->status; // block & unblock
             if($userUpdate->save()){
@@ -415,7 +417,7 @@ class AjaxController extends Controller
                 return response()->json([
                         'success' => true,
                         'message' =>'success',
-                        'response' => 'User Details Updated Successfully '
+                        'response' => 'API  Deleted Successfully '
                     ]);
             }
             

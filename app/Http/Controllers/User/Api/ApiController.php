@@ -20,7 +20,7 @@ class ApiController extends Controller
      * @author Ruban
     */
     public function getApiView(){
-        $apiList = Api::where('user_id',Auth::user()->id)->orderBy('updated_at','DESC')->paginate(10);
+        $apiList = Api::where('user_id',Auth::user()->id)->where('is_status',1)->orderBy('updated_at','DESC')->paginate(10);
     	return view('user.api.apiView', compact('apiList'));
     }
     public function getApiCreate(){

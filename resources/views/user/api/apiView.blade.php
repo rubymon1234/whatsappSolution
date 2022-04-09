@@ -45,7 +45,7 @@
                                     <td class="serial">{{ $key + $apiList->firstItem()}} </td>
                                     <td> <span class="name">{{ $api->api_name}}</span> </td>
                                     <td> <span class="name">{{ $api->api_key}}</span> </td>
-                                    <td> <span class="name">{{ $instance->instance_name}}</span></td>
+                                    <td> <span class="name">{{ $api->instance_name}}</span></td>
                                     <td>
                                         @if($api->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
@@ -61,7 +61,7 @@
 
                                     <td style="text-align: left;">
                                         <a href="javascript:void(0)" >
-                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete API" onclick="doubleConfirm('{{ $api->id }}',3)">
+                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete API" onclick="doubleConfirm('{{Crypt::encryptString($api->id)  }}',3)">
                                             </i>
                                         </a>
                                         
