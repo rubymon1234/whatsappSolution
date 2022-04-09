@@ -24,6 +24,11 @@ Route::group(['middleware' => 'auth','prefix' =>'admin'], function () {
 	Route::get('/role/action/{id}', 'Acl\AclController@getCreateRole')->name('acl.role.action')->middleware(['permission:acl.role.view']);
 	Route::post('/role/action/{id}', 'Acl\AclController@postCreateRole')->name('acl.role.action')->middleware(['permission:acl.role.view']);
 
+	//INSTANCE MANAGEMENT
+	Route::get('/instance/list', 'Admin\InstanceController@getInstanceView')->name('admin.instance.view')->middleware(['permission:admin.instance.view']);
+	Route::post('/instance/create', 'Admin\InstanceController@postInstanceCreate')->name('admin.instance.create');
+	Route::post('/ajax/scan-qr', 'Web\AjaxController@postQRScan')->name('user.instance.postqrscan')->middleware(['permission:admin.instance.view']);
+
 	//ASSIGN PERMISSION TO ROLES
 	Route::get('role/assign/permissions/{id}', 'Acl\AclController@getPermissionAssign')->name('acl.assign.role.permission')->middleware(['permission:acl.assign.role.permission']);
 	Route::post('role/assign/permissions/{id}', 'Acl\AclController@postPermissionAssign')->name('acl.assign.role.permission')->middleware(['permission:acl.assign.role.permission']);
