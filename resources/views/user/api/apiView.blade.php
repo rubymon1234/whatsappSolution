@@ -45,7 +45,7 @@
                                     <td class="serial">{{ $key + $apiList->firstItem()}} </td>
                                     <td> <span class="name">{{ $api->api_name}}</span> </td>
                                     <td> <span class="name">{{ $api->api_key}}</span> </td>
-                                    <td> <span class="name">{{ $api->instance_name}}</span></td>
+                                    <td> <span class="name">{{ App\Models\Instance::where('id',$api->instance_id)->pluck('instance_name')->first()}}</span></td>
                                     <td>
                                         @if($api->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
