@@ -20,7 +20,6 @@
                     </div>
                     <div class="col-md-4">
                         <select class="form-control form-control-sm new custom-select select2" id="type" name="type" >
-                            <option value=""></option>
                             <option value="1">Normal</option>
                             <option value="2">Random</option>
                         </select>

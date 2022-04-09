@@ -32,8 +32,8 @@
                                 <th>API Key</th>
                                 <th>Instance</th>
                                 <th>Status </th>
-                                <th>created</th>{{-- 
-                                <th>Manage</th> --}}
+                                <th>created</th>
+                                <th>Manage</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,14 +59,14 @@
                                     </td>
                                     <td> <span class="name">{{$api->created_at}}</span> </td>
 
-                                    {{-- <td style="text-align: left;">
+                                    <td style="text-align: left;">
                                         <a href="javascript:void(0)" >
-                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete API" onclick="doubleConfirm('{{ Crypt::encryptString($api->id) }}',3)">
+                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete API" onclick="doubleConfirm('{{ $api->id }}',3)">
                                             </i>
                                         </a>
                                         
                                         
-                                    </td> --}}
+                                    </td>
                                     {{-- <td> <span class="name"></span> </td> --}}
                                 </tr>
                             @empty
@@ -99,8 +99,8 @@
     </div>
 <script type="text/javascript">
 function doubleConfirm(api, status){
-    alert(api);
     if (confirm('Are you sure you want to continue ?')){
+    //alert(api);
         
         $.ajax(
             {
@@ -119,7 +119,7 @@ function doubleConfirm(api, status){
                     $('#loading').hide();
                     if(result.success){
                         $('.preloader-it').hide();
-                        //alert(result.response);
+                       alert(result.response);
                         location.reload();
                     }
                 },
