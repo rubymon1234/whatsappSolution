@@ -99,7 +99,7 @@ class AjaxController extends Controller
 	    	$Instance = Instance::find(Crypt::decryptString($instance_id));
 
 	    	$token 	= $Instance->token;
-	    	$scan_url 	= 'http://95.216.214.103:8000/?id='.$token;
+	    	$scan_url 	= 'http://135.181.82.89:8000/?id='.$token;
 
 	    		return response()->json([
 		                'success' => true,
