@@ -42,9 +42,16 @@
                                     <td class="serial">{{ $key + $campaignList->firstItem()}} </td>
                                     <td> <span class="name">{{ $campaign->campaign_name }}</span> </td>
                                     @php
+                                    if($campaign->current_plan_id ==NULL){
+
+                                    }
                                     $planDetail = \App\Helpers\Helper::getPlanDetail(Crypt::encrypt($campaign->current_plan_id));
                                     @endphp
-                                     <td> <span class="product">{{ $planDetail->plan_name }}</span> </td>
+                                    @if(isset($campaign->current_plan_id))
+                                        <td> <span class="product">{{ $planDetail->plan_name }}</span> </td>
+                                    @else
+                                        <td><span class="badge badge-info">credit</span></td>
+                                    @endif
                                     <td >{{$campaign->instance_name }}</td>
                                     <td >{{ $campaign->type }} </td>
                                     <td>
