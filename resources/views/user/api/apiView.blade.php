@@ -39,7 +39,7 @@
                         <tbody>
                             @forelse($apiList as $key=> $api)
                                 @php
-                                   $instance= App\Models\Instance::find($api->instance_token,['instance_name']);
+                                   $instance= App\Models\Instance::find($api->instance_id);
                                 @endphp
                                 <tr>
                                     <td class="serial">{{ $key + $apiList->firstItem()}} </td>
