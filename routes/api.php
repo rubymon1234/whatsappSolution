@@ -12,6 +12,5 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => ['apiauth']], function () {
-	Route::post('send', 'Api\ApiController@send')->name('send');
-});
+Route::post('send', 'Api\ApiController@send')->name('send')->middleware(['apiauth']);;
+
