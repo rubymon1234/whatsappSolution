@@ -28,6 +28,7 @@ use App\Models\ListApplication;
 use App\Models\ListBody;
 use App\Models\ButtonApplication;
 use App\Models\ButtonBodies;
+use App\Models\Api;
 use Exception;
 
 class AjaxController extends Controller
@@ -404,5 +405,28 @@ class AjaxController extends Controller
 				'response' => $response
 			]);
 	   }
-   }
+   	}
+   	public function postBlockApi(Request $request){
+        try{
+        	//dd($request->api);
+        	//dd(Crypt::decryptString($request->api));
+            $userUpdate = Api::find(Crypt::decryptString($request->api));
+            $userUpdate->is_status = $request->status; // block & unblock
+            if($userUpdate->save()){
+
+                return response()->json([
+                        'success' => true,
+                        'message' =>'success',
+                        'response' => 'API  Deleted Successfully '
+                    ]);
+            }
+            
+        }catch(\Exception $e){
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Oops, Something Went Wrong',
+            ]);
+        }
+   	}
 }

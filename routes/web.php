@@ -103,6 +103,7 @@ Route::post('/ajax/block-user', 'Web\AjaxController@getBlockUser')->name('ajax.b
 Route::post('/ajax-chat/instance-delete', 'Web\AjaxController@getInstanceDelete')->name('user.chat.bot.instance.delete');
 Route::post('/ajax-chat/message-response-delete', 'Web\AjaxController@getMessageResponseDelete')->name('user.chat.bot.message.response.delete');
 Route::post('/ajax-chat/menu-response-delete', 'Web\AjaxController@getMenuResponseDelete')->name('user.chat.bot.menu.response.delete');
+Route::post('/ajax-chat/block-api', 'Web\AjaxController@postBlockApi')->name('api.block.api');
 
 
 // Message Request - AJax section starts

@@ -20,7 +20,7 @@ class ApiController extends Controller
      * @author Ruban
     */
     public function getApiView(){
-        $apiList = Api::where('user_id',Auth::user()->id)->orderBy('updated_at','DESC')->paginate(10);
+        $apiList = Api::where('user_id',Auth::user()->id)->where('is_status',1)->orderBy('updated_at','DESC')->paginate(10);
     	return view('user.api.apiView', compact('apiList'));
     }
     public function getApiCreate(){
@@ -85,28 +85,7 @@ class ApiController extends Controller
     public function generateApiKey(){
         return $api_key = Helper::generateUniqueId().Helper::generateUniqueId().Helper::generateUniqueId();
     }
-    public function postBlockApi(Request $request){
-
-        try{
-           /* $userUpdate = Api::find(Crypt::decryptString($request->api));
-            $userUpdate->is_status = $request->status; // block & unblock
-            if($userUpdate->save()){
-
-                return response()->json([
-                        'success' => true,
-                        'message' =>'success',
-                        'response' => 'User Details Updated Successfully '
-                    ]);
-            }*/
-            
-        }catch(\Exception $e){
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Oops, Something Went Wrong',
-            ]);
-        }
-   }
+   
 }
 
 
