@@ -40,7 +40,7 @@ class CreditController extends Controller
                 return view('admin.credit.addCredit', compact('user'));
             }
             
-            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");  
+            return redirect()->route('admin.user.view')->with('error_message', "Oops,Something went wrong.");  
         } catch (\Exception $e) {
             return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
         }
@@ -51,7 +51,7 @@ class CreditController extends Controller
     */
     public function postAddCredit(Request $request,$id)
     {
-        /*try {*/
+        try {
             DB::beginTransaction();
             //check if it user is admin
             $user = Auth::user();
@@ -66,7 +66,7 @@ class CreditController extends Controller
                     $admin_id = Auth::user()->id;
                     $account    = $request->account;
                     //admin check
-                    $this->adminCheck($user);
+                    //$this->adminCheck($user);
 
                     //credit checking
                     if($type =='debit'){
@@ -171,19 +171,17 @@ class CreditController extends Controller
                 return redirect()->route('admin.user.view')->with('success_message', "Amount updated successfully");
                 
             }
-            DB::rollback();
-            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");  
-        /*} catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return redirect()->route('admin.user.view')->with('warning_message', $e->getMessage());
-        }*/
+        }
     }
     public function adminCheck($user){
 
         $admin_id = Auth::user()->id;
         $transfer_id = $user->admin_id;
         if($transfer_id != $admin_id){
-            return redirect()->route('admin.user.view')->with('error_message', "Oops, Something went wrong.");
+            return redirect()->route('admin.user.view')->with('error_message', "kjlblihll  Oops, Something went wrong.");
         }
         return true;
     }
