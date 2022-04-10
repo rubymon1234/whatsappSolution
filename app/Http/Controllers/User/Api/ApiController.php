@@ -64,8 +64,8 @@ class ApiController extends Controller
                     $apiInsert->instance_id = $request->instance;
                     $apiInsert->is_status = 1;
                     $apiInsert->save();
-                    $apiList = Api::where('user_id',Auth::user()->id)->paginate(10);
-                    return view('user.api.apiView', compact('apiList'));
+                    
+                    return redirect()->route('api.key.view')->with('success_message', 'New API Key Created Successfully');
                 }
             }elseif($request->Cancel =='cancel'){
                 return redirect()->route('api.key.view')->with('warning_message', 'Request is Rollback');
