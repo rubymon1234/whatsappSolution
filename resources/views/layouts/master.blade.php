@@ -67,15 +67,14 @@
                     <?php
                     $accounts = \App\Helpers\Helper::getCredits(Crypt::encrypt(Auth::user()->id));
                     ?>
-                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="zmdi zmdi-balance-wallet"></span><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse"></span></span> Credit</a>
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="zmdi zmdi-balance-wallet"></span><span class="badge-wrap"><span class="badge badge-success badge-indicator badge-indicator-sm badge-pill pulse"></span></span></a>
                     <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="height: 400%;">
-                        <h6 class="dropdown-header">Credit List</h6>
                         <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
                             <div class="notifications-nicescroll-bar" style="overflow: hidden; width: auto;  outline: currentcolor none medium;" tabindex="-50">
                                 <a href="javascript:void(0);" class="dropdown-item">
                                     <div class="media">
                                         <div class="media-img-wrap col-md-6">
-                                            Chat Bot Credit
+                                            CHAT BOT
                                         </div>
                                         <div class="media-body col-md-6">
                                             <div>
@@ -90,7 +89,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item">
                                     <div class="media">
                                         <div class="media-img-wrap col-md-6">
-                                            Api Credit
+                                            API
                                         </div>
                                         <div class="media-body col-md-6">
                                             <div>
@@ -105,7 +104,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item">
                                     <div class="media">
                                         <div class="media-img-wrap col-md-6">
-                                            Random Credit
+                                            RANDOM
                                         </div>
                                         <div class="media-body col-md-6">
                                             <div>
