@@ -51,8 +51,8 @@
                         <thead>
                             <tr>
                                 <th style="width: 0px;">Check</th>
-                                <th>Id</th>
-                                <th># </th>
+                                <th>#</th>
+                                <th>Number </th>
                                 <th>Instance</th>
                                 <th>Message</th>
                                 <th>Received Time</th>
