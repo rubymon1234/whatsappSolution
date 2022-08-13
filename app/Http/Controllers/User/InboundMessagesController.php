@@ -50,10 +50,6 @@ class InboundMessagesController extends Controller
                     ->orderBy('inbound_messages.id', 'DESC')->paginate(20);
         $inboundMessages->appends(['number' => $number]);
         $inboundMessages->appends(['instance_id' => $instance_id]);
-        // echo "<pre>";
-        // print_r($inboundMessages);
-        // exit();
-
 
     	return view('user.inbound.inboundMessages',compact('inboundMessages','instanceList','number','instance_id'));
     }

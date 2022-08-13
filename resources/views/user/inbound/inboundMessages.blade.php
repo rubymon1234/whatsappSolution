@@ -56,6 +56,7 @@
                                 <th>Instance</th>
                                 <th>Message</th>
                                 <th>Received Time</th>
+                                <th>Webhook Response</th>
                                 <th>Status</th>
                                 <th>Manage</th>
                             </tr>
@@ -89,6 +90,8 @@
                                         <?php  echo $string ?></td>
                                     </td>
                                     <td>{{ $inbound->updated_at }} </td>
+                                    <td><a href="javascript::void(0)" data-toggle="modal" data-target="#web_hook_model_{{ $inbound->id }}">
+                                            <i class="fa fa-eye" data-toggle="tooltip" data-original-title="view web hook responses" ></i></a>&nbsp;&nbsp;</td>
                                     <td>
                                         @if($inbound->is_status==0)
                                             <span class="badge badge-warning">Queued</span>
@@ -101,8 +104,6 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <a href="javascript:void()">
-                                            <button class="btn btn-secondary  btn-xs" >reply&nbsp;&nbsp;</button></a> --}}
                                         <a href="javascript:void()">
                                         <button class="btn btn-secondary btn-wth-icon btn-rounded icon-right btn-xs" onclick="doubleConfirm('{{ $inbound->number }}', '{{ $inbound->instance_token }}')"><span class="btn-text">Reply</span> <span class="icon-label"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span> </span>
                                         </button></a>
@@ -136,7 +137,57 @@
             </div>
         </div>
     </div>
-    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="padding-right: 17px;" aria-modal="true">
+    {{-- End Webhook Model--}}
+    @php
+    foreach ($inboundMessages as $webHook) { @endphp
+        <div class="modal fade show" id="web_hook_model_{{ $webHook->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge01" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Web hook responses</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Progress</th>
+                                                <th>Deadline</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @php }
+    @endphp
+    
+    {{-- End Webhook Model--}}
+    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
