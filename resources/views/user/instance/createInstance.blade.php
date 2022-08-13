@@ -17,6 +17,9 @@
                 <label>
                     <input type="text" class="form-control form-control-sm new" placeholder="instance name" aria-controls="datable_1" name="instance_name" value="">
                 </label>
+                <label>
+                    <input type="text" class="form-control form-control-sm new" placeholder="web hook url" aria-controls="datable_1" name="web_hook_url" value="">
+                </label>
                 <button class="btn btn-tool btn-danger" name="save" value="save">Add Instance </button>
             </form>
              @endpermission
@@ -41,7 +44,9 @@
                                 <th>Instance Name </th>
                                 <th>Status </th>
                                 <th>State </th>
+                                <th>WebhookUrl </th>
                                 <th style="text-align: left;"> Scan </th>
+                                <th > Manage </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,15 +62,20 @@
                                         @endif
                                     </td>
                                     <td>{{ $instance->state }}</td>
+                                    <td>{{ $instance->web_hook_url }}</td>
                                     <td style="text-align: left;">
-                                        @if($instance->is_status==1)
+                                        {{-- @if($instance->is_status==1)
                                             <span class="badge badge-success">whatsapp_authenticated</span>
                                         @elseif($instance->is_status==3)
                                             <span class="badge badge-success">campaign_running</span>
-                                        @else
+                                        @else --}}
                                         <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Scan</button>
-                                        @endif
+                                        {{-- @endif --}}
                                     </td>
+                                    <td>
+                                        <a href="{{ route('user.instance.update' ,Crypt::encrypt($instance->id)) }}">
+                                            <i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Chat Instance"></i></a>&nbsp;&nbsp;
+                                        </td>
                                 </tr>
                             @empty
                                 <tr>

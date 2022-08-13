@@ -55,7 +55,7 @@
                                 <th># </th>
                                 <th>Instance</th>
                                 <th>Message</th>
-                                <th>Sent Time</th>
+                                <th>Received Time</th>
                                 <th>Status</th>
                                 <th>Manage</th>
                             </tr>

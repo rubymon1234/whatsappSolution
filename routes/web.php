@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/instance/list', 'User\InstanceController@getInstanceView')->name('user.instance.view')->middleware(['permission:user.instance.view']);
 	Route::post('/instance/create', 'User\InstanceController@postInstanceCreate')->name('user.instance.create');
 	Route::post('/ajax/scan-qr', 'Web\AjaxController@postQRScan')->name('user.instance.postqrscan')->middleware(['permission:user.instance.view']);
+	Route::get('/instance/update/{id}', 'User\InstanceController@getInstanceUpdate')->name('user.instance.update')->middleware(['permission:user.instance.update']);
+	Route::post('/instance/update/{id}', 'User\InstanceController@postInstanceUpdate')->name('user.instance.update')->middleware(['permission:user.instance.update']);
+
 
 	//COMPOSE MANAGEMENT
 	Route::get('/sent/message', 'User\ComposeController@getComposeView')->name('user.compose.sent.message')->middleware(['permission:user.compose.sent.message']);
