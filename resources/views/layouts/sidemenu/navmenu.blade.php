@@ -124,9 +124,14 @@
                         <span class="feather-icon"><i data-feather="message-square"></i></span>
                         <span class="nav-link-text">Messages</span>
                     </a>
-                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.sent.message') || Route::is('user.campaign.view')? 'show' : '') }} collapse ">
+                    <ul id="auth_drp7" class="nav flex-column collapse-level-1 {{ (Route::is('user.compose.sent.message') || Route::is('user.campaign.view') || Route::is('user.compose.inbound.message')? 'show' : '') }} collapse">
                         <li class="nav-item">
                             <ul class="nav flex-column">
+                                @permission('user.compose.inbound.message')
+                                <li class="nav-item {{ (Route::is('user.compose.inbound.message') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.compose.inbound.message') }}">Inbound</a>
+                                </li>
+                                @endpermission
                                 @permission('user.compose.sent.message')
                                 <li class="nav-item {{ (Route::is('user.compose.sent.message') ? 'active' : '' ) }}">
                                     <a class="nav-link" href="{{ route('user.compose.sent.message') }}">Compose</a>

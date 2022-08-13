@@ -12,5 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('send', 'Api\ApiController@send')->name('send')->middleware(['apiauth']);;
+Route::post('incoming-message-capture','Api\Common\IncomingMessageCaptureController@IncomingMessageCaptureRequest')->name('IncomingMessageCaptureRequest');
+Route::post('send', 'Api\ApiController@send')->name('send')->middleware(['apiauth']);
+
 

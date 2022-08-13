@@ -271,7 +271,10 @@ class Helper {
         $instance_id = Crypt::decrypt($instance_id);
         return Instance::find($instance_id);
    }
+   public static function getInstanceDetailToken($token) {
 
+        return Instance::where('token',$token)->first();
+   }
    public static function getCredits($user_id){
         $user_id = Crypt::decrypt($user_id);
         $creditsDetail = Accounts::where('user_id',$user_id)->first();

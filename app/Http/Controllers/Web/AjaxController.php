@@ -100,7 +100,7 @@ class AjaxController extends Controller
 	    	$Instance = Instance::find(Crypt::decryptString($instance_id));
 
 	    	$token 	= $Instance->token;
-	    	$scan_url 	= 'http://135.181.82.89:8000/?id='.$token;
+	    	$scan_url 	= 'https://api.textnator.com:5000/?id='.$token;
 
 	    		return response()->json([
 		                'success' => true,
@@ -408,8 +408,6 @@ class AjaxController extends Controller
    	}
    	public function postBlockApi(Request $request){
         try{
-        	//dd($request->api);
-        	//dd(Crypt::decryptString($request->api));
             $userUpdate = Api::find(Crypt::decryptString($request->api));
             $userUpdate->is_status = $request->status; // block & unblock
             if($userUpdate->save()){

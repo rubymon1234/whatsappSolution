@@ -32,6 +32,12 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/sent/message', 'User\ComposeController@getComposeView')->name('user.compose.sent.message')->middleware(['permission:user.compose.sent.message']);
 	Route::post('/sent/message', 'User\ComposeController@postComposeView')->name('user.compose.sent.message')->middleware(['permission:user.compose.sent.message']);
 
+	//INBOUND MESSAGES
+	Route::get('/inbound/message', 'User\InboundMessagesController@getInboundView')->name('user.compose.inbound.message')->middleware(['permission:user.compose.inbound.message']);
+	Route::post('/inbound/message', 'User\InboundMessagesController@getInboundView')->name('user.compose.inbound.message')->middleware(['permission:user.compose.inbound.message']);
+	Route::post('/create/inbound-campaign', 'User\InboundMessagesController@postInBoundMessagePush')->name('ajax.create.inbound.campaign');
+
+
 	//SCRUB MANAGEMENT
 	Route::get('/compose/scrub-view', 'User\ScrubController@getScrubView')->name('user.compose.scrub.view')->middleware(['permission:user.compose.scrub.view']);
 	Route::get('/compose/scrub-create', 'User\ScrubController@getScrubCreate')->name('user.compose.scrub.create')->middleware(['permission:user.compose.scrub.create']);

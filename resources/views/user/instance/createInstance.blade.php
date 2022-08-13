@@ -131,6 +131,7 @@
                     },
                     success: function (result) {
                         $('.preloader-it').hide();
+                        console.log(result);
                         if(result.success){
                             $('#scanQRCodeModel').modal('show');
                             $('.qrCode').attr('src', result.scan_url);
@@ -145,9 +146,9 @@
             );
         }
     }
-   $(document).on('click', '.scanQRCodeModelClose', function (e) {
-        e.preventDefault();
-        location.reload();
-    });
+   // $(document).on('click', '.scanQRCodeModelClose', function (e) {
+   //      e.preventDefault();
+   //      location.reload();
+   //  });
 </script>
 @endsection
