@@ -24,12 +24,40 @@ class IncomingMessageCaptureController extends Controller
     public function IncomingMessageCaptureRequest(Request $request){ 
         $request = json_decode(Request::createFromGlobals()->getContent());
         if($request->method =='inbound'){ // Incomming Message
-            $this->InsertInboundRequest($request);
+            $response = $this->InsertInboundRequest($request);
+        }if($request->method =='token'){
+            $response = $this->qRScanAuthRequest($request);
         }
+        return response()->json($response);
     }
-
+    public function qRScanAuthRequest($request){
+        if($request->token){
+            $instanceToken = Instance::where('token', $request->token)->first();
+            if($request->message->code=='500'){
+                $instanceToken->is_status = 0;
+                $instanceToken->state = $request->message->body;
+            }else if($request->message->code=='200'){
+                $instanceToken->is_status = 1;
+                $instanceToken->state = $request->message->body;
+            }else{
+                $instanceToken->is_status = 0;
+                $instanceToken->state = $request->message->body;
+            }
+            $instanceToken->save();
+            $response['status'] = true;
+            $response['message'] = 'SUCCESS';
+            $response['response'] = 'QA Authenticate Successfully';
+            
+            return $response;  
+        }
+        $response['status'] = false;
+        $response['message'] = 'Failed';
+        $response['response'] = 'Token Mismatch';
+        return $response;
+    }
     public function InsertInboundRequest($request){
 
+        $response = array();
         $InsertInboundMessage = new InboundMessage();
         $InsertInboundMessage->instance_token = $request->token;
         //get token 
@@ -46,12 +74,16 @@ class IncomingMessageCaptureController extends Controller
                 $InsertInboundMessage->web_hook_url_response = $response;
             }
         }
-
         $InsertInboundMessage->message = $request->text->body; //message json encode value
         $InsertInboundMessage->messaging_product = $request->messaging_product;
         $InsertInboundMessage->json_data = json_encode($request);
         $InsertInboundMessage->save();
-        return true;
+
+        $response['status'] = true;
+        $response['message'] = 'SUCCESS';
+        $response['message'] = 'Inbound Message Added Successfully';
+
+        return $response;
     }
     public function sentWebHookURL($request,$endpoint,$method){
 
