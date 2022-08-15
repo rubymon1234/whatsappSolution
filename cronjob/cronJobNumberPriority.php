@@ -106,7 +106,7 @@ if (isset($argv[1]))
   						$errorCode = "";
   						$statusMessage = "Sent";
   						$status = '1';
-              $msgId = $result['response']['id']['id'];
+              $msgId = $result['response']['id'];
   					}else{
   						$errorCode = $result['code'];
   						$status = '0';
