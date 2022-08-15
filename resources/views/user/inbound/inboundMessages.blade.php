@@ -139,7 +139,7 @@
     </div>
     {{-- End Webhook Model--}}
     @php
-    foreach ($inboundMessages as $webHook) { @endphp
+    foreach ($inboundMessages as $v => $webHook) { @endphp
         <div class="modal fade show" id="web_hook_model_{{ $webHook->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge01" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -158,17 +158,19 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Progress</th>
-                                                <th>Deadline</th>
-                                                <th>Action</th>
+                                                <th>Status</th>
+                                                <th>Response</th>
+                                                <th>start time</th>
+                                                <th>end time</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $webHook->web_hook_url_response_code }}</td>
+                                                <td>{{ $webHook->web_hook_url_response }}</td>
+                                                <td>{{ $webHook->web_hook_url_start_time }}</td>
+                                                <td>{{ $webHook->web_hook_url_end_time }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
