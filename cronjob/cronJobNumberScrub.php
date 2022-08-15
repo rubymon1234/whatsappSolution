@@ -57,7 +57,7 @@ if (isset($argv[1]))
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
-  					$ch = curl_init('http://localhost:8000/scrub-number');
+  					$ch = curl_init('https://api.textnator.com:5000/send-message');
   					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   					curl_setopt($ch, CURLOPT_HEADER, false);
   					curl_setopt($ch, CURLINFO_HEADER_OUT, true);
@@ -67,7 +67,7 @@ if (isset($argv[1]))
   					curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   					    'Content-Type: application/json',
   					    'Content-Length: ' . strlen($payload),
-  					    'X-Authentication-Key:93c0c7c7cd2a23ccaa3ebed05d442ce4')
+  					    'X-Authentication-Key:3ec5d070a0b165c00c5c06673fdb59a2')
   					);
   					$result = json_decode(curl_exec($ch), true);
   					curl_close($ch);

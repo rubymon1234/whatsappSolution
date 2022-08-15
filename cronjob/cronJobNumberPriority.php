@@ -53,6 +53,17 @@ if (isset($argv[1]))
     //   $message = $message.'%0A%0A*Reply \'STOP\' to unsubscribe*';
     // }
 
+    if ($type != 'text'){
+      $cf = new CURLFile("/var/www/html/whatsappSolution/public/uploads/media/$file");
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, "https://api.textnator.com:5000/receive-file");
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => $cf]);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $result = curl_exec($ch);
+      curl_close($ch);
+    }
+
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       $leadCount = count(file('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead));
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -87,7 +98,7 @@ if (isset($argv[1]))
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
-  					$ch = curl_init('http://localhost:8000/send-message');
+  					$ch = curl_init('https://api.textnator.com:5000/send-message');
   					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   					curl_setopt($ch, CURLOPT_HEADER, false);
   					curl_setopt($ch, CURLINFO_HEADER_OUT, true);
@@ -97,7 +108,7 @@ if (isset($argv[1]))
   					curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   					    'Content-Type: application/json',
   					    'Content-Length: ' . strlen($payload),
-  					    'X-Authentication-Key:93c0c7c7cd2a23ccaa3ebed05d442ce4')
+  					    'X-Authentication-Key:3ec5d070a0b165c00c5c06673fdb59a2')
   					);
   					$result = json_decode(curl_exec($ch), true);
   					curl_close($ch);
@@ -106,7 +117,7 @@ if (isset($argv[1]))
   						$errorCode = "";
   						$statusMessage = "Sent";
   						$status = '1';
-              $msgId = $result['response']['id']['id'];
+              $msgId = $result['response']['id'];
   					}else{
   						$errorCode = $result['code'];
   						$status = '0';
