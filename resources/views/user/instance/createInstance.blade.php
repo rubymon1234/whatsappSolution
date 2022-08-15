@@ -42,6 +42,7 @@
                             <tr>
                                 <th >#</th>
                                 <th>Instance Name </th>
+                                <th>Instance Token </th>
                                 <th>Status </th>
                                 <th>State </th>
                                 <th>WebhookUrl </th>
@@ -54,6 +55,7 @@
                                 <tr>
                                     <td class="serial">{{ $key + $instanceDetail->firstItem()}}</td>
                                     <td><span class="name">{{ $instance->instance_name }}</span></td>
+                                    <td>{{ $instance->token }}</td>
                                     <td style="font-weight: bold;">
                                         @if($instance->is_status==0)
                                             <span class="badge badge-danger">Not Active</span>
