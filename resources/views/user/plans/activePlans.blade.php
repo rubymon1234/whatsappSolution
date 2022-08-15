@@ -3,15 +3,15 @@
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row -->
-    <div class="row">	
+    <div class="row">
         <div class="col-xl-12">
             <div class="hk-row">
 				<div class="col-lg-12 col-sm-6">
 					@forelse($currentPlan as $key=>$crtplan)
 					<div class="card d-inline-block w-sm-320p">
-						
+
                         <div class="card-body">
-                        	
+
 							<div class="d-flex flex-wrap">
 								{{-- <img class="d-86 rounded mb-15 mr-15" src="dist/img/img-thumb1.jpg" alt="thumb"> --}}
 								{{-- <div class="w-120">
@@ -39,20 +39,20 @@
                             <td>@if($crtplan->scrub_count) {{ $crtplan->scrub_count }} @else {{ $crtplan->scrub_count }} @endif</td>
                         </tr>
                         <tr>
-                            <td>Bot Instance count</td>
+                            <td>Instance count</td>
                             <td>@if($crtplan->bot_instance_count) {{ $crtplan->bot_instance_count }} @else {{ $crtplan->bot_instance_count }} @endif</td>
                         </tr>
                          </tr>
                                 </table>
 							</div>
-							
+
 						</div>
 
                         <div class="card-footer text-muted justify-content-between">
                             <div><span class="text-dark"></span></div>
-                            <?php $today_date = date('Y-m-d'); 
+                            <?php $today_date = date('Y-m-d');
 	                            if($crtplan->current_validity ==NULL){
-	                            	$current_validity = $today_date; 
+	                            	$current_validity = $today_date;
 	                            }else{
 	                            	$current_validity = $crtplan->current_validity;
 	                            }
@@ -68,15 +68,15 @@
                             @else
                             <button class="btn btn-xs btn-danger ml-15 w-sm-100p">Expired</button>
                             @endif
-							
+
 						</div>
-						
+
                     </div>
                     @empty
                                  No Plan logs in the list
                             @endforelse
 				</div>
-			</div>		
+			</div>
 		</div>
     </div>
     <!-- /Row -->

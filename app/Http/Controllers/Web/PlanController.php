@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class PlanController extends Controller
 {
     /**
-     * ViewPlan 
+     * ViewPlan
      * @author Ruban
     */
    	public function getPlanView(Request $request)
@@ -26,7 +26,7 @@ class PlanController extends Controller
         return view('web.global.planView',compact('plans','key'));
     }
     /**
-     * CreatePlan 
+     * CreatePlan
      * @author Ruban
     */
    	public function getPlanCreate(Request $request)
@@ -53,8 +53,8 @@ class PlanController extends Controller
                 'plan_name.unique' => 'Plan Name Already Exist',
                 'daily_count.required' => 'Daily count is required',
                 'plan_validity.required' => 'Plan validity is required',
-                'bot_instance_count.required' => 'Bot Instance count is required',
-                'scrub_count.required' => 'scrub count is required',
+                'bot_instance_count.required' => 'Instance count is required',
+                'scrub_count.required' => 'Scrub count is required',
             ];
 
             $validator = Validator::make(Input::all(), $rule, $messages);
@@ -78,7 +78,7 @@ class PlanController extends Controller
         }
     }
     /**
-     * Update Plan 
+     * Update Plan
      * @author Ruban
     */
    	public function getPlanUpdate($id =null)

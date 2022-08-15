@@ -51,8 +51,6 @@ use App\Models\Accounts;
                                 <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Chatbot Credit</th>
-                                <th>API Credit</th>
                                 <th>Recharge</th>
                             </tr>
                         </thead>
@@ -84,23 +82,18 @@ use App\Models\Accounts;
 
                                         $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
                                     @endphp
-                                    <td>
-                                       {{$AccountDetails->credits}}
-                                    </td>
-                                    <td>
-                                       {{$AccountDetails->api_credits}}
-                                    </td>
+
                                     <td>
                                         @if($user->hasRole('user'))
                                         <span >
                                             <a class="btn btn-outline-primary" href="{{ route('reseller.user.recharge.request',Crypt::encrypt($user->id)) }}" >Request</a>
                                         </span>
                                         @endif
-                                        @if($user->hasRole('user') || $user->hasRole('reseller'))
+                                        <!-- @if($user->hasRole('user') || $user->hasRole('reseller'))
                                         <span >
                                             <a class="btn btn-outline-primary" href="{{ route('reseller.user.add.credit',Crypt::encrypt($user->id)) }}" >Credit</a>
                                         </span>
-                                        @endif
+                                        @endif -->
                                     </td>
                                 </tr>
                             @empty

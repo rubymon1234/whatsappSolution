@@ -29,7 +29,7 @@
                                 <th>Plan Name</th>
                                 <th>Plan Count</th>
                                 <th>Scrub Count</th>
-                                <th>Bot Instance Count</th>
+                                <th>Instance Count</th>
                                 <th>Plan Validity(days)</th>
                                 <th>Credit</th>
                                 <th>Request Time</th>

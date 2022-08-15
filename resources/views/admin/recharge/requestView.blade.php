@@ -30,7 +30,7 @@
                                 <th>Plan Name</th>
                                 <th>Plan Count</th>
                                 <th>Scrub Count</th>
-                                <th>Bot Instance Count</th>
+                                <th>Instance Count</th>
                                 <th>Plan Validity(days)</th>
                                 <th>Request Time</th>
                                 <th>Manage</th>
@@ -109,7 +109,7 @@
                     <p class="mt-10"> {{ $planDetail->daily_count }} </p>
                     <h6>Scrub Count</h6>
                     <p class="mt-10"> {{ $planDetail->scrub_count }} </p>
-                    <h6>Bot Instance Count</h6>
+                    <h6>Instance Count</h6>
                     <p class="mt-10"> {{ $planDetail->bot_instance_count }} </p>
                     <h6>Plan Validity</h6>
                     <p class="mt-10"> {{ $planDetail->plan_validity }} </p>
