@@ -14,6 +14,7 @@ use App\Models\Instance;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\CampaignsOutbound;
+use App\Models\IncomingLog;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -24,6 +25,11 @@ class IncomingMessageCaptureController extends Controller
 {
     public function IncomingMessageCaptureRequest(Request $request){ 
         $request = json_decode(Request::createFromGlobals()->getContent());
+        $incomingLog = new IncomingLog();
+        $incomingLog->instance_token = $request->token;
+        $incomingLog->method = $request->method;
+        $incomingLog->response_request = $request;
+        $incomingLog->save();
         if($request->method =='inbound'){ // Incomming Message
             $response = $this->InsertInboundRequest($request);
         }if($request->method =='token'){
@@ -37,7 +43,7 @@ class IncomingMessageCaptureController extends Controller
         }
         return response()->json($response);
     }
-    public function reportACKupdate($request){
+    public function reportACKupdate($request){ 
 
         if($request){
             $msg_id = $request->message_id;

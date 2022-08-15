@@ -58,8 +58,6 @@ class ApiController extends Controller
                     ]);
                 }
             }
-// print_r($validResponse); 
-// exit();
             //extension and file size checking
             if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
                 //current plan
