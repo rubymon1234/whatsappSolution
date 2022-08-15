@@ -94,7 +94,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8"> No campaign in the list</td>
+                                    <td colspan="10"> No campaign in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>

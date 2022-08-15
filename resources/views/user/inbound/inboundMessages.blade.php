@@ -129,7 +129,7 @@
                                     </div>
                             @empty
                                 <tr>
-                                    <td colspan="8"> No Inbound Messages in the list</td>
+                                    <td colspan="9"> No Inbound Messages in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
