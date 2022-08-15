@@ -90,12 +90,14 @@ class UserController extends Controller
                             'domain_id' => $domainDetail->id,
                             'is_status' => 1,
                         ]);
+
                         $user_id = $insertUser->id;
                         $role = Role::where('name','user')->first();
                         RoleUser::create([
                         	'user_id' => $user_id,
                         	'role_id' => $role->id,
                         ]);
+                        
                         Accounts::create([
                             'user_id' => $user_id,
                             'reseller_id' => Auth::user()->id,

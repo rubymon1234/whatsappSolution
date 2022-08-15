@@ -11,35 +11,37 @@
     </div>
     <div class="hk-pg-header mb-0">
         @php 
-        if(count($instanceDetail) < (int)$currentPlan->bot_instance_count){ @endphp
-        <div class="d-flex">
-            @permission('user.instance.view')
-            <form name="instanceForm" action="{{ route('user.instance.create') }}" method="post">
-                {{ csrf_field() }}
-                <label>
-                    <input type="text" class="form-control form-control-sm new" placeholder="instance name" aria-controls="datable_1" name="instance_name" value="">
-                </label>
-                <label>
-                    <input type="text" class="form-control form-control-sm new" placeholder="web hook url" aria-controls="datable_1" name="web_hook_url" value="">
-                </label>
-                <button class="btn btn-tool btn-danger" name="save" value="save">Add Instance</button>
-            </form>
-             @endpermission
-            </div>
-            @php }else{ @endphp
-            <div class="col-lg-12 col-sm-12">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                    <span>
-                        @php
-                        $words = \App\Helpers\Helper::convert_number($currentPlan->bot_instance_count);
-                        @endphp
-                            Allowed {{ $words }} Instance , Need more contact admin or scan and reuse it</span> 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+        if(isset($currentPlan->bot_instance_count)){
+            if(count($instanceDetail) < (int)$currentPlan->bot_instance_count){ @endphp
+            <div class="d-flex">
+                @permission('user.instance.view')
+                <form name="instanceForm" action="{{ route('user.instance.create') }}" method="post">
+                    {{ csrf_field() }}
+                    <label>
+                        <input type="text" class="form-control form-control-sm new" placeholder="instance name" aria-controls="datable_1" name="instance_name" value="">
+                    </label>
+                    <label>
+                        <input type="text" class="form-control form-control-sm new" placeholder="web hook url" aria-controls="datable_1" name="web_hook_url" value="">
+                    </label>
+                    <button class="btn btn-tool btn-danger" name="save" value="save">Add Instance</button>
+                </form>
+                 @endpermission
                 </div>
-            </div>
-        @php }
+                @php }else{ @endphp
+                <div class="col-lg-12 col-sm-12">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <span>
+                            @php
+                            $words = \App\Helpers\Helper::convert_number($currentPlan->bot_instance_count);
+                            @endphp
+                                Allowed {{ $words }} Instance , Need more contact admin or scan and reuse it</span> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+            @php }
+        }
         @endphp
         </div>
     <style type="text/css">
