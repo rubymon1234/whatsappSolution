@@ -57,7 +57,7 @@ if (isset($argv[1]))
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
-  					$ch = curl_init('https://api.textnator.com:5000/send-message');
+  					$ch = curl_init('https://api.textnator.com:5000/scrub-number');
   					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   					curl_setopt($ch, CURLOPT_HEADER, false);
   					curl_setopt($ch, CURLINFO_HEADER_OUT, true);
