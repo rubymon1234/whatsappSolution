@@ -13,6 +13,7 @@ use App\Models\Accounts;
 use App\Models\Instance;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
+use App\Models\CampaignsOutbound;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -27,8 +28,37 @@ class IncomingMessageCaptureController extends Controller
             $response = $this->InsertInboundRequest($request);
         }if($request->method =='token'){
             $response = $this->qRScanAuthRequest($request);
+        }if($request->method =='message-ack'){
+            $response = $this->reportACKupdate($request);
+        }else{
+            $response['status'] = false;
+            $response['message'] = 'FAILED';
+            $response['response'] = 'Method not found';
         }
         return response()->json($response);
+    }
+    public function reportACKupdate($request){
+
+        if($request){
+            $msg_id = $request->message_id;
+            $CampaignsOutbound = CampaignsOutbound::where('msg_id',$msg_id)->where('instance_token',$request->token)->first();
+            if($CampaignsOutbound){
+                $CampaignsOutbound->message_status = $request->message->msgStatus;
+                $CampaignsOutbound->save();
+                    $response['status'] = true;
+                    $response['message'] = 'SUCCESS';
+                    $response['response'] = 'ACK update Successfully';
+            }else{
+               $response['status'] = false;
+                $response['message'] = 'Failed';
+                $response['response'] = 'Payload Missmatch, Something went wrong.'; 
+            }
+        }else{
+            $response['status'] = false;
+            $response['message'] = 'Failed';
+            $response['response'] = 'Oops , Something went wrong.';
+        }
+        return $response;
     }
     public function qRScanAuthRequest($request){
         if($request->token){
