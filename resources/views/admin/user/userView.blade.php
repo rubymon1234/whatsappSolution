@@ -51,8 +51,6 @@ use App\Models\Accounts;
                                 <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Chatbot Credit</th>
-                                <th>API Credit</th>
                                 <th>Recharge</th>
                                 <th style="text-align: left;">Manage</th>
                             </tr>
@@ -86,12 +84,7 @@ use App\Models\Accounts;
 
                                         $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
                                     @endphp
-                                    <td>
-                                       {{$AccountDetails->credits}}
-                                    </td>
-                                    <td>
-                                       {{$AccountDetails->api_credits}}
-                                    </td>
+
                                     <td>
                                     @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
                                         <span>
@@ -99,11 +92,11 @@ use App\Models\Accounts;
                                     @else
                                         {{ '' }}
                                     @endif
-                                    @if($user->reseller_id==Auth::user()->id && ($user->hasRole('user') || $user->hasRole('reseller')))
+                                    <!-- @if($user->reseller_id==Auth::user()->id && ($user->hasRole('user') || $user->hasRole('reseller')))
                                         <span >
                                             <a class="btn btn-outline-primary" href="{{ route('admin.user.add.credit',Crypt::encrypt($user->id)) }}" >Credit</a>
                                         </span>
-                                    @endif
+                                    @endif -->
                                     </td>
                                     <td style="text-align: left;">
                                          @if($user->is_status !=3)
@@ -149,7 +142,7 @@ use App\Models\Accounts;
 <script type="text/javascript">
 function doubleConfirm(user, status){
 if (confirm('Are you sure you want to continue ?')){
-    
+
     $.ajax(
         {
             url: '{{ route('ajax.block.user') }}',
