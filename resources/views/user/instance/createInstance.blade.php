@@ -10,7 +10,9 @@
         </div>
     </div>
     <div class="hk-pg-header mb-0">
-    <div class="d-flex">
+        @php 
+        if(count($instanceDetail) <5){ @endphp
+        <div class="d-flex">
             @permission('user.instance.view')
             <form name="instanceForm" action="{{ route('user.instance.create') }}" method="post">
                 {{ csrf_field() }}
@@ -20,10 +22,22 @@
                 <label>
                     <input type="text" class="form-control form-control-sm new" placeholder="web hook url" aria-controls="datable_1" name="web_hook_url" value="">
                 </label>
-                <button class="btn btn-tool btn-danger" name="save" value="save">Add Instance </button>
+                <button class="btn btn-tool btn-danger" name="save" value="save">Add Instance</button>
             </form>
              @endpermission
-        </div>
+            </div>
+            @php }else{ @endphp
+            <div class="col-lg-12 col-sm-12">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <span>
+                            Allowed five Instance , Need more contact admin or scan and reuse it</span> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            </div>
+        @php }
+        @endphp
         </div>
     <style type="text/css">
         .form-control-sm, .custom-select-sm {
