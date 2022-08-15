@@ -125,7 +125,7 @@ class ApiController extends Controller
 
                             //Campaign Creation
                             $campaignInsert = new Campaign();
-                            $campaignInsert->campaign_name = $campaign'_'."API";
+                            $campaignInsert->campaign_name = $campaign.'_'."API";
                             $campaignInsert->user_id = $user_id;
                             $campaignInsert->reseller_id = $reseller_id;
                             $campaignInsert->current_plan_id = $currentPlan->plan_id;
