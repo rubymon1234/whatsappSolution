@@ -17,6 +17,7 @@ class ApiAuth
     public function handle($request, Closure $next)
     {
         $apiTokenValidate = false;
+
         $apiToken = $this->bearerToken($request);
         if ($request->wantsJson()) {
             $apiTokenValidate = Api::where('is_status',1)->where('api_key',$apiToken)->first();

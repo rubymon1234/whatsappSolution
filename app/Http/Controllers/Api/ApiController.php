@@ -58,8 +58,6 @@ class ApiController extends Controller
                     ]);
                 }
             }
-// print_r($validResponse); 
-// exit();
             //extension and file size checking
             if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
                 //current plan
@@ -94,16 +92,8 @@ class ApiController extends Controller
                             ]);
                     }
                     //upload file
-                    if($request->message_type =='image'){
-                        $uploadfilename = $this->uploadFile($request,'photo');
-                    }elseif($request->message_type =='video'){
-                        $uploadfilename = $this->uploadFile($request,'video_file');
-                    }elseif ($request->message_type =='audio') {
-                        $uploadfilename = $this->uploadFile($request,'audio_file');
-                    }elseif($request->message_type =='document'){
-                        $uploadfilename = $this->uploadFile($request,'doc_file');
-                    }else{
-                        $uploadfilename = NULL;
+                    if($message_type !='text'){
+                      $uploadfilename = $this->uploadFile($request,'file');
                     }
                 if(isset($campaignFetch[0]['total'])){ 
                     $total = $campaignFetch[0]['total']; 
