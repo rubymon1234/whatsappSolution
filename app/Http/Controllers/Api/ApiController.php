@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use DB;
 use Crypt;
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\PermissionRole;
@@ -12,6 +14,7 @@ use App\Models\Accounts;
 use App\Models\Instance;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
+use App\Models\CurrentPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -20,149 +23,209 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
-  public function send(Request $request){
+    public function send(Request $request){
 
-    //$api_key 		= $request->key; // campaign name
-    $api_key = Helper::getBearerToken($request);
-    $apiKey 	= Api::where('is_status',1)->where('api_key',$api_key)->first();
-    if ($apiKey){
-      $campaign 		= $request->campaign; // campaign name
-      $instance_token 	=  $apiKey->instance_token;// instance id from database
-      $user_id 	=  $apiKey->user_id;// user id from database
-      $reseller_id 	=  $apiKey->reseller_id;// reseller id from database
-      $message_type 	= $request->type; // message type
-      $mobile 		= $request->mobile; // mobile
-      $message 		= rawurldecode($request->message); // message
-      $uploadfilename = NULL;
+        $api_key = Helper::getBearerToken($request);
+        $apiKey   = Api::where('is_status',1)->where('api_key',$api_key)->first();
+        if($apiKey) {
 
-      $validResponse = $this->messageTypeValidation($request->type,$request);
-      $extensionValidation = $this->typeValidation($request->type,$request);
+            $campaign    = $request->campaign; // campaign name
+            $instance_token   =  $request->instance_token; // instance id from database
+            $user_id  =  $apiKey->user_id;// user id from database
+            $reseller_id  =  $apiKey->reseller_id;// reseller id from database
+            $message_type   = $request->message_type; // message type
+            $mobile     = $request->mobile; // mobile
+            $message    = rawurldecode($request->message); // message
+            $uploadfilename = NULL;
 
-      if ($validResponse['status'] ==true && $extensionValidation['status'] ==true){
-        if($message_type !='text'){
-          $uploadfilename = $this->uploadFile($request,'file');
-        }
-        $account 	= Accounts::where('user_id',$user_id)->first();
-        $credit = $account->api_credits;
-        $csvDetail = $this->createCsv($mobile);
+            //UPLOAD VALIDATION
+            $validResponse = $this->messageTypeValidation($request->message_type,$request);
+            $extensionValidation = $this->typeValidation($request->message_type,$request);
 
-        if ($this->checkCredit($csvDetail['num_count'], $credit, $account)){
-          $num_count = $csvDetail['num_count'];
-          $csv_name = $csvDetail['csv_name'];
-
-          $campaign_start_date = date('Y-m-d');
-          $campaign_start_time = date('H:i:s');
-          if($request->scheduled==1){
-                if(isset($request->date) && isset($request->time)){
-                  $campaign_start_date = $request->date;
-                  $campaign_start_time = $request->time;
+            //campaign start time
+            $campaign_start_date = date('Y-m-d');
+            $campaign_start_time = date('H:i:s');
+            if($request->is_scheduled==1){
+                if(isset($request->sch_date) && isset($request->sch_time)){
+                    $campaign_start_date = $request->sch_date;
+                    $campaign_start_time = $request->sch_time;
                 }else{
-                  //Invalid scheduled date and time
-                }
-          }
-          if(strlen($request->message) >1000){
-            return response()->json([
-                      'status' => 'FAILED',
-                      'data' => [
-                        'status' => 'failed',
-                        'message' => 'Message is more than 1000 characters'
-                      ]
-                  ]);
-          }
-
-          $getInstance = Instance::where('token',$instance_token)->first();
-          if($getInstance){
-            //Campaign Creation
-            $campaignInsert = new Campaign();
-            $campaignInsert->campaign_name = $campaign;
-            $campaignInsert->user_id = $user_id;
-            $campaignInsert->reseller_id = $reseller_id;
-            $campaignInsert->current_plan_id = NULL;
-            $campaignInsert->leads_file = $csv_name;//csv
-            $campaignInsert->instance_token = $instance_token;
-            $campaignInsert->instance_name = $getInstance->instance_name;
-            $campaignInsert->type = $validResponse['slug'];
-            $campaignInsert->message = rawurlencode($message);
-            $campaignInsert->media_file_name = $uploadfilename;
-            $campaignInsert->count = $num_count;
-
-            if($request->optout =='1'){
-              $campaignInsert->opt_out = 1;
-            }else{
-              $campaignInsert->opt_out = 0;
-            }
-            $campaignInsert->start_at = $campaign_start_date.' '.$campaign_start_time;
-            if($request->scheduled==1){
-              $campaignInsert->is_status = 0; // scheduled
-            }else{
-              $campaignInsert->is_status = 2;
-            }
-            $campaignInsert->save();
-            $last_inserted_id = $campaignInsert->id;
-            shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
-
-            if($campaignInsert){
-
-              return response()->json([
-                        'status' => 'OK',
-                        'data' => [
-                          'status' => 'success',
-                          'campid' => $last_inserted_id,
-                          'message' => 'Campaign created successfully'
-                        ]
+                    return response()->json([
+                        'success' => false,
+                        'message' =>'success',
+                        'validator' => false,
+                        'response' => 'Schedule date and time is in-valid',
                     ]);
+                }
             }
-          }else{
-            //Invalid instance token
+// print_r($validResponse); 
+// exit();
+            //extension and file size checking
+            if($validResponse['status'] ==true && $extensionValidation['status'] ==true){
+                //current plan
+                $currentPlan  = CurrentPlan::where('is_status',1)->where('user_id',$user_id)->first();
+
+                //current plan not active
+                if($currentPlan){
+                    $daily_count  = $currentPlan->daily_count;
+                    $plan_validity  = $currentPlan->plan_validity;
+
+                    $campaignFetch = Campaign::where('user_id',$user_id)
+                              ->where('current_plan_id',$currentPlan->plan_id)
+                              ->select( DB::raw('sum(count) as total'))
+                              ->whereIn('is_status',[1,2,0])
+                              ->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
+                    //create csv
+                    $csv_name ='';
+                    $num_count = 0; 
+
+                    if(isset($request->mobile)){
+                        $csvDetail = $this->createCsv($request->mobile);
+                        $num_count = $csvDetail['num_count'];
+                        $csv_name = $csvDetail['csv_name'];
+                    }
+
+                    if(strlen($request->message) >=1000){
+                        return response()->json([
+                                'success' => false,
+                                'message' =>'success',
+                                'validator' => false,
+                                'response' => 'Message count is more than 1000.',
+                            ]);
+                    }
+                    //upload file
+                    if($request->message_type =='image'){
+                        $uploadfilename = $this->uploadFile($request,'photo');
+                    }elseif($request->message_type =='video'){
+                        $uploadfilename = $this->uploadFile($request,'video_file');
+                    }elseif ($request->message_type =='audio') {
+                        $uploadfilename = $this->uploadFile($request,'audio_file');
+                    }elseif($request->message_type =='document'){
+                        $uploadfilename = $this->uploadFile($request,'doc_file');
+                    }else{
+                        $uploadfilename = NULL;
+                    }
+                if(isset($campaignFetch[0]['total'])){ 
+                    $total = $campaignFetch[0]['total']; 
+                }else{ 
+                    $total = 0; 
+                }
+                $total = $total + $num_count;
+                if($daily_count >=$total){
+                    if($request->is_scheduled==1){
+                        $today_date = $campaign_start_date;
+                    }else{
+                        $today_date = date('Y-m-d');
+                    }
+                    if($plan_validity >= $today_date){
+
+                        //current instance
+                        $getInstance = Instance::where('token',$instance_token)->where('is_status',1)->first();
+                        if($getInstance){
+
+                            //Campaign Creation
+                            $campaignInsert = new Campaign();
+                            $campaignInsert->campaign_name = $campaign'_'."API";
+                            $campaignInsert->user_id = $user_id;
+                            $campaignInsert->reseller_id = $reseller_id;
+                            $campaignInsert->current_plan_id = $currentPlan->plan_id;
+                            $campaignInsert->leads_file = $csv_name;//csv
+                            $campaignInsert->instance_token = $getInstance->token;
+                            $campaignInsert->instance_name = $getInstance->instance_name;
+                            $campaignInsert->type = $validResponse['slug'];
+                            $campaignInsert->message = rawurlencode($message);
+                            $campaignInsert->media_file_name = $uploadfilename;
+                            $campaignInsert->count = $num_count;
+                            if($num_count <=10){
+                                $campaignInsert->is_status = 2;
+                            }else{
+                                $campaignInsert->is_status = 0;
+                            }
+                            if($request->optOut =='on'){
+                                $campaignInsert->opt_out = 1;
+                            }else{
+                                $campaignInsert->opt_out = 0;
+                            }
+                            $campaignInsert->start_at = $campaign_start_date.' '.$campaign_start_time;
+                            if($request->is_scheduled==1){
+                                $campaignInsert->is_status = 0; // scheduled
+                            }
+                            $campaignInsert->save();
+
+                            $last_inserted_id = $campaignInsert->id;
+                            if($num_count <=10){
+                            shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
+                            }
+                            if($campaignInsert){
+
+                                return response()->json([
+                                    'success' => true,
+                                    'message' =>'success',
+                                    'validator' => false,
+                                    'response' => 'Campaign created successfully',
+                                ]);
+                            }
+
+                            return response()->json([
+                                'success' => false,
+                                'message' =>'success',
+                                'validator' => false,
+                                'response' => 'Oops, something went wrong',
+                            ]);
+
+                        }else{
+
+                            return response()->json([
+                                'success' => false,
+                                'message' =>'success',
+                                'validator' => false,
+                                'response' => 'Campaign is running, choose another instance',
+                            ]);
+                        }
+                    }else{
+
+                        return response()->json([
+                            'success' => false,
+                            'message' =>'success',
+                            'validator' => false,
+                            'response' => 'Validity expired',
+                        ]);
+                    }
+
+            }else{
+                return response()->json([
+                              'success' => false,
+                              'message' =>'success',
+                              'validator' => false,
+                              'response' => 'Daily limit exceeded',
+                          ]);
+            }
+            }else{
+              return response()->json([
+                              'success' => false,
+                              'message' =>'success',
+                              'validator' => false,
+                              'response' => 'Plan is not active',
+                          ]);
+            }
+        }else{
             return response()->json([
-                      'status' => 'FAILED',
-                      'data' => [
-                        'status' => 'failed',
-                        'message' => 'Invalid instance token'
-                      ]
-                  ]);
-          }
-
-        }else{
-          // No credits
-          return response()->json([
-                    'status' => 'FAILED',
-                    'data' => [
-                      'status' => 'failed',
-                      'message' => 'Insufficient credits'
-                    ]
-                ]);
+                              'success' => false,
+                              'message' =>'success',
+                              'validator' => false,
+                              'response' => $validResponse,
+                          ]);
         }
-      }else{
-        //Message validation failed
-        if ($extensionValidation['message']){
-          $error = $extensionValidation['message'];
         }else{
-          $error = $validResponse['message'];
-        }
-
-        return response()->json([
-                  'status' => 'FAILED',
-                  'data' => [
-                    'status' => 'failed',
-                    'message' => $error
-                  ]
-              ]);
-      }
-
-
-
-    }else{
-      //Invalid API Key
-      return response()->json([
+            //Invalid API Key
+            return response()->json([
                 'status' => 'FAILED',
                 'data' => [
                   'status' => 'failed',
                   'message' => 'Invalid API key'
                 ]
             ]);
-    }
-
+      }
   }
 
   public function checkCredit($count, $credit, $account){
