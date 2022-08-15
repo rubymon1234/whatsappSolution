@@ -33,9 +33,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Bot instance count(N)</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Instance count(N)</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="bot_instance_count" class="form-control" placeholder="Enter Bot instance count." value="{{ old('bot_instance_count') }}">
+                                            <input type="text" name="bot_instance_count" class="form-control" placeholder="Enter Instance count." value="{{ old('bot_instance_count') }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">

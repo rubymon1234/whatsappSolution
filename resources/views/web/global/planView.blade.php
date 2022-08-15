@@ -7,7 +7,7 @@
     <div class="hk-pg-header mb-10">
         <div>
             <h6 class="hk-pg-title">@yield('title') :: List Plans</h6>
-            
+
         </div>
     </div>
     <div class="hk-pg-header mb-0">
@@ -43,7 +43,7 @@
                                 <th>Plan name</th>
                                 <th>Daily count</th>
                                 <th>Scrub count</th>
-                                <th>Bot instance count</th>
+                                <th>Instance count</th>
                                 <th>Plan validity</th>
                                 <th>Status</th>
                                 @permission('global.plan.update')
