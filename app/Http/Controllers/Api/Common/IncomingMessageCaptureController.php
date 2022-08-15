@@ -25,11 +25,14 @@ class IncomingMessageCaptureController extends Controller
 {
     public function IncomingMessageCaptureRequest(Request $request){ 
         $request = json_decode(Request::createFromGlobals()->getContent());
-        $incomingLog = new IncomingLog();
-        $incomingLog->instance_token = $request->token;
-        $incomingLog->method = $request->method;
-        $incomingLog->response_request = $request;
-        $incomingLog->save();
+        if($request){
+            $incomingLog = new IncomingLog();
+            $incomingLog->instance_token = $request->token;
+            $incomingLog->method = $request->method;
+            $incomingLog->response_request = json_encode($request);
+            $incomingLog->save();
+        }
+        
         if($request->method =='inbound'){ // Incomming Message
             $response = $this->InsertInboundRequest($request);
         }if($request->method =='token'){
