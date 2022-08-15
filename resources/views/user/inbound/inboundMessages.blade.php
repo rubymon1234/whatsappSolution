@@ -84,7 +84,7 @@
                                             $endPoint = strrpos($stringCut, ' ');
                                             //if the string doesn't contain any space then it will cut without word basis.
                                             $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                                            $string .= '... <i class="fa fa-eye" data-toggle="tooltip" data-original-title="'.rawurldecode($inbound->message).'" ></i>';
+                                            $string .= '... <a href="javascript::void(0)" data-toggle="modal" data-target="#web_hook_model_message_'.$inbound->id.'"><i class="fa fa-eye" data-toggle="tooltip" data-original-title="'.rawurldecode($inbound->message).'"></a>';
                                         }
                                         ?>
                                         <?php  echo $string ?></td>
@@ -109,6 +109,24 @@
                                         </button></a>
                                     </td>
                                 </tr>
+                                <div class="modal fade show" id="web_hook_model_message_{{ $inbound->id }}" tabindex="-1" role="dialog" aria-labelledby="web_hook_model_message_{{ $inbound->id }}" aria-modal="true">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Message</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>{{ rawurldecode($inbound->message) }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             @empty
                                 <tr>
                                     <td colspan="8"> No Inbound Messages in the list</td>
