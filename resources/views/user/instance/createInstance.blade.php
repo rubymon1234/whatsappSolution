@@ -100,7 +100,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6"> No Instance in the list</td>
+                                    <td colspan="8"> No Instance in the list</td>
                                 </tr>
                             @endforelse
                         </tbody>
