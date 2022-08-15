@@ -97,7 +97,6 @@ class InstanceController extends Controller
                 $newInstance = Instance::find(Crypt::decrypt($id));
                 $newInstance->instance_name = $request->get('instance_name');
                 $newInstance->web_hook_url  = $request->web_hook_url;
-                $newInstance->is_status = 0;
                 if($newInstance->save())
                     return redirect()->route('user.instance.view')->with('success_message', 'Instance  successfully update');
             }
