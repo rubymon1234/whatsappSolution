@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Instance;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
+use App\Models\CurrentPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -20,8 +21,10 @@ class InstanceController extends Controller
      * @author Ruban
     */
     public function getInstanceView(){
+        //current plan
+        $currentPlan    = CurrentPlan::where('is_status',1)->where('user_id',Auth::user()->id)->first();
     	$instanceDetail = Instance::where('user_id',Auth::user()->id)->whereIn('is_status',[0,1,3])->orderBy('updated_at','DESC')->paginate(10);
-    	return view('user.instance.createInstance', compact('instanceDetail'));
+    	return view('user.instance.createInstance', compact('instanceDetail','currentPlan'));
     }
     /**
      * Create Instance and view (POST)

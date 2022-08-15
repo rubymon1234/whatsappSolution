@@ -326,7 +326,7 @@
                     <li class="nav-item">
                         <ul class="nav flex-column">
                             
-                            <li class="nav-item {{ (Route::is('user.report.log.*') ? 'menu-open' : '') }}">
+                            {{-- <li class="nav-item {{ (Route::is('user.report.log.*') ? 'menu-open' : '') }}">
                                 <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#chat_rep">
                                         Bot Log
                                     </a>
@@ -347,7 +347,7 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> --}}
 
                             @permission('user.report.consolidated')
                                 <li class="nav-item {{ (Route::is('user.report.consolidated') ? 'active' : '' ) }}">

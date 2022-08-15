@@ -11,7 +11,7 @@
     </div>
     <div class="hk-pg-header mb-0">
         @php 
-        if(count($instanceDetail) <5){ @endphp
+        if(count($instanceDetail) < (int)$currentPlan->bot_instance_count){ @endphp
         <div class="d-flex">
             @permission('user.instance.view')
             <form name="instanceForm" action="{{ route('user.instance.create') }}" method="post">
@@ -30,7 +30,10 @@
             <div class="col-lg-12 col-sm-12">
                 <div class="alert alert-primary alert-dismissible fade show" role="alert">
                     <span>
-                            Allowed five Instance , Need more contact admin or scan and reuse it</span> 
+                        @php
+                        $words = \App\Helpers\Helper::convert_number($currentPlan->bot_instance_count);
+                        @endphp
+                            Allowed {{ $words }} Instance , Need more contact admin or scan and reuse it</span> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
