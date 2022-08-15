@@ -139,10 +139,6 @@ class IncomingMessageCaptureController extends Controller
         $statusCode = $response->getStatusCode();
         $content = $response->getBody();
         //response
-        if ($response->failed()) {
-           return $response;
-        } else {
-          return $response;
-        }
+        return $response;
     }
 }
