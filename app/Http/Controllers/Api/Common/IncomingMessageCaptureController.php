@@ -52,7 +52,7 @@ class IncomingMessageCaptureController extends Controller
             $msg_id = $request->message_id;
             $CampaignsOutbound = CampaignsOutbound::where('msg_id',$msg_id)->where('instance_token',$request->token)->first();
             if($CampaignsOutbound){
-                $CampaignsOutbound->message_status = $request->message->msgStatus;
+                $CampaignsOutbound->message_status = $request->message->body;
                 $CampaignsOutbound->save();
                     $response['status'] = true;
                     $response['message'] = 'SUCCESS';
