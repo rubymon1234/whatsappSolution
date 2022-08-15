@@ -53,6 +53,17 @@ if (isset($argv[1]))
     //   $message = $message.'%0A%0A*Reply \'STOP\' to unsubscribe*';
     // }
 
+    if ($type != 'text'){
+      $cf = new CURLFile("/var/www/html/whatsappSolution/public/uploads/media/$file");
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, "https://api.textnator.com:5000/receive-file");
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => $cf]);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $result = curl_exec($ch);
+      curl_close($ch);
+    }
+
 		if (($handle = fopen('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead, "r")) !== FALSE) {
       $leadCount = count(file('/var/www/html/whatsappSolution/public/uploads/csv/'.$lead));
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
