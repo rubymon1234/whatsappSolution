@@ -201,8 +201,7 @@ class ApiController extends Controller
             return response()->json([
               status => 0,
               response => 'invalid API key',
-              code => 'ERR108'
-                ]
+              code => 'ERR108',
             ]);
       }
   }
