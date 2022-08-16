@@ -51,9 +51,9 @@ class ApiController extends Controller
                     $campaign_start_time = $request->sch_time;
                 }else{
                     return response()->json([
-                      status => 0,
-                      response => 'schedule date and time is invalid',
-                      code => 'ERR100',
+                      'status' => 0,
+                      'response' => 'schedule date and time is invalid',
+                      'code' => 'ERR100',
                     ]);
                 }
             }
@@ -84,9 +84,9 @@ class ApiController extends Controller
 
                     if(strlen($request->message) >=1000){
                         return response()->json([
-                                status => 0,
-                                response => 'message count is more than 1000',
-                                code => 'ERR101',
+                                'status' => 0,
+                                'response' => 'message count is more than 1000',
+                                'code' => 'ERR101',
                             ]);
                     }
                     //upload file
@@ -147,61 +147,61 @@ class ApiController extends Controller
                             if($campaignInsert){
 
                                 return response()->json([
-                                    status => 1,
-                                    response => 'campaign created successfully',
+                                    'status' => 1,
+                                    'response' => 'campaign created successfully',
                                 ]);
                             }
 
                             return response()->json([
-                              status => 0,
-                              response => 'temporary error',
-                              code => 'ERR102',
+                              'status' => 0,
+                              'response' => 'temporary error',
+                              'code' => 'ERR102',
                             ]);
 
                         }else{
 
                             return response()->json([
-                                status => 0,
-                                response => 'choose another or authenticate the instance',
-                                code => 'ERR103',
+                                'status' => 0,
+                                'response' => 'choose another or authenticate the instance',
+                                'code' => 'ERR103',
                             ]);
                         }
                     }else{
 
                         return response()->json([
-                            status => 0,
-                            response => 'plan validity expired',
-                            code => 'ERR104',
+                            'status' => 0,
+                            'response' => 'plan validity expired',
+                            'code' => 'ERR104',
                         ]);
                     }
 
             }else{
                 return response()->json([
-                              status => 0,
-                              response => 'daily limit exceeded',
-                              code => 'ERR105',
+                              'status' => 0,
+                              'response' => 'daily limit exceeded',
+                              'code' => 'ERR105',
                           ]);
             }
             }else{
               return response()->json([
-                              status => 0,
-                              response => 'plan is not active',
-                              code => 'ERR106',
+                              'status' => 0,
+                              'response' => 'plan is not active',
+                              'code' => 'ERR106',
                           ]);
             }
         }else{
             return response()->json([
-                              status => 0,
-                              response => $validResponse,
-                              code => 'ERR107',
+                              'status' => 0,
+                              'response' => $validResponse,
+                              'code' => 'ERR107',
                           ]);
         }
         }else{
             //Invalid API Key
             return response()->json([
-              status => 0,
-              response => 'invalid API key',
-              code => 'ERR108',
+              'status' => 0,
+              'response' => 'invalid API key',
+              'code' => 'ERR108'
             ]);
       }
   }
