@@ -51,10 +51,9 @@ class ApiController extends Controller
                     $campaign_start_time = $request->sch_time;
                 }else{
                     return response()->json([
-                        'success' => false,
-                        'message' =>'success',
-                        'validator' => false,
-                        'response' => 'Schedule date and time is in-valid',
+                      status => 0,
+                      response => 'schedule date and time is invalid',
+                      code => 'ERR100',
                     ]);
                 }
             }
@@ -75,7 +74,7 @@ class ApiController extends Controller
                               ->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
                     //create csv
                     $csv_name ='';
-                    $num_count = 0; 
+                    $num_count = 0;
 
                     if(isset($request->mobile)){
                         $csvDetail = $this->createCsv($request->mobile);
@@ -85,20 +84,19 @@ class ApiController extends Controller
 
                     if(strlen($request->message) >=1000){
                         return response()->json([
-                                'success' => false,
-                                'message' =>'success',
-                                'validator' => false,
-                                'response' => 'Message count is more than 1000.',
+                                status => 0,
+                                response => 'message count is more than 1000',
+                                code => 'ERR101',
                             ]);
                     }
                     //upload file
                     if($message_type !='text'){
                       $uploadfilename = $this->uploadFile($request,'file');
                     }
-                if(isset($campaignFetch[0]['total'])){ 
-                    $total = $campaignFetch[0]['total']; 
-                }else{ 
-                    $total = 0; 
+                if(isset($campaignFetch[0]['total'])){
+                    $total = $campaignFetch[0]['total'];
+                }else{
+                    $total = 0;
                 }
                 $total = $total + $num_count;
                 if($daily_count >=$total){
@@ -149,70 +147,61 @@ class ApiController extends Controller
                             if($campaignInsert){
 
                                 return response()->json([
-                                    'success' => true,
-                                    'message' =>'success',
-                                    'validator' => false,
-                                    'response' => 'Campaign created successfully',
+                                    status => 1,
+                                    response => 'campaign created successfully',
                                 ]);
                             }
 
                             return response()->json([
-                                'success' => false,
-                                'message' =>'success',
-                                'validator' => false,
-                                'response' => 'Oops, something went wrong',
+                              status => 0,
+                              response => 'temporary error',
+                              code => 'ERR102',
                             ]);
 
                         }else{
 
                             return response()->json([
-                                'success' => false,
-                                'message' =>'success',
-                                'validator' => false,
-                                'response' => 'Campaign is running, choose another instance',
+                                status => 0,
+                                response => 'choose another or authenticate the instance',
+                                code => 'ERR103',
                             ]);
                         }
                     }else{
 
                         return response()->json([
-                            'success' => false,
-                            'message' =>'success',
-                            'validator' => false,
-                            'response' => 'Validity expired',
+                            status => 0,
+                            response => 'plan validity expired',
+                            code => 'ERR104',
                         ]);
                     }
 
             }else{
                 return response()->json([
-                              'success' => false,
-                              'message' =>'success',
-                              'validator' => false,
-                              'response' => 'Daily limit exceeded',
+                              status => 0,
+                              response => 'daily limit exceeded',
+                              code => 'ERR105',
                           ]);
             }
             }else{
               return response()->json([
-                              'success' => false,
-                              'message' =>'success',
-                              'validator' => false,
-                              'response' => 'Plan is not active',
+                              status => 0,
+                              response => 'plan is not active',
+                              code => 'ERR106',
                           ]);
             }
         }else{
             return response()->json([
-                              'success' => false,
-                              'message' =>'success',
-                              'validator' => false,
-                              'response' => $validResponse,
+                              status => 0,
+                              response => $validResponse,
+                              code => 'ERR107',
                           ]);
         }
         }else{
             //Invalid API Key
             return response()->json([
-                'status' => 'FAILED',
-                'data' => [
-                  'status' => 'failed',
-                  'message' => 'Invalid API key'
+              status => 0,
+              response => 'invalid API key',
+              code => 'ERR108'
                 ]
             ]);
       }
