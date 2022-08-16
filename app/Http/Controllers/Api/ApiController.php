@@ -192,7 +192,7 @@ class ApiController extends Controller
         }else{
             return response()->json([
                               'status' => 0,
-                              'response' => $validResponse,
+                              'response' => $validResponse['message'],
                               'code' => 'ERR107',
                           ]);
         }
