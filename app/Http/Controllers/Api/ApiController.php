@@ -209,14 +209,8 @@ class ApiController extends Controller
     if($token){
         $instance = Instance::where('token', $token)->first();
         if($instance){
-            $scan_url   = url('/').'/?id='.$token;
-
-            return response()->json([
-                'status' => 0,
-                'response' => array(
-                    'url' => $scan_url
-                )
-            ]);
+            $url = 'https://api.textnator.com:5000/?id='.$token;
+            return "<iframe src=".$url." style='width:100%; height:100%;'></iframe>";
         }
         return response()->json([
             'status' => 1,
