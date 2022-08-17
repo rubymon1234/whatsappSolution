@@ -85,7 +85,7 @@
                                     </td>
                                     <td>{{ $instance->state }}</td>
                                     <td>{{ $instance->web_hook_url }}</td>
-                                    <td>{{ url('/').'api/'.$instance->token }}</td>
+                                    <td>{{ url('/').'/api/'.$instance->token }}</td>
                                     <td style="text-align: left;">
                                         {{-- @if($instance->is_status==1)
                                             <span class="badge badge-success">whatsapp_authenticated</span>
