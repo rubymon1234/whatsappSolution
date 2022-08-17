@@ -65,6 +65,7 @@
                                 <th>Status </th>
                                 <th>State </th>
                                 <th>WebhookUrl </th>
+                                <th>Scan Api</th>
                                 <th style="text-align: left;"> Scan </th>
                                 <th > Manage </th>
                             </tr>
@@ -84,6 +85,7 @@
                                     </td>
                                     <td>{{ $instance->state }}</td>
                                     <td>{{ $instance->web_hook_url }}</td>
+                                    <td>{{ url('/').'/'.$instance->token }}</td>
                                     <td style="text-align: left;">
                                         {{-- @if($instance->is_status==1)
                                             <span class="badge badge-success">whatsapp_authenticated</span>
@@ -93,6 +95,7 @@
                                         <button type="submit" class="btn btn-primary" onclick="__appQRScan('{{ Crypt::encryptString($instance->id) }}')">Scan</button>
                                         {{-- @endif --}}
                                     </td>
+
                                     <td>
                                         <a href="{{ route('user.instance.update' ,Crypt::encrypt($instance->id)) }}">
                                             <i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit Chat Instance"></i></a>&nbsp;&nbsp;
