@@ -119,7 +119,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>{{ rawurldecode($inbound->message) }}</p>
+                                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" maxlength="1000" id="message" name="message" disabled="disabled">{{ rawurldecode($inbound->message) }}</textarea>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
