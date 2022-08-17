@@ -205,7 +205,26 @@ class ApiController extends Controller
             ]);
       }
   }
+  public function getApiQRtoken($token){
+    if($token){
+        $instance = Instance::where('token', $token)->first();
+        if($instance){
+            $scan_url   = url('/').'/?id='.$token;
 
+            return response()->json([
+                'status' => 0,
+                'response' => array(
+                    'url' => $scan_url
+                )
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'response' => 'invalid token',
+            'code' => 'ERR1011'
+        ]);
+    }   
+  }
   public function checkCredit($count, $credit, $account){
     if ($credit >= $count){
       //update credit

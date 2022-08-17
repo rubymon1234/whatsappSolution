@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::post('incoming-message-capture','Api\Common\IncomingMessageCaptureController@IncomingMessageCaptureRequest')->name('IncomingMessageCaptureRequest');
+Route::get('qr/{token}','Api\ApiController@getApiQRtoken')->name('getApiQRtoken');
 Route::post('send', 'Api\ApiController@send')->name('send')->middleware(['apiauth']);
 
 
