@@ -108,7 +108,7 @@ class ApiController extends Controller
                     if($plan_validity >= $today_date){
 
                         //current instance
-                        $getInstance = Instance::where('token',$instance_token)->where('is_status',1)->first();
+                        $getInstance = Instance::where('token',$instance_token)->where('is_status',1)->where('user_id',$user_id)->first();
                         if($getInstance){
 
                             //Campaign Creation
@@ -205,20 +205,7 @@ class ApiController extends Controller
             ]);
       }
   }
-  public function getApiQRtoken($token){
-    if($token){
-        $instance = Instance::where('token', $token)->first();
-        if($instance){
-            $url = 'https://api.textnator.com:5000/?id='.$token;
-            return "<iframe src=".$url." style='width:100%; height:100%;'></iframe>";
-        }
-        return response()->json([
-            'status' => 1,
-            'response' => 'invalid token',
-            'code' => 'ERR1011'
-        ]);
-    }   
-  }
+
   public function checkCredit($count, $credit, $account){
     if ($credit >= $count){
       //update credit
