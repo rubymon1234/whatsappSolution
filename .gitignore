@@ -11,3 +11,7 @@ npm-debug.log
 yarn-error.log
 /public/uploads/
 /public/uploads/*
+/cronjob/cronJobNumberScrub.php
+/cronjob/cronJobNumberPriority.php
+/app/Http/Controllers/Web/AjaxController.php
+/app/Http/Controllers/Api/ApiController.php
