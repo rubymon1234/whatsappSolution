@@ -30,7 +30,7 @@ class ApiController extends Controller
         if($apiKey) {
 
             $campaign    = $request->campaign; // campaign name
-            $instance_token   =  $request->instance_token; // instance id from database
+            $instance_token   =  $apiKey->instance_token; // instance id from database
             $user_id  =  $apiKey->user_id;// user id from database
             $reseller_id  =  $apiKey->reseller_id;// reseller id from database
             $message_type   = $request->message_type; // message type
