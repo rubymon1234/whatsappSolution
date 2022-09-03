@@ -50,7 +50,7 @@ if (isset($argv[1]))
 		$lead = $row['leads_file'];
     $optOut = $row['opt_out'];
 
-    $smsDb->where ('instance_token', $instance);
+    $smsDb->where ('token', $instance);
     $rowInstance = $smsDb->getOne('wc_instances');
     $webUrl = $rowInstance['web_hook_url'];
     // if($optOut){
