@@ -49,6 +49,10 @@ if (isset($argv[1]))
 		$file = $row['media_file_name'];
 		$lead = $row['leads_file'];
     $optOut = $row['opt_out'];
+
+    $smsDb->where ('instance_token', $instance);
+    $rowInstance = $smsDb->getOne('wc_instances');
+    $webUrl = $rowInstance['web_hook_url'];
     // if($optOut){
     //   $message = $message.'%0A%0A*Reply \'STOP\' to unsubscribe*';
     // }
@@ -115,7 +119,7 @@ if (isset($argv[1]))
 
   					if ($result['status'] == 1){
   						$errorCode = "";
-  						$statusMessage = "Sent";
+  						$statusMessage = "Message Has Been Sent";
   						$status = '1';
               $msgId = $result['response']['id'];
   					}else{
@@ -148,7 +152,35 @@ if (isset($argv[1]))
 			      				"status_message" => "$statusMessage",
 			      		);
 		      $smsDb->insert('wc_campaigns_outbounds', $reportData);
-          sleep(mt_rand(5,20));
+          if (isset($webUrl)){
+            $dataPost = array(
+  					    'messaging_product' => "whatsapp",
+  					    'method' => "campaign",
+                'campaign_id' => $id,
+                'msg_id' => $msgId,
+  					    'from' => $data['0'],
+                'sent_time' => $ctimestamp,
+  					    'status' => $status,
+  							'error_code' => $errorCode,
+                'status_message' => $statusMessage
+  					);
+  					$payload = json_encode($dataPost);
+  					// Prepare new cURL resource
+  					$ch = curl_init($webUrl);
+  					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  					curl_setopt($ch, CURLOPT_HEADER, false);
+  					curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+  					curl_setopt($ch, CURLOPT_POST, true);
+  					curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+  					// Set HTTP Header for POST request
+  					curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+  					    'Content-Type: application/json',
+  					    'Content-Length: ' . strlen($payload))
+  					);
+  					$result = json_decode(curl_exec($ch), true);
+  					curl_close($ch);
+          }
+          sleep(mt_rand(5,12));
 
   		}
       fclose($handle);
