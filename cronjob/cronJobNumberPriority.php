@@ -157,7 +157,7 @@ if (isset($argv[1]))
   					    'messaging_product' => "whatsapp",
   					    'method' => "campaign",
                 'campaign_id' => $id,
-                'msg_id' => $msgId,
+                'message_id' => $msgId,
   					    'from' => $data['0'],
                 'sent_time' => $ctimestamp,
   					    'status' => $status,
