@@ -83,6 +83,7 @@ class UserController extends Controller
 		        			 $insertUser = User::create([
                             'name' => $request->name,
                             'email' => $request->email,
+                            'remember_password' => base64_encode($request->password) ,
                             'password' => Hash::make($request->password),
                             'mobile' => $request->mobile,
                             'reseller_id' => Auth::user()->id,

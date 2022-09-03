@@ -51,6 +51,9 @@ use App\Models\Accounts;
                                 <th>Domain</th>
                                 <th>Role</th>
                                 <th>Status</th>
+                                @permission('reseller.remember.password.view')
+                                    <th>Remember password</th>
+                                @endpermission
                                 <th>Recharge</th>
                             </tr>
                         </thead>
@@ -82,7 +85,16 @@ use App\Models\Accounts;
 
                                         $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
                                     @endphp
-
+                                    @permission('reseller.remember.password.view')
+                                    <td > 
+                                        @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
+                                            <span>
+                                                {{ base64_decode($user->remember_password) }}
+                                            </span>
+                                        @else
+                                            {{ '' }}
+                                        @endif
+                                    @endpermission
                                     <td>
                                         @if($user->hasRole('user'))
                                         <span >
