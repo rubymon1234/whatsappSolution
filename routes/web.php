@@ -102,6 +102,9 @@ Route::post('/my/profile', 'User\UserController@postProfileDetail')->name('globa
 //default dashboard
 Route::get('dashboard', 'Auth\AuthController@defaultlanding')->name('default.dashboard')->middleware(['permission:default.dashboard']);
 
+//API DOCUMENTAION
+Route::get('/api/documentation', 'User\UserController@getDocumentation')->name('api.documentation')->middleware(['permission:api.documentation']);
+
 //globalAjaxcall
 Route::post('/ajax/request-approve', 'Web\AjaxController@postRequestApprove')->name('ajax.request.approve')->middleware(['permission:ajax.request.approve']);
 Route::post('/ajax/request-reject', 'Auth\AjaxController@postRequestReject')->name('ajax.request.reject')->middleware(['permission:ajax.request.reject']);

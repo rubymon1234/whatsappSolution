@@ -89,4 +89,7 @@ class UserController extends Controller
             return Redirect::back()->with('warning_message', 'User request is rollback')->withInput(['tab'=>'']);
         }
     }
+    public function getDocumentation(){
+        return view('web.global.apiDocumentation');
+    }
 }	

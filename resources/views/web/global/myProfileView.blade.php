@@ -2,8 +2,8 @@
 @section('title', 'Profile Management')
 @section('content')
 
-<div class="profile-cover-wrap overlay-wrap">
-    <div class="profile-cover-img" style="background-image:url('{{ asset('dist/img/trans-bg.jpg') }}')"></div>
+<div class="profile-cover-wrap bg-indigo-light-2">
+    {{-- <div class="profile-cover-img" style="background-image:url('{{ asset('dist/img/trans-bg.jpg') }}')"></div> --}}
 	<div class="bg-overlay bg-trans-dark-60"></div>
 	<div class="container-fluid profile-cover-content py-50">
 		<div class="hk-row"> 

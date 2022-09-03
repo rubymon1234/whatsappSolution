@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15">
    <!-- Row -->
-   <h6 class="hk-sec-title">@yield('title') :: Create Plan</h6>
+   <h6 class="hk-sec-title">@yield('title') :: Create Plan </h6>
    <p class="mb-20"></p>
     <div class="row">
         <div class="col-xl-12">

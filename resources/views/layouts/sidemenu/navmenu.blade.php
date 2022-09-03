@@ -361,12 +361,12 @@
                 </li>
             @endpermission
             @permission(('api.key.*'))
-                <li class="nav-item {{ (Route::is('api.key.*') ? 'menu-open' : '') }}">
+                <li class="nav-item {{ (Route::is('api.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#api_drp" aria-expanded="true">
                         <span class="feather-icon"><i data-feather="code"></i></span>
                         <span class="nav-link-text">API</span>
                     </a>
-                    <ul id="api_drp" class="nav flex-column collapse-level-1 {{ (Route::is('api.key.*') ? 'show' : '') }} collapse ">
+                    <ul id="api_drp" class="nav flex-column collapse-level-1 {{ (Route::is('api.*') ? 'show' : '') }} collapse ">
                         <li class="nav-item">
                             <ul class="nav flex-column">
                               @permission('api.key.view')
@@ -374,6 +374,11 @@
                                   <a class="nav-link" href="{{ route('api.key.view') }}">List API</a>
                               </li>
                               @endpermission
+                               @permission('api.documentation')
+                              <li class="nav-item {{ (Route::is('api.documentation') ? 'active' : '' ) }}">
+                                  <a class="nav-link" href="{{ route('api.documentation') }}">API Documentation</a>
+                              </li>
+                               @endpermission 
                             </ul>
                         </li>
                     </ul>
