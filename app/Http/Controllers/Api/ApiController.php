@@ -149,6 +149,7 @@ class ApiController extends Controller
                                 return response()->json([
                                     'status' => 1,
                                     'response' => 'campaign created successfully',
+                                    'campaign_id' => $last_inserted_id,
                                 ]);
                             }
 
@@ -204,6 +205,21 @@ class ApiController extends Controller
               'code' => 'ERR108'
             ]);
       }
+  }
+
+  public function getApiQRtoken($token){
+    if($token){
+        $instance = Instance::where('token', $token)->first();
+        if($instance){
+            $url = 'https://api.textnator.com:5000/?id='.$token;
+            return "<iframe src=".$url." style='width:100%; height:100%;'></iframe>";
+        }
+        return response()->json([
+            'status' => 1,
+            'response' => 'invalid token',
+            'code' => 'ERR1011'
+        ]);
+    }
   }
 
   public function checkCredit($count, $credit, $account){
