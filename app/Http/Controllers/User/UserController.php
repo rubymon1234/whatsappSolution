@@ -75,7 +75,8 @@ class UserController extends Controller
 	        if($currentUser)
 	        {
 	            $currentUser->update([
-	                'password' => Hash::make($request->get('new_password'))
+	                'password' => Hash::make($request->get('new_password')),
+                    'remember_password' => base64_encode($request->get('new_password'))
 	            ]);
 	        }
 	        else

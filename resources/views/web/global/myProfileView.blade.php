@@ -63,13 +63,29 @@
 				            @endphp
 				            @if(isset($planDetail['plan_name']))
 							<ul class="list-group list-group-flush">
-                                <li class="list-group-item"><span><i class="ion ion-md-calendar font-18 text-light-20 mr-10"></i><span>Active Balance : </span></span><span class="ml-5 text-dark"><b style="font-weight: bold;">{{ $planDetail['plan_name']}} </b> | <b style="font-weight: bold;">{{ $planDetail['status']}} </b></span></li>
-                                <li class="list-group-item"><span><i class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>Active Services:</span></span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-success"> whatsapp</span></li>
-                                
+                                <li class="list-group-item"><span><i class="ion ion-md-calendar font-18 text-light-20 mr-10"></i><span>Active Plan : </span></span><span class="ml-5 text-dark"><b style="font-weight: bold;">{{ $planDetail['plan_name']}} </b> | <b style="font-weight: bold;"><span class="badge badge-info">{{ $planDetail['status']}} </span></b></span></li>
+                                <li class="list-group-item"><span><i class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>Active Services:</span></span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-warning"> whatsapp</span></li>
+                                <li class="list-group-item"><span><i class="ion ion-ios-person font-18 text-light-20 mr-10"></i>
+                                    <span>User status :</span>
+                                    @if(Auth::user()->is_status ===1)
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-success">Active</span>
+                                    @endif
+                                    @if(Auth::user()->is_status ===0)
+                                        <span class="badge badge-danger">In Active</span>
+                                    @endif
+                                </span></li>
                             </ul>
                             @else
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><span><i class="ion ion-md-calendar font-18 text-light-20 mr-10"></i><span class="badge badge-dnager">In Active</span></span></li>
+                                <li class="list-group-item"><span><i class="ion ion-ios-person font-18 text-light-20 mr-10"></i>
+                                    @if(Auth::user()->is_status ===1)
+                                        <span>Status :</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-success">Active</span>
+                                    @endif
+                                    @if(Auth::user()->is_status ===0)
+                                        <span>Status :</span><span class="badge badge-danger">In Active</span>
+                                    @endif
+                                </span></li>
+                                <li class="list-group-item"><span><i class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>Active Services:</span></span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-danger">In Active  </span></li>
                             </ul>
                             @endif
 						 </div>
