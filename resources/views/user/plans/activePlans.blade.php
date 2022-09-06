@@ -31,8 +31,20 @@
                             <td>@if($crtplan->current_validity) {{ $crtplan->current_validity }} @else {{ $crtplan->plan_validity }} Days @endif</td>
                             </tr>
                             <tr>
-                            <td>daily count</td>
+                            <td>count</td>
                             <td>@if($crtplan->daily_count) {{ $crtplan->daily_count }} @else {{ $crtplan->daily_count }} Days @endif</td>
+                        </tr>
+                        <tr>
+                            <td>plan subscription</td>
+                            <td>
+                                @if($crtplan->plan_subscription===0)
+                                    <span class="badge badge-info">daily</span>
+                                @elseif($crtplan->plan_subscription===1)
+                                   <span class="badge badge-success">monthly</span>
+                                @else
+                                   <span class="badge badge-info">daily</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>scrub count</td>

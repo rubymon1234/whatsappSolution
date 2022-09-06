@@ -102,12 +102,20 @@ class ComposeController extends Controller
 	    			if($currentPlan){
 	    				$daily_count 	= $currentPlan->daily_count;
 	    				$plan_validity 	= $currentPlan->plan_validity;
-
+	    				$plan_subsciption 	= $currentPlan->plan_subscription; // monthy or daily
+	    				if($plan_subsciption ===1){ // monthy
+	    					$end_date = Carbon::parse($currentPlan->plan_validity)->format('Y-m-d');
+	    					$operator = '<=';
+	    					$plan_subsciption_message = 'monthy';
+	    				}else{ // daily
+	    					$end_date = Carbon::today()->toDateString();
+	    					$operator = '='; $plan_subsciption_message = 'daily';
+	    				}
 	    				$campaignFetch = Campaign::where('user_id',$user_id)
 	    										->where('current_plan_id',$currentPlan->plan_id)
 	    										->select( DB::raw('sum(count) as total'))
 	    										->whereIn('is_status',[1,2,0])
-	    										->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
+	    										->whereDate('start_at', $operator, $end_date)->get()->toArray();
 	    			//create csv
 		            $num_count =0;
 		            $csv_name ='';
@@ -137,8 +145,12 @@ class ComposeController extends Controller
 					}else{
 						$uploadfilename = NULL;
 					}
-	    			if(isset($campaignFetch[0]['total'])){ $total = $campaignFetch[0]['total']; }else{ $total = 0; }
+	    			if(isset($campaignFetch[0]['total'])){ 
+
+	    				$total = $campaignFetch[0]['total']; 
+	    			}else{ $total = 0; }
 	    				$total = $total + $num_count;
+
 	    				if($daily_count >=$total){
 	    					if($request->is_scheduled==1){
 	    						$today_date = $campaign_start_date;
@@ -224,7 +236,7 @@ class ComposeController extends Controller
 							                'success' => false,
 							                'message' =>'success',
 							                'validator' => false,
-							                'response' => 'Daily limit exceeded',
+							                'response' => $plan_subsciption_message.' limit exceeded',
 							            ]);
 	    				}
 	    			}else{

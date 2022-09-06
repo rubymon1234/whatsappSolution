@@ -64,6 +64,7 @@ class AjaxController extends Controller
 	    			$currentPlanInsert = new CurrentPlan();
 	                $currentPlanInsert->plan_id = $planApproveDetail->plan_id;
 	                $currentPlanInsert->daily_count = $planDetail->daily_count;
+	                $currentPlanInsert->plan_subscription = $planDetail->plan_subscription;
 	                $currentPlanInsert->scrub_count = $planDetail->scrub_count;
 	                $currentPlanInsert->bot_instance_count = $planDetail->bot_instance_count;
 	                $currentPlanInsert->user_id = $planApproveDetail->user_id;

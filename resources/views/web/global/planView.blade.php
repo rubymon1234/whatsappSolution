@@ -42,6 +42,7 @@
                                 <th >#</th>
                                 <th>Plan name</th>
                                 <th>Daily count</th>
+                                <th>Plan Subscription</th>
                                 <th>Scrub count</th>
                                 <th>Instance count</th>
                                 <th>Plan validity</th>
@@ -57,6 +58,14 @@
                                     <td class="serial">{{ $key + $plans->firstItem()}} </td>
                                     <td> <span class="name">{{ $plan->plan_name }}</span> </td>
                                     <td> <span class="product">{{ $plan->daily_count }}</span> </td>
+                                    <td> 
+                                    @if($plan->plan_subscription===0)
+                                        <span class="badge badge-info">daily</span>
+                                    @elseif($plan->plan_subscription===1)
+                                       <span class="badge badge-success">monthly</span>
+                                    @else
+                                       <span class="badge badge-info">daily</span>
+                                    @endif </td>
                                     <td> <span class="product">{{ $plan->scrub_count }}</span> </td>
                                     <td> <span class="product">{{ $plan->bot_instance_count }}</span> </td>
                                     <td> <span class="product">{{ $plan->plan_validity }}</span> </td>

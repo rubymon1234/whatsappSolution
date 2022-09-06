@@ -28,7 +28,8 @@
                                 <th >Username</th>
                                 <th >Reseller Name</th>
                                 <th>Plan Name</th>
-                                <th>Plan Count</th>
+                                <th>Count</th>
+                                <th>Plan Subscription</th>
                                 <th>Scrub Count</th>
                                 <th>Instance Count</th>
                                 <th>Plan Validity(days)</th>
@@ -47,7 +48,15 @@
                                     <td> <span style="font-weight: bold;">{{ $resellerDetail->name }}
                                     </span> </td>
                                     <td> <span class="name">{{ $plan->plan_name }}</span> </td>
+                                    
                                      <td> <span class="product">{{ $plan->daily_count }}</span> </td>
+                                     <td> @if($plan->plan_subscription===0)
+                                        <span class="badge badge-info">daily</span>
+                                    @elseif($plan->plan_subscription===1)
+                                       <span class="badge badge-success">monthly</span>
+                                    @else
+                                       <span class="badge badge-info">daily</span>
+                                    @endif </td>
                                      <td> <span class="product">{{ $plan->scrub_count }}</span> </td>
                                      <td> <span class="product">{{ $plan->bot_instance_count }}</span> </td>
                                     <td >{{$plan->plan_validity }}</td>
@@ -105,8 +114,16 @@
                 <div class="modal-body">
                     <h6>Plan name </h6>
                     <p class="mt-10 mb-20"> {{ $planDetail->plan_name }}</p>
-                    <h6>Daily Count</h6>
+                    <h6>Count</h6>
                     <p class="mt-10"> {{ $planDetail->daily_count }} </p>
+                    <h6>Plan Subscription</h6>
+                    <p class="mt-10">  @if($planDetail->plan_subscription===0)
+                                        <span class="badge badge-info">daily</span>
+                                    @elseif($planDetail->plan_subscription===1)
+                                       <span class="badge badge-success">monthly</span>
+                                    @else
+                                       <span class="badge badge-info">daily</span>
+                                    @endif </p>
                     <h6>Scrub Count</h6>
                     <p class="mt-10"> {{ $planDetail->scrub_count }} </p>
                     <h6>Instance Count</h6>

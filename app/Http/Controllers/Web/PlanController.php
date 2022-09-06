@@ -47,6 +47,7 @@ class PlanController extends Controller
                 'plan_validity' => 'required|numeric',
                 'bot_instance_count' => 'required|numeric',
                 'scrub_count' => 'required|numeric',
+                'plan_subscription' => 'required|numeric',
             ];
             $messages = [
                 'plan_name.required' => 'Plan Name is required',
@@ -55,6 +56,7 @@ class PlanController extends Controller
                 'plan_validity.required' => 'Plan validity is required',
                 'bot_instance_count.required' => 'Instance count is required',
                 'scrub_count.required' => 'Scrub count is required',
+                'plan_subscription.required' => 'Plan Subscription is required',
             ];
 
             $validator = Validator::make(Input::all(), $rule, $messages);
@@ -69,6 +71,7 @@ class PlanController extends Controller
                 $newPlan->plan_validity  = $request->get('plan_validity');
                 $newPlan->scrub_count = $request->get('scrub_count');
                 $newPlan->bot_instance_count = $request->get('bot_instance_count');
+                $newPlan->plan_subscription = $request->get('plan_subscription');
                 if($newPlan->save())
                     return redirect()->route('global.plan.view')->with('success_message', 'New Plan successfully Added ');
             }

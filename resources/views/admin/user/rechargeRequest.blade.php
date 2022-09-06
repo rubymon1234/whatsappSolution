@@ -75,8 +75,16 @@
             <div class="modal-body">
                 <h6>Plan name </h6>
                 <p class="mt-10 mb-20"> {{ $plan->plan_name }}</p>
-                <h6>Daily Count</h6>
+                <h6>Count</h6>
                 <p class="mt-10"> {{ $plan->daily_count }} </p>
+                <h6>Plan Subscription</h6>
+                <p class="mt-10"> @if($plan->plan_subscription===0)
+                                        <span class="badge badge-info">daily</span>
+                                    @elseif($plan->plan_subscription===1)
+                                       <span class="badge badge-success">monthly</span>
+                                    @else
+                                       <span class="badge badge-info">daily</span>
+                                    @endif </p>
                 <h6>Scrub Count</h6>
                 <p class="mt-10"> {{ $plan->scrub_count }} </p>
                 <h6>Instance Count</h6>

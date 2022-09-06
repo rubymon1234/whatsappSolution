@@ -66,12 +66,21 @@ class ApiController extends Controller
                 if($currentPlan){
                     $daily_count  = $currentPlan->daily_count;
                     $plan_validity  = $currentPlan->plan_validity;
-
+                    $plan_subsciption   = $currentPlan->plan_subscription; // monthy or daily
+                    if($plan_subsciption ===1){ // monthy
+                        $end_date = Carbon::parse($currentPlan->plan_validity)->format('Y-m-d');
+                        $operator = '<=';
+                        $plan_subsciption_message = 'monthy';
+                    }else{ // daily
+                        $end_date = Carbon::today()->toDateString();
+                        $operator = '='; $plan_subsciption_message = 'daily';
+                    }
                     $campaignFetch = Campaign::where('user_id',$user_id)
                               ->where('current_plan_id',$currentPlan->plan_id)
                               ->select( DB::raw('sum(count) as total'))
                               ->whereIn('is_status',[1,2,0])
-                              ->whereDate('start_at', '=', Carbon::today()->toDateString())->get()->toArray();
+                              ->whereDate('start_at', $operator, $end_date)->get()->toArray();
+                              
                     //create csv
                     $csv_name ='';
                     $num_count = 0;

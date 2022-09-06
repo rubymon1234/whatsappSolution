@@ -21,13 +21,22 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Daily count</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">count</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="daily_count" class="form-control" placeholder="Enter daily count." value="{{ old('daily_count') }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Scrub count count</label>
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Plan Subscription</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control custom-select select2" id="plan_subscription" name="plan_subscription">
+                                                <option value="0">Daily</option>
+                                                <option value="1">Monthly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputPassword3" class="col-sm-2 col-form-label">Scrub count</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="scrub_count" class="form-control" placeholder="Enter scrub count." value="{{ old('scrub_count') }}">
                                         </div>
