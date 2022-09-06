@@ -88,11 +88,10 @@ use App\Models\Accounts;
                                         $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
                                     @endphp
                                     @permission('admin.remember.password.view')
-                                    <td > 
-                                            <span>
-                                                {{ base64_decode($user->remember_password) }}
-                                            </span>
-                                        
+                                    <td>
+                                        <span>
+                                            {{ base64_decode($user->remember_password) }}
+                                        </span>
                                     @endpermission
                                     </td>
                                     <td>
