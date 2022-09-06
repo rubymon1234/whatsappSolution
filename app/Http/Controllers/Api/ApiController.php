@@ -80,7 +80,7 @@ class ApiController extends Controller
                               ->select( DB::raw('sum(count) as total'))
                               ->whereIn('is_status',[1,2,0])
                               ->whereDate('start_at', $operator, $end_date)->get()->toArray();
-                              
+
                     //create csv
                     $csv_name ='';
                     $num_count = 0;
@@ -188,7 +188,7 @@ class ApiController extends Controller
             }else{
                 return response()->json([
                               'status' => 0,
-                              'response' => 'daily limit exceeded',
+                              'response' => $plan_subsciption_message.' limit exceeded',
                               'code' => 'ERR105',
                           ]);
             }

@@ -76,11 +76,18 @@ class ScrubController extends Controller
 			if($currentPlan){
 				$scrub_count 	= $currentPlan->scrub_count;
 				$plan_validity 	= $currentPlan->plan_validity;
-
+                $plan_subsciption   = $currentPlan->plan_subscription; // monthy or daily
+                if($plan_subsciption ===1){ // monthy
+                    $end_date = Carbon::parse($currentPlan->plan_validity)->format('Y-m-d');
+                    $operator = '<=';
+                }else{ // daily
+                    $end_date = Carbon::today()->toDateString();
+                    $operator = '=';
+                }
 				$scrubcampaignFetch = Scrub::where('user_id',$user_id)
 									->where('current_plan_id',$currentPlan->plan_id)
 									->select( DB::raw('sum(count) as total'))
-									->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->toArray();
+									->whereDate('created_at', $operator, $end_date)->get()->toArray();
 	    		$num_count = 0; $csv_name = '';
 	    		if(isset($request->mobile)){
 	            	$csvDetail = $this->createCsv($request->mobile);
