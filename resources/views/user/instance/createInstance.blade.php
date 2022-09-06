@@ -34,7 +34,7 @@
                             @php
                             $words = \App\Helpers\Helper::convert_number($currentPlan->bot_instance_count);
                             @endphp
-                                Allowed {{ $words }} Instance , Need more contact admin or scan and reuse it</span> 
+                                Allowed {{ $words }} Instance , Need more contact admin.</span> 
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>

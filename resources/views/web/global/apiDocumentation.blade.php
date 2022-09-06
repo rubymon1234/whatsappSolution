@@ -94,7 +94,7 @@
                                                 &lt;div id="tweets_fetch" class="owl-carousel owl-theme"&gt;&lt;/div&gt;
                                             &lt;/div&gt;
                                         &lt;/div&gt;
-                                    </pre>
+                                        </pre>
                                     <br>
                                     <p><strong>Above all procedures are optional you can directly use the compiled file which we provided you.</strong></p>
                         </section>

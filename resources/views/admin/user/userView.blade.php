@@ -89,13 +89,10 @@ use App\Models\Accounts;
                                     @endphp
                                     @permission('admin.remember.password.view')
                                     <td > 
-                                        @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
                                             <span>
                                                 {{ base64_decode($user->remember_password) }}
                                             </span>
-                                        @else
-                                            {{ '' }}
-                                        @endif
+                                        
                                     @endpermission
                                     </td>
                                     <td>

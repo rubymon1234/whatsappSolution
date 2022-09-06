@@ -86,16 +86,13 @@ use App\Models\Accounts;
                                         $AccountDetails=Accounts::where('user_id',$user->id)->select('api_credits','credits')->first();
                                     @endphp
                                     @permission('reseller.remember.password.view')
-                                    <td > 
-                                        @if($user->reseller_id==Auth::user()->id && $user->hasRole('user'))
-                                            <span>
-                                                {{ base64_decode($user->remember_password) }}
-                                            </span>
-                                        @else
-                                            {{ '' }}
-                                        @endif
+                                    <td >
+                                        <span>
+                                            {{ base64_decode($user->remember_password) }}
+                                        </span>
+                                    <td>  
                                     @endpermission
-                                    <td>
+                                    
                                         @if($user->hasRole('user'))
                                         <span >
                                             <a class="btn btn-outline-primary" href="{{ route('reseller.user.recharge.request',Crypt::encrypt($user->id)) }}" >Request</a>

@@ -173,6 +173,7 @@ class UserController extends Controller
 	                            'name' => $request->name,
 	                            'email' => $request->email,
 	                            'password' => Hash::make($request->password),
+                                'remember_password' => base64_encode($request->password) ,
 	                            'mobile' => $request->mobile,
 	                            'reseller_id' => Auth::user()->id,
 	                            'domain_id' => null,
