@@ -60,7 +60,7 @@ if (isset($argv[1]))
     if ($type != 'text'){
       $cf = new CURLFile("/var/www/html/whatsappSolution/public/uploads/media/$file");
       $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, "https://api.textnator.com:5000/receive-file");
+      curl_setopt($ch, CURLOPT_URL, "https://api.textnator.com:9000/receive-file");
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => $cf]);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -102,7 +102,7 @@ if (isset($argv[1]))
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
-  					$ch = curl_init('https://api.textnator.com:5000/send-message');
+  					$ch = curl_init('https://api.textnator.com:9000/send-message');
   					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   					curl_setopt($ch, CURLOPT_HEADER, false);
   					curl_setopt($ch, CURLINFO_HEADER_OUT, true);

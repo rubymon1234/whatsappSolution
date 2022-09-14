@@ -101,7 +101,7 @@ class AjaxController extends Controller
 	    	$Instance = Instance::find(Crypt::decryptString($instance_id));
 
 	    	$token 	= $Instance->token;
-	    	$scan_url 	= 'https://api.textnator.com:5000/?id='.$token;
+	    	$scan_url 	= 'https://api.textnator.com:9000/?id='.$token;
 
 	    		return response()->json([
 		                'success' => true,
