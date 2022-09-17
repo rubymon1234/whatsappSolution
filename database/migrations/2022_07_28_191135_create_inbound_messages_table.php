@@ -26,8 +26,8 @@ class CreateInboundMessagesTable extends Migration
             $table->string('json_data')->nullable();
             $table->string('web_hook_url_response_code')->nullable();
             $table->string('web_hook_url_response')->nullable();
-            $table->time('web_hook_url_start_time')->nullable();
-            $table->time('web_hook_url_end_time')->nullable();
+            $table->datetime('web_hook_url_start_time')->nullable();
+            $table->datetime('web_hook_url_end_time')->nullable();
             $table->smallInteger('is_status')->nullable()->comment('0-Not Active,1-Active')->default(1);
             $table->timestamps();
         });

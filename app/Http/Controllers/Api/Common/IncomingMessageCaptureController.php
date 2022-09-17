@@ -31,18 +31,36 @@ class IncomingMessageCaptureController extends Controller
             $incomingLog->method = $request->method;
             $incomingLog->response_request = json_encode($request);
             $incomingLog->save();
+            $incoming_log_last_updated_id = $incomingLog->id;
         }
-        
         if($request->method =='inbound'){ // Incomming Message
-            $response = $this->InsertInboundRequest($request);
-        }if($request->method =='token'){
+            $response = $this->InsertInboundRequest($request,$incoming_log_last_updated_id);
+        }else if($request->method =='token'){
             $response = $this->qRScanAuthRequest($request);
-        }if($request->method =='message-ack'){
+        }else if($request->method =='message-ack'){
             $response = $this->reportACKupdate($request);
         }else{
             $response['status'] = false;
             $response['message'] = 'FAILED';
             $response['response'] = 'Method not found';
+        }
+         
+        if(isset($request->token)){
+
+            $instanceToken = Instance::where('token', $request->token)->where('is_status',1)->first();
+            if($request->method !='inbound'){ 
+                if(isset($instanceToken->web_hook_url)){
+                    $date_end_time = date('Y-m-d H:m:s');
+                    $sentWebHookURLAllResponse = $this->sentWebHookURLAll($request,$instanceToken->web_hook_url,'POST',$incoming_log_last_updated_id);
+                    $incomingLog_Update = IncomingLog::find($incoming_log_last_updated_id);
+                    $incomingLog_Update->web_hook_url_response_code = $sentWebHookURLAllResponse['errorCode'];
+                    $incomingLog_Update->web_hook_url_response = $sentWebHookURLAllResponse['error_response'];
+                    $incomingLog_Update->sent_webhook_url = 1;
+                    $incomingLog_Update->web_hook_url_start_time = $date_end_time;
+                    $incomingLog_Update->web_hook_url_end_time = $date_end_time;
+                    $incomingLog_Update->save();
+                }
+            }
         }
         return response()->json($response);
     }
@@ -94,7 +112,7 @@ class IncomingMessageCaptureController extends Controller
         $response['response'] = 'Token Mismatch';
         return $response;
     }
-    public function InsertInboundRequest($request){
+    public function InsertInboundRequest($request,$incoming_log_last_updated_id=null){
 
         $response = array();
         $InsertInboundMessage = new InboundMessage();
@@ -105,23 +123,34 @@ class IncomingMessageCaptureController extends Controller
         $InsertInboundMessage->user_id = $instanceToken->user_id;
         $InsertInboundMessage->reseller_id = $instanceToken->reseller_id;
         $InsertInboundMessage->number = explode("@",$request->from)[0];
-        //sent with web_hook url
-        if($instanceToken->web_hook_url){
-            $date_start_time = date('Y-m-d H:m:s');
-            $sentWebHookURLResponse = $this->sentWebHookURL($request,$instanceToken->web_hook_url,'POST');
-            if($sentWebHookURLResponse){
-                $date_end_time = date('Y-m-d H:m:s');
-                $InsertInboundMessage->web_hook_url_response_code = $response->getStatusCode();
-                $InsertInboundMessage->web_hook_url_response = $response;
-                $InsertInboundMessage->web_hook_url_start_time = $date_start_time;
-                $InsertInboundMessage->web_hook_url_end_time = $date_end_time;
-            }
-        }
         $InsertInboundMessage->message = $request->text->body; //message json encode value
         $InsertInboundMessage->messaging_product = $request->messaging_product;
         $InsertInboundMessage->json_data = json_encode($request);
         $InsertInboundMessage->save();
-
+        $last_inserted_id = $InsertInboundMessage->id;
+        //sent with web_hook url
+        if($instanceToken->web_hook_url){
+            $webHookUpdate = InboundMessage::find($last_inserted_id);
+            $date_start_time = date('Y-m-d H:m:s');
+            $sentWebHookURLResponse = $this->sentWebHookURL($request,$instanceToken->web_hook_url,'POST');
+            if($sentWebHookURLResponse){
+                $date_end_time = date('Y-m-d H:m:s');
+                $webHookUpdate->web_hook_url_response_code = $sentWebHookURLResponse['errorCode'];
+                $webHookUpdate->web_hook_url_response = $sentWebHookURLResponse['error_response'];
+                $webHookUpdate->web_hook_url_start_time = $date_start_time;
+                $webHookUpdate->web_hook_url_end_time = $date_end_time;
+                $webHookUpdate->save();
+                if(isset($incoming_log_last_updated_id)){
+                    $incomingLog_Update = IncomingLog::find($incoming_log_last_updated_id);
+                    $incomingLog_Update->web_hook_url_response_code = $sentWebHookURLResponse['errorCode'];
+                    $incomingLog_Update->web_hook_url_response = $sentWebHookURLResponse['error_response'];
+                    $incomingLog_Update->sent_webhook_url = 1;
+                    $incomingLog_Update->web_hook_url_start_time = $date_end_time;
+                    $incomingLog_Update->web_hook_url_end_time = $date_end_time;
+                    $incomingLog_Update->save();
+                }
+            }
+        }
         $response['status'] = true;
         $response['message'] = 'SUCCESS';
         $response['message'] = 'Inbound Message Added Successfully';
@@ -130,15 +159,47 @@ class IncomingMessageCaptureController extends Controller
     }
     public function sentWebHookURL($request,$endpoint,$method){
 
+        $returnArray = array();
         $client = new \GuzzleHttp\Client();
+        try
+        {
+            $response = $client->request($method, $endpoint, ['query' => [
+                'data' => $request,
+            ]]);
+            $returnArray['errorCode'] = $response->getStatusCode();
+            $returnArray['error_response'] = "success";
+            $returnArray['error'] = false;
 
-        $response = $client->request($method, $endpoint, ['query' => [
-            'data' => $request,
-        ]]);
+            return $returnArray;
 
-        $statusCode = $response->getStatusCode();
-        $content = $response->getBody();
-        //response
-        return $response;
+        }catch( \Exception $e ) {
+             $returnArray['errorCode'] = $e->getCode();
+             $returnArray['error_response'] = "failed";
+             $returnArray['error'] = true;
+            return $returnArray;
+        }
+    }
+    public function sentWebHookURLAll($request,$endpoint,$method){
+
+
+        $returnArray = array();
+        $client = new \GuzzleHttp\Client();
+        try
+        {
+            $response = $client->request($method, $endpoint, ['query' => [
+                'data' => $request,
+            ]]);
+            $returnArray['errorCode'] = $response->getStatusCode();
+            $returnArray['error_response'] = "success";
+            $returnArray['error'] = false;
+
+            return $returnArray;
+
+        }catch( \Exception $e ) {
+             $returnArray['errorCode'] = $e->getCode();
+             $returnArray['error_response'] = "failed";
+             $returnArray['error'] = true;
+            return $returnArray;
+        }
     }
 }
