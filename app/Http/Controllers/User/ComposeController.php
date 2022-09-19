@@ -125,12 +125,12 @@ class ComposeController extends Controller
     					$csv_name = $csvDetail['csv_name'];
 		            }
 
-		            if(strlen($request->message) >=1000){
+		            if(strlen($request->message) >=10000){
 		            		return response()->json([
 						                'success' => false,
 						                'message' =>'success',
 						                'validator' => false,
-						                'response' => 'Message count is more than 1000.',
+						                'response' => 'Message count is more than 10000.',
 						            ]);
 		            }
     				//upload file
@@ -145,9 +145,9 @@ class ComposeController extends Controller
 					}else{
 						$uploadfilename = NULL;
 					}
-	    			if(isset($campaignFetch[0]['total'])){ 
+	    			if(isset($campaignFetch[0]['total'])){
 
-	    				$total = $campaignFetch[0]['total']; 
+	    				$total = $campaignFetch[0]['total'];
 	    			}else{ $total = 0; }
 	    				$total = $total + $num_count;
 
