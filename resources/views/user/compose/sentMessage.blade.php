@@ -25,7 +25,7 @@
                     <div class="col-sm">
                         <form id="sendMessageForm" method="POST" action="{{ route('user.compose.sent.message') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            
+
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="firstName">Campaign </label>
@@ -89,11 +89,11 @@
                                  </div>
                                  <div class="col-md-6 form-group">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="1000" id="message" name="message"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="10000" id="message" name="message"></textarea>
                                      <div class="custom-control custom-checkbox checkbox-primary">
                                         <input type="checkbox" class="custom-control-input" id="optOut" name="optOut" checked="checked">
                                         <label class="custom-control-label" for="optOut">Opt-Out</label>
-                                        <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="1000" id="msg_count_id">1000</span>
+                                        <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="10000" id="msg_count_id">10000</span>
                                     </div>
                                  </div>
                             </div>

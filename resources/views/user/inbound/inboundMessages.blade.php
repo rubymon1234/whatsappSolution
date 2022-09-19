@@ -29,8 +29,8 @@
                 <div class="col-md-3 form-group">
                 <button class="btn btn-tool btn-danger" name="search" value="search" style="margin-top: 19px;"  >Search </button>
                 <button class="btn btn-tool btn-info" name="download" value="download" style="margin-top: 19px;" onclick="return bulkMessage(this.value);">Bulk <?php echo strtolower('reply') ?> </button>
-                </div> 
-                
+                </div>
+
             </div>
         </form>
         {{-- </div> --}}
@@ -68,13 +68,13 @@
                                         <span class="name">
                                             <input type="checkbox" class="bulkCheck" name="permissn[]" class="" id="check_{{ $inbound->number }}_{{ $inbound->instance_token }}" value="{{ $inbound->number }}_{{ $inbound->instance_token }}"></span> </td>
                                     <td> #{{ $key + $inboundMessages->firstItem() }} </td>
-                                    <td><span class="product">{{ $inbound->number }}</span> 
+                                    <td><span class="product">{{ $inbound->number }}</span>
                                     </td>
                                     @php
                                        $instanceDetai = App\Models\Instance::where('token',$inbound->instance_token)->first();
                                     @endphp
                                     <td><span class="badge badge-info">{{ $instanceDetai->instance_name }}</span></td>
-                                   
+
                                     <td ><?php
                                         $string = strip_tags(rawurldecode($inbound->message));
                                         if (strlen($string) > 10) {
@@ -119,7 +119,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" maxlength="1000" id="message" name="message" disabled="disabled">{{ rawurldecode($inbound->message) }}</textarea>
+                                                    <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" maxlength="10000" id="message" name="message" disabled="disabled">{{ rawurldecode($inbound->message) }}</textarea>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -205,7 +205,7 @@
     </div>
     @php }
     @endphp
-    
+
     {{-- End Webhook Model--}}
     <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -277,11 +277,11 @@
                             <div class="row">
                                  <div class="col-md-6 form-group">
                                     <label for="lastName">Message</label>
-                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="1000" id="message" name="message"></textarea>
+                                     <textarea class="form-control mt-15 sel_msg" rows="3" placeholder="Enter Message"  rows="5" cols="14" style="margin-top: 15px; margin-bottom: 5px; height: 154px;" onkeyup="smsCounter();" maxlength="10000" id="message" name="message"></textarea>
                                      <div class="custom-control custom-checkbox checkbox-primary">
                                         <input type="checkbox" class="custom-control-input" id="optOut" name="optOut" checked="checked">
                                         <label class="custom-control-label" for="optOut">Opt-Out</label>
-                                        <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="1000" id="msg_count_id">1000</span>
+                                        <span class="btn btn-danger btn-xs pull-right btn-rounded" maxlength="10000" id="msg_count_id">10000</span>
                                     </div>
                                  </div>
                             </div>
@@ -290,9 +290,9 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                          <button class="btn btn-primary" id="sendBtn" type="submit">Send</button>
                     </div> 
-                    
+
                 </div></div>
-                </form> 
+                </form>
             </div>
         </div>
     </div>
@@ -307,7 +307,7 @@
                 bulkData.push({
                     uniquevalue: key,
                     number: newVal[0],
-                    instance_token:newVal[1] 
+                    instance_token:newVal[1]
                 });
             }else{
                  bulkData.filter(function(elem,i){
@@ -383,7 +383,7 @@
             }else{
                 alert("Checked is missing..");
             }
-            
+
         }
     });
         function bulkMessage($event){
@@ -479,7 +479,7 @@
                 $('.sel_audio').show();
                 $('.sel_audio').prop('required',true);
                 $('#message').prop('required',false);
-                $('.sel_msg').hide();            
+                $('.sel_msg').hide();
             }
             else if (selected_dt=='video') {
                 $('.sel_video').show();
@@ -500,7 +500,7 @@
                 $('#message').prop('required',true);
                 $('.sel_msg').show();
             }
-        }     
+        }
         });
     function smsCounter() {
         var msg = $('#message').val();
@@ -511,11 +511,11 @@
         }
         var counter_text = char_count +' / ' + msg_count;*/
 
-        var maxLength = 1000;
+        var maxLength = 10000;
         var counter_text = maxLength - char_count;
         //alert(msg);
-        $('#msg_count_id').empty().html(counter_text); 
+        $('#msg_count_id').empty().html(counter_text);
     }
-    
+
     </script>
 @endsection
