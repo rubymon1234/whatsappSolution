@@ -98,7 +98,9 @@ if (isset($argv[1]))
   					    'message' => $message,
   					    'type' => $type,
   							'file' => $file,
-                'optout' => $optOut
+                'optout' => $optOut,
+                'optmessage' => '*TO STOP FUTURE MESSAGES FROM US*',
+                'option' => array('text' => "UNSUBSCRIBE",'text' => "REPORT")
   					);
   					$payload = json_encode($dataPost);
   					// Prepare new cURL resource
