@@ -19,7 +19,7 @@
    <h6 class="hk-pg-title">@yield('title') :: Compose </h6>
    <p class="mb-20"></p>
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-9">
             <section class="hk-sec-wrapper">
                 <div class="row">
                     <div class="col-sm">
@@ -118,6 +118,56 @@
                     </div>
                 </div>
             </section>
+        </div>
+        <div class="col-xl-3">
+            <div class="card card-profile-feed" style="height: 100%;">
+                <div class="card-header card-header-action">
+                    <h6 style="text-align:center;">Addressbook</h6>
+                </div>
+                <hr style=" margin-top: 0px; margin-bottom: 0px;">
+                <div id="grouTot" class="fp1" style="padding: 0px;">
+                    <table class="table table-bordered" style="margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align:center;">
+                                    Groups
+                                </th>
+                                {{-- <th colspan="2">Select All</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($groupDetails as $group)
+                                <tr class="group_test">
+                                    <td style="text-align:center;">
+                                      <input type="checkbox" value="{{$group->id}}" id="group_{{$group->id}}" name="group_{{$group->id}}" onclick="groupSelect({{$group->id}})"></td>
+                                    <td>
+                                        {{$group->group_name}} 
+                                    </td>
+                                    <td>
+                                        @php
+                                    $groupCount = \App\Helpers\Helper::getGroupContactCount($group->id);
+                                    @endphp
+                                        <span class="badge badge-info">{{$groupCount}}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <br>
+                    <table class="table table-bordered">
+                        <tbody>
+                          <tr style="border-top: #e0e3e4 1px solid;">
+                            <td><strong class="Themecolor">Selected Group's </strong></td>
+                                  <td><span class="badge badge-group" id="totalGroup" style="">  0 </span></td>
+                          </tr>
+                          <tr>
+                            <td><strong class="Themecolor">Total Group's  </strong></td>
+                                  <td><span class="badge badge-group" id="totgrp1" style="">{{ count($groupDetails) }}</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                 </div>
+            </div>
         </div>
     </div>
 </div>
@@ -301,5 +351,57 @@
             return false;
         }
     }
+    function groupSelect(id){
+        var groupsel = '';
+        $('#grouTot :checked').each(function() {
+            if(groupsel!='')groupsel+=',';
+           groupsel+=$(this).val();
+            var id2 = $(this).val();
+           $('#group_'+id2).attr('checked', false);  
+        });
+        if(groupsel==''){
+             document.getElementById('totalGroup').innerHTML=0;
+        }else{
+            var separated = groupsel.split(",");
+            $.each(separated, function(index, chunk) {
+                var countNumbers = index+1;
+                document.getElementById('totalGroup').innerHTML=countNumbers;
+            });
+        }
+        $.ajax(
+            {
+                url: '{{ route('ajax.group.contacts') }}',
+                dataType: 'json', // what to expect back from the PHP script
+                cache: false,
+                data: { 
+                        _token: "{{ csrf_token() }}",
+                        group_ids : groupsel ,
+                    },
+                type: 'POST' ,
+                beforeSend: function () {
+                    $('.preloader-it').show();
+                },
+                complete: function () {
+                    $('.preloader-it').hide();
+                },
+                success: function (result) {
+                    $('#loading').hide();
+                    result = result.response;
+                    var res1=result.replace(/\s/g, "\n");
+                    tot = res1.replace(/^\s*$[\n\r]{1,}/gm, '');
+                    tot = tot.trim();
+                    var elem = tot.split('\n');
+                    var str =elem.join(' ');
+                    var str = str.replace(/\s/g,'\n');
+                    document.getElementById('mobile').value =str;
+                    checkNumberCount();
+                },
+                error: function (response) {
+                    console.log('Server error');
+                }
+            }
+        );
+    };
 </script>
+
 @endsection

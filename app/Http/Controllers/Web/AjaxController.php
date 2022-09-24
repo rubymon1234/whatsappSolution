@@ -28,6 +28,8 @@ use App\Models\ListApplication;
 use App\Models\ListBody;
 use App\Models\ButtonApplication;
 use App\Models\ButtonBodies;
+use App\Models\Group;
+use App\Models\GroupContact;
 use App\Models\Api;
 use Exception;
 
@@ -427,5 +429,23 @@ class AjaxController extends Controller
                 'message' => 'Oops, Something Went Wrong',
             ]);
         }
+   	}
+   	public function postRequestGroupContacts(Request $request){
+
+   		$groupIds = explode(",",$request->group_ids);
+   		$user_id = Auth::user()->id;
+   		$contacts = '';
+   		foreach ($groupIds as $group) {
+   			$groupContacts = GroupContact::where('group_id',$group)->get();
+   			foreach ($groupContacts as $contact) {
+   				$contacts .= "\n".$contact->contact_number;
+   			}
+   			
+   		}
+   		 return response()->json([
+                        'success' => true,
+                        'message' =>'success',
+                        'response' => $contacts
+                    ]);
    	}
 }

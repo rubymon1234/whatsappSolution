@@ -27,6 +27,8 @@ use App\Models\ButtonBodies;
 use App\Models\ButtonApplication;
 use App\Models\ListApplication;
 use App\Models\ListBody;
+use App\Models\Group;
+use App\Models\GroupContact;
 use Illuminate\Support\Str;
 use App\Models\TimeConditionApplication;
 use Exception;
@@ -289,6 +291,11 @@ class Helper {
         $button_id = Crypt::decrypt($id);
         $buttonDetail = ButtonBodies::where('button_application_id',$button_id)->get();
         return $buttonDetail;
+   }
+   public static function getGroupContactCount($group_id){
+   // $group_id = Crypt::decrypt($id);
+    $groupContact = GroupContact::where('group_id',$group_id)->where('is_status',1)->get();
+    return count($groupContact);
    }
    public static function getListDetail($id){
         $list_id = Crypt::decrypt($id);

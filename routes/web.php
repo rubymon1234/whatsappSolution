@@ -58,6 +58,13 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/report/log-sessions', 'User\ReportController@getChatBotReport')->name('user.report.log.sessions')->middleware(['permission:user.report.log.sessions']);
 	Route::get('/report/user-input', 'User\ReportController@getMenuInputReport')->name('user.report.log.menu.input')->middleware(['permission:user.report.log.menu.input']);
 
+	//GROUPS MANAGEMENT
+	Route::get('/group/list', 'User\GroupsController@getListGroup')->name('user.group.view')->middleware(['permission:user.group.view']);
+	Route::post('/group/create', 'User\GroupsController@getCreateGroup')->name('user.group.create')->middleware(['permission:user.group.view']);
+	Route::get('/group/update/{id}', 'User\GroupsController@getUpdateGroup')->name('user.group.update')->middleware(['permission:user.group.view']);
+	Route::post('/group/updatecsv/{id}', 'User\GroupsController@postUpdateCsvGroup')->name('user.group.update.csv')->middleware(['permission:user.group.view']);
+	Route::get('/group/contacts/{id}', 'User\GroupsController@postDeleteContacts')->name('user.group.contacts.delete')->middleware(['permission:user.group.view']);
+
 	//CHAT BOT - MESSAGE RESPONSES
 	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);
 
@@ -116,7 +123,8 @@ Route::post('/ajax-chat/instance-delete', 'Web\AjaxController@getInstanceDelete'
 Route::post('/ajax-chat/message-response-delete', 'Web\AjaxController@getMessageResponseDelete')->name('user.chat.bot.message.response.delete');
 Route::post('/ajax-chat/menu-response-delete', 'Web\AjaxController@getMenuResponseDelete')->name('user.chat.bot.menu.response.delete');
 Route::post('/ajax-chat/block-api', 'Web\AjaxController@postBlockApi')->name('api.block.api');
-
+//GROUP AJAX CALL
+Route::post('/ajax/group-contacts-getter', 'Web\AjaxController@postRequestGroupContacts')->name('ajax.group.contacts');
 
 // Message Request - AJax section starts
 

@@ -80,6 +80,25 @@
                     </ul>
                 </li>
             @endpermission
+            @permission(('user.group.*'))
+                <li class="nav-item {{ (Route::is('user.group.*') ? 'menu-open' : '') }}">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp23" aria-expanded="true">
+                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="nav-link-text">Groups</span>
+                    </a>
+                    <ul id="auth_drp23" class="nav flex-column collapse-level-1 {{ (Route::is('user.group.*') ? 'show' : '') }} collapse ">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                @permission('user.group.view')
+                                <li class="nav-item {{ (Route::is('user.group.view') ? 'active' : '' ) }}">
+                                    <a class="nav-link" href="{{ route('user.group.view') }}">List Group</a>
+                                </li>
+                                @endpermission
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endpermission
             @permission(('admin.instance.*'))
                 <li class="nav-item {{ (Route::is('admin.instance.*') ? 'menu-open' : '') }}">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp6" aria-expanded="true">

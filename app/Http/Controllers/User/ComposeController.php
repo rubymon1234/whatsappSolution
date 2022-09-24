@@ -10,6 +10,8 @@ use App\Models\Campaign;
 use App\Models\Instance;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
+use App\Models\Group;
+use App\Models\GroupContact;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +30,11 @@ class ComposeController extends Controller
     					->whereIn('is_status',[1,3])
     					->orderBy('updated_at','DESC')
     					->get();
+    	//GroupDetails
+    	$groupDetails = Group::where('user_id',Auth::user()->id)
+    							->where('is_status',1)->get();
 
-    	return view('user.compose.sentMessage',compact('instanceDetail'));
+    	return view('user.compose.sentMessage',compact('instanceDetail','groupDetails'));
     }
 
     public function postComposeView(Request $request){
