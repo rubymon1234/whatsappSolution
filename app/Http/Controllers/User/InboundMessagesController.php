@@ -151,19 +151,19 @@ class InboundMessagesController extends Controller
                                     }
                                 }
                             }
-                            $multipleInstanceMobile[$key][$bulk->instance_token][$k] = $bulk->number; 
+                            $multipleInstanceMobile[$key][$bulk->instance_token][$k] = $bulk->number;
                             $num_countArray[] =$bulk->number;
 
                         }
                         $num_count = count($num_countArray);
                        // $csv_name = $csvDetail['csv_name'];
                     }
-                    if(strlen($request->message) >=1000){
+                    if(strlen($request->message) >=10000){
                             return response()->json([
                                         'success' => false,
                                         'message' =>'success',
                                         'validator' => false,
-                                        'response' => 'Message count is more than 1000.',
+                                        'response' => 'Message count is more than 10000.',
                                     ]);
                     }
                     //upload file
@@ -228,7 +228,7 @@ class InboundMessagesController extends Controller
                                 if($num_count <=10){
                                     shell_exec('/usr/bin/php /var/www/html/whatsappSolution/cronjob/cronJobNumberPriority.php '.$last_inserted_id.' 2> /dev/null > /dev/null  &');
                                 }
-                                
+
 
                                 }else{
                                     return response()->json([
@@ -237,7 +237,7 @@ class InboundMessagesController extends Controller
                                             'validator' => false,
                                             'response' => 'Campaign is running, choose another instance',
                                         ]);
-                                } 
+                                }
                             }
                             if($campaignInsert){
 
