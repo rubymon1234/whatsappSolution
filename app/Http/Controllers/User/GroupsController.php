@@ -45,6 +45,23 @@ class GroupsController extends Controller
         return view('user.groups.groupContactUpdate',compact('groupContactList','group_id'));
     }
     /**
+     * Delete Group
+     * @author Ruban
+    */
+    public function postDeleteGroup(Request $request,$id){
+        echo $group_id = Crypt::decrypt($id);
+        $groupContactList = GroupContact::where('group_id',$group_id)->get();
+        if($groupContactList){
+            foreach($groupContactList as $gContact){
+                $contactDetails = GroupContact::find($gContact->id);
+                $contactDetails->delete();
+            }
+        }
+        $groupList = Group::find($group_id);
+        $groupList->delete();
+        return redirect()->route('user.group.view')->with('success_message', 'Group deleted successfully.');
+    }
+    /**
      * Create Group
      * @author Ruban
     */
@@ -151,9 +168,9 @@ class GroupsController extends Controller
             $last_inserted_id =  $groupInsertion->id;
             for ($i = 0; $i < count($customerArr); $i++)
             {
-                $new['contact_number'] = $customerArr[$i][0];
-                $new['contact_name'] = $customerArr[$i][1];
-                $new['contact_email'] = $customerArr[$i][2];
+                $new['contact_number'] = isset($customerArr[$i][0]) ? $customerArr[$i][0]:'';
+                $new['contact_name'] = isset($customerArr[$i][1])? $customerArr[$i][1]:'';
+                $new['contact_email'] = isset($customerArr[$i][2])? $customerArr[$i][2]:'';
                 $new['group_id'] = $last_inserted_id;
                 $newInsertion[] = $new;
             }

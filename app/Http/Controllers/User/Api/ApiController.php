@@ -36,7 +36,7 @@ class ApiController extends Controller
     public function postApiCreate(Request $request){
 
         try {
-            
+
             if($request->Update =='Save'){
                 $rule = [
                     'api_name' => 'required',
@@ -50,7 +50,7 @@ class ApiController extends Controller
                 ];
                 $validator = Validator::make(Input::all(), $rule, $messages);
                 if ($validator->fails()) {
-                     return redirect()->route('api.key.view')->with('error_message', "Oops, Something went wrong.");  
+                     return redirect()->route('api.key.view')->with('error_message', "Oops, Something went wrong.");
 
                 }else{
                     $instanceDetail = Instance::find($request->instance);
@@ -64,7 +64,7 @@ class ApiController extends Controller
                     $apiInsert->instance_id = $request->instance;
                     $apiInsert->is_status = 1;
                     $apiInsert->save();
-                    
+
                     return redirect()->route('api.key.view')->with('success_message', 'New API Key Created Successfully');
                 }
             }elseif($request->Cancel =='cancel'){
@@ -85,5 +85,5 @@ class ApiController extends Controller
     public function generateApiKey(){
         return $api_key = Helper::generateUniqueId().Helper::generateUniqueId().Helper::generateUniqueId();
     }
-   
+
 }

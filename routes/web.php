@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 	Route::get('/group/update/{id}', 'User\GroupsController@getUpdateGroup')->name('user.group.update')->middleware(['permission:user.group.view']);
 	Route::post('/group/updatecsv/{id}', 'User\GroupsController@postUpdateCsvGroup')->name('user.group.update.csv')->middleware(['permission:user.group.view']);
 	Route::get('/group/contacts/{id}', 'User\GroupsController@postDeleteContacts')->name('user.group.contacts.delete')->middleware(['permission:user.group.view']);
+    Route::get('/group/{id}', 'User\GroupsController@postDeleteGroup')->name('user.group.group.delete')->middleware(['permission:user.group.view']);
 
 	//CHAT BOT - MESSAGE RESPONSES
 	Route::get('/message/list-responses', 'User\ChatBot\MessageResponseController@getMessageResponse')->name('user.chat.bot.message.create')->middleware(['permission:user.chat.bot.message.create']);
@@ -86,9 +87,9 @@ Route::group(['middleware' => 'auth','prefix' =>'user'], function () {
 
 	//BOT INSTANCE
 	Route::get('/message/instance-list', 'User\ChatBot\BotInstanceController@getInstanceList')->name('user.chat.bot.instance.list')->middleware(['permission:user.chat.bot.instance.list']);
-	
+
 	Route::get('/message/instance-create', 'User\ChatBot\BotInstanceController@getInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
-	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);	
+	Route::post('/message/instance-create', 'User\ChatBot\BotInstanceController@postInstanceCreate')->name('user.chat.bot.instance.create')->middleware(['permission:user.chat.bot.instance.create']);
 
 	Route::get('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@getInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);
 	Route::post('/message/instance-update/{id}', 'User\ChatBot\BotInstanceController@postInstanceUpdate')->name('user.chat.bot.instance.update')->middleware(['permission:user.chat.bot.instance.update']);

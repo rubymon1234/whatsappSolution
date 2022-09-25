@@ -37,7 +37,7 @@
                 <button class="btn btn-tool btn-info" name="save" value="download">Demo CSV</button>
             </form>
              @endpermission
-            </div>   
+            </div>
         </div>
     <div class="row">
         <div class="col-xl-12">
@@ -76,6 +76,9 @@
                                     <td>
                                         <a href="{{ route('user.group.update' ,Crypt::encrypt($group->id)) }}">
                                             <i class="fa fa-edit" data-toggle="tooltip" data-original-title="Edit group contacts"></i></a>
+                                            &nbsp;&nbsp;
+                                            <a href="{{ route('user.group.group.delete' ,Crypt::encrypt($group->id)) }}">
+                                            <i class="fa fa-trash" data-toggle="tooltip" data-original-title="Delete group with contacts"></i></a>
                                             &nbsp;&nbsp;
                                     </td>
                                 </tr>
