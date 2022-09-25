@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 class GroupsController extends Controller
 {
     /**
-     * Groups View 
+     * Groups View
      * @author Ruban
     */
    	public function getListGroup()
@@ -35,7 +35,7 @@ class GroupsController extends Controller
         return redirect()->route('user.group.view')->with('success_message', 'Contacts deleted successfully.');
     }
     /**
-     * Groups Update 
+     * Groups Update
      * @author Ruban
     */
     public function getUpdateGroup($id){
@@ -45,7 +45,7 @@ class GroupsController extends Controller
         return view('user.groups.groupContactUpdate',compact('groupContactList','group_id'));
     }
     /**
-     * Create Group 
+     * Create Group
      * @author Ruban
     */
     public function getCreateGroup(Request $request)
@@ -130,10 +130,10 @@ class GroupsController extends Controller
                 $new['contact_email'] = $customerArr[$i][2];
                 $new['group_id'] = $last_inserted_id;
                 $newInsertion[] = $new;
-            } 
+            }
             GroupContact::insert($newInsertion);
         }
-        return true;   
+        return true;
     }
     public function importCsv($csv_path = null, $group_name = null)
     {
@@ -146,9 +146,9 @@ class GroupsController extends Controller
         $groupInsertion->reseller_id = Auth::user()->reseller_id;
         $groupInsertion->is_status = 1;
         $groupInsertion->save();
-        
+
         if($groupInsertion){
-            $last_inserted_id = $id;
+            $last_inserted_id =  $groupInsertion->id;
             for ($i = 0; $i < count($customerArr); $i++)
             {
                 $new['contact_number'] = $customerArr[$i][0];
@@ -156,10 +156,10 @@ class GroupsController extends Controller
                 $new['contact_email'] = $customerArr[$i][2];
                 $new['group_id'] = $last_inserted_id;
                 $newInsertion[] = $new;
-            } 
+            }
             GroupContact::insert($newInsertion);
         }
-        return true;   
+        return true;
     }
     function csvToArray($filename = '', $delimiter = ',')
     {
