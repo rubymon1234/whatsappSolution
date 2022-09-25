@@ -142,9 +142,9 @@ class GroupsController extends Controller
             $last_inserted_id = $id;
             for ($i = 0; $i < count($customerArr); $i++)
             {
-                $new['contact_number'] = $customerArr[$i][0];
-                $new['contact_name'] = $customerArr[$i][1];
-                $new['contact_email'] = $customerArr[$i][2];
+                $new['contact_number'] = isset($customerArr[$i][0]) ? $customerArr[$i][0]:'';
+                $new['contact_name'] = isset($customerArr[$i][1])? $customerArr[$i][1]:'';
+                $new['contact_email'] = isset($customerArr[$i][2])? $customerArr[$i][2]:'';
                 $new['group_id'] = $last_inserted_id;
                 $newInsertion[] = $new;
             }
