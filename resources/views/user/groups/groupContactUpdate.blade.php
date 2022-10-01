@@ -33,7 +33,7 @@
                 <button class="btn btn-tool btn-danger" name="save" value="save">update Group</button>
             </form>
              @endpermission
-            </div>   
+            </div>
         </div>
     <div class="row">
         <div class="col-xl-12">

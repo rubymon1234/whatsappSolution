@@ -34,7 +34,8 @@
                     <input type="file" class="form-control form-control-sm new" placeholder="upload contacts" aria-controls="datable_1" name="csv_import" value="">
                 </label>
                 <button class="btn btn-tool btn-danger" name="save" value="save">Create Group</button>
-                <button class="btn btn-tool btn-info" name="save" value="download">Demo CSV</button>
+                <!-- <button class="btn btn-tool btn-info" name="save" value="download">Demo CSV</button> -->
+                <a href="{{ asset('uploads/group-csv/contacts_group.csv') }}" class="btn btn-tool btn-info">Demo CSV</a>
             </form>
              @endpermission
             </div>
