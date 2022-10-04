@@ -128,25 +128,18 @@ class IncomingMessageCaptureController extends Controller
         $InsertInboundMessage->messaging_product = $request->messaging_product;
         $InsertInboundMessage->json_data = json_encode($request);
         $InsertInboundMessage->save();
-        if(isset($request->text->body) && ($request->text->body ==='UNSUBSCRIBE' || $request->text->body ==='REPORT' || $request->text->body ==='BLOCK')){
+        // if(isset($request->text->body) && ($request->text->body ==='UNSUBSCRIBE' || $request->text->body ==='REPORT' || $request->text->body ==='BLOCK')){
 
-            $blacklistDetail = Blacklist::where('number')->first();
-            if($blacklistDetail){
-                $blacklistDetail->number = explode("@",$request->from)[0];
-                $blacklistDetail->token = $request->token;
-                $blacklistDetail->keyword = $request->text->body;
-                $blacklistDetail->is_status = 1;
-                $blacklistDetail->save();
-            }else{
-                $blacklistDetail = new Blacklist();
-                $blacklistDetail->number = explode("@",$request->from)[0];
-                $blacklistDetail->token = $request->token;
-                $blacklistDetail->keyword = $request->text->body;
-                $blacklistDetail->is_status = 1;
-                $blacklistDetail->save();
-            }
-            $this->blockedMessageNoticationInitCall($request,explode("@",$request->from)[0],$method);
-        }
+        //     $blacklistDetail = Blacklist::where('number')->first();
+        //     if(empty($blacklistDetail)){ $blacklistDetail = new Blacklist(); }
+        //         $blacklistDetail = new Blacklist();
+        //         $blacklistDetail->number = explode("@",$request->from)[0];
+        //         $blacklistDetail->token = $request->token;
+        //         $blacklistDetail->keyword = $request->text->body;
+        //         $blacklistDetail->is_status = 1;
+        //         $blacklistDetail->save();
+        //         $this->blockedMessageNoticationInitCall($request,explode("@",$request->from)[0],$method);
+        // }
         $last_inserted_id = $InsertInboundMessage->id;
         //sent with web_hook url
         if($instanceToken->web_hook_url){
