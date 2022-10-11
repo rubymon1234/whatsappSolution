@@ -34,6 +34,7 @@ class IncomingMessageCaptureController extends Controller
             $incomingLog->save();
             $incoming_log_last_updated_id = $incomingLog->id;
         }
+
         if($request->method =='inbound'){ // Incomming Message
             $response = $this->InsertInboundRequest($request,$incoming_log_last_updated_id);
         }else if($request->method =='token'){
@@ -129,10 +130,12 @@ class IncomingMessageCaptureController extends Controller
         $InsertInboundMessage->json_data = json_encode($request);
         $InsertInboundMessage->save();
         $last_inserted_id = $InsertInboundMessage->id;
+
         //sent with web_hook url
         if($instanceToken->web_hook_url){
             $webHookUpdate = InboundMessage::find($last_inserted_id);
             $date_start_time = date('Y-m-d H:m:s');
+
             $sentWebHookURLResponse = $this->sentWebHookURL($request,$instanceToken->web_hook_url,'POST');
             if($sentWebHookURLResponse){
                 $date_end_time = date('Y-m-d H:m:s');
@@ -152,6 +155,18 @@ class IncomingMessageCaptureController extends Controller
                 }
             }
         }
+        if(isset($request->text->body) && ($request->text->body ==='UNSUBSCRIBE' || $request->text->body ==='REPORT' || $request->text->body ==='BLOCK')){
+            $number_mob = explode("@",$request->from)[0];
+            $blacklistDetail = Blacklist::where('number',$number_mob)->first();
+
+            if(empty($blacklistDetail)){ $blacklistDetail = new Blacklist(); }
+                $blacklistDetail->number = explode("@",$request->from)[0];
+                $blacklistDetail->instance_token = $request->token;
+                $blacklistDetail->keyword = $request->text->body;
+                $blacklistDetail->is_status = 1;
+                $blacklistDetail->save();
+                $this->blockedMessageNoticationInitCall($request,explode("@",$request->from)[0],$request->text->body);
+            }
         $response['status'] = true;
         $response['message'] = 'SUCCESS';
         $response['message'] = 'Inbound Message Added Successfully';
@@ -203,33 +218,34 @@ class IncomingMessageCaptureController extends Controller
             return $returnArray;
         }
     }
-    // public function blockedMessageNoticationInitCall($token, $number,$body){
-    //     $dataPost = array(
-    //         'id' => $instance,
-    //         'number' => $data['0'],
-    //         'message' => "You have been successfully ".$body,
-    //         'type' => 'text',
-    //         'file' => '',
-    //         'opt' => '',
-    //         'optmessage' => '',
-    //         'option' => ''
-    //     );
-    //     $payload = json_encode($dataPost);
-    //     // Prepare new cURL resource
-    //     $ch = curl_init('https://api.textnator.com:9000/send-message');
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_HEADER, false);
-    //     curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-    //     curl_setopt($ch, CURLOPT_POST, true);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    //     // Set HTTP Header for POST request
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    //         'Content-Type: application/json',
-    //         'Content-Length: ' . strlen($payload),
-    //         'X-Authentication-Key:3ec5d070a0b165c00c5c06673fdb59a2')
-    //     );
-    //     $result = json_decode(curl_exec($ch), true);
-    //     curl_close($ch);
-    //     return true;
-    // }
+    public function blockedMessageNoticationInitCall($token, $number,$body){
+        $dataPost = array(
+            'id' => $token,
+            'number' => $number,
+            'message' => "You have been successfully ".$body,
+            'type' => 'text',
+            'file' => '',
+            'opt' => '',
+            'optmessage' => '',
+            'option' => ''
+        );
+        $returnArray = array();
+        $client = new \GuzzleHttp\Client();
+        try
+        {
+            $response = $client->request('POST', 'https://api.textnator.com:9000/send-message', ['query' =>
+                $dataPost,
+            ]);
+            $returnArray['errorCode'] = $response->getStatusCode();
+            $returnArray['error_response'] = "success";
+            $returnArray['error'] = false;
+            return $returnArray;
+
+        }catch( \Exception $e ) {
+             $returnArray['errorCode'] = $e->getCode();
+             $returnArray['error_response'] = "failed";
+             $returnArray['error'] = true;
+            return $returnArray;
+        }
+    }
 }
